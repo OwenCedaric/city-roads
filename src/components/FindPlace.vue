@@ -1,6 +1,7 @@
 <template>
 <div class='find-place' :class='{centered: boxInTheMiddle }'>
-  <div v-if='boxInTheMiddle'>
+  <div v-if='boxInTheMiddle' class='site-header-container'>
+    <city-logo :size='52' class='site-logo'></city-logo>
     <h3 class='site-header'>city roads</h3>
     <p class='description'>This website renders every single road within a city</p>
   </div>
@@ -71,6 +72,7 @@
 
 <script>
 import LoadingIcon from './LoadingIcon.vue';
+import CityLogo from './CityLogo.vue';
 import Query from '../lib/Query.js';
 import request from '../lib/request.js';
 import findBoundaryByName from '../lib/findBoundaryByName.js';
@@ -88,7 +90,8 @@ const FIND_TEXT = 'Find City Bounds';
 export default {
   name: 'FindPlace',
   components: {
-    LoadingIcon
+    LoadingIcon,
+    CityLogo
   },
   data () {
     const enteredInput = appState.get('q') || '';
@@ -359,25 +362,52 @@ function parseBBox(bboxStr) {
 
 <style lang="stylus">
 @import('../vars.styl');
-.find-place  {
+
+.find-place {
   width: desktop-controls-width;
+}
+
+.site-header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.site-logo {
+  margin-bottom: 12px;
+  filter: drop-shadow(0 2px 8px rgba(61, 68, 81, 0.08));
 }
 
 h3.site-header {
   margin: 0;
-  font-weight: normal;
+  font-family: serif-font;
+  font-weight: 600;
   font-size: 32px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: primary-ink;
   text-align: center;
 }
 
 input {
   border: none;
   flex: 1;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  padding: 0;
-  color: #434343;
+  font-family: sans-font;
+  font-weight: 400;
+  padding: 0 4px;
+  color: primary-ink;
+  background: transparent;
   height: 100%;
   font-size: 16px;
+  letter-spacing: 0.02em;
+
+  &::placeholder {
+    color: secondary-ink;
+    opacity: 0.65;
+    font-weight: 300;
+  }
+
   &:focus {
     outline: none;
   }
@@ -385,18 +415,29 @@ input {
 
 .search-box {
   position: relative;
-  background-color: emphasis-background;
-  padding: 0 8px;
-  padding: 0 0 0 8px;
-
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+  background: glass-surface;
+  backdrop-filter: blur(glass-blur);
+  -webkit-backdrop-filter: blur(glass-blur);
+  border: 1px solid subtle-border;
+  border-radius: 3px;
+  padding: 0 0 0 12px;
+  margin-top: 16px;
+  box-shadow: 0 4px 20px rgba(61, 68, 81, 0.05);
   height: 48px;
   display: flex;
-  font-size: 16px;
+  font-size: 15px;
   cursor: text;
+  transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:focus-within {
+    border-color: sole-accent;
+    box-shadow: 0 4px 24px rgba(130, 161, 185, 0.15);
+  }
+
   a {
     cursor: pointer;
   }
+
   span {
     display: flex;
     align-items: center;
@@ -405,13 +446,17 @@ input {
 }
 
 .prompt {
-  padding: 4px;
+  padding: 8px 12px;
   text-align: center;
   font-size: 12px;
+  color: secondary-ink;
+  font-family: sans-font;
+  font-weight: 300;
+  line-height: 1.6;
 }
 
 .search-submit {
-  padding: 0 8px;
+  padding: 0 14px;
   align-items: center;
   text-decoration: none;
   display: flex;
@@ -419,37 +464,71 @@ input {
   justify-content: center;
   outline: none;
   z-index: 1;
-  color: highlight-color
+  color: sole-accent;
+  font-family: sans-font;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
   &:hover {
-    color: emphasis-background;
-    background: highlight-color;
+    color: primary-ink;
+    background: subtle-fill;
   }
 }
 
 .suggestion {
-  display: block
-  min-height: 64px
+  display: flex;
+  min-height: 56px;
   align-items: center;
-  border-bottom: 1px solid border-color
-  display: flex
-  padding: 0 10px;
-  text-decoration: none
-  color: highlight-color
+  border-bottom: 1px solid subtle-border;
+  padding: 8px 14px;
+  text-decoration: none;
+  color: primary-ink;
+  font-family: sans-font;
+  font-size: 14px;
+  line-height: 1.45;
+  transition: background 0.15s ease-in-out, transform 0.15s ease-in-out;
+
+  small {
+    color: secondary-ink;
+    font-weight: 300;
+    margin-left: 6px;
+    font-size: 12px;
+  }
+
+  &:hover {
+    background: subtle-fill;
+    color: primary-ink;
+  }
 }
 
 .suggestions {
   position: relative;
-  background: white
+  background: glass-surface;
+  backdrop-filter: blur(glass-blur);
+  -webkit-backdrop-filter: blur(glass-blur);
+  border: 1px solid subtle-border;
+  border-radius: 3px;
+  margin-top: 8px;
+  box-shadow: 0 8px 24px rgba(61, 68, 81, 0.06);
+
+  .prompt {
+    border-bottom: 1px solid subtle-border;
+  }
+
   .note {
-    font-size: 10px;
+    font-size: 11px;
     font-style: italic;
+    color: secondary-ink;
+    opacity: 0.85;
   }
 
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    max-height: calc(100vh - 128px);
+    max-height: calc(100vh - 180px);
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -457,32 +536,57 @@ input {
 
 .message,
 .loading {
-  padding: 4px 8px;
+  padding: 10px 14px;
   position: relative;
+  border: 1px solid subtle-border;
+  border-radius: 3px;
+  background: glass-surface;
+  backdrop-filter: blur(glass-blur);
+  -webkit-backdrop-filter: blur(glass-blur);
+  color: primary-ink;
+  font-family: sans-font;
+  font-size: 13px;
+  margin-top: 8px;
 }
-.loading svg {
-  margin-right: 8px;
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: sole-accent;
+
+  svg {
+    margin-right: 8px;
+    color: sole-accent;
+  }
+}
+
+.no-results {
+  text-align: center;
+  color: secondary-ink;
+  font-family: sans-font;
+  font-weight: 300;
 }
 
 .shadow {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2)
+  box-shadow: 0 4px 16px rgba(61, 68, 81, 0.05);
 }
 
 .error {
   overflow-x: auto;
+  border-left: 2px solid sole-accent;
 }
 
 .find-place {
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 8px;
+  top: 12px;
   left: 50%;
-
   transform: translateX(-50%) translateY(0);
-  transition-timing-function: ease-out;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-property: top left transform;
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
 }
 
 .find-place.centered {
@@ -490,68 +594,156 @@ input {
   left: 50%;
   transform: translateX(-50%) translateY(-143px);
 }
+
 .load-padding {
-  padding-left: 16px;
+  padding-left: 22px;
+  font-size: 12px;
+  color: secondary-ink;
+  margin-top: 4px;
 }
+
 .description {
   padding: 8px;
-  margin: 0;
+  margin: 6px 0 0 0;
   text-align: center;
+  font-family: sans-font;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.85;
+  color: secondary-ink;
+  letter-spacing: 0.02em;
 }
 
 .cancel-request {
   position: absolute;
-  right: 4px;
-  top: 4px;
+  right: 10px;
+  top: 10px;
   font-size: 12px;
+  font-family: sans-font;
+  color: secondary-ink;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+
+  &:hover {
+    color: primary-ink;
+  }
 }
+
 .error-note {
   font-size: 12px;
-  color: #666;
+  color: secondary-ink;
+  font-weight: 300;
+  line-height: 1.6;
   margin: 8px 0;
 }
+
 .error-actions {
   margin: 12px 0 8px 0;
 }
+
 .retry-btn {
   display: inline-block;
-  padding: 8px 24px;
-  background: highlight-color;
-  color: white;
+  padding: 6px 20px;
+  background: sole-accent;
+  color: base-surface;
   text-decoration: none;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 3px;
+  font-family: sans-font;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: opacity 0.15s ease-in-out;
+
   &:hover {
-    opacity: 0.9;
+    opacity: 0.88;
   }
 }
+
 .error-links {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
   margin-top: 12px;
   padding-top: 8px;
-  border-top: 1px solid border-color;
-}
+  border-top: 1px solid subtle-border;
 
-@media (max-width: small-screen) {
-  .find-place {
-    width: 100%;
-  }
-  .find-place.centered {
-    top: 8px;
-    left: 0;
-    transform: none;
-  }
-  .message {
-    font-size: 12px;
-  }
-  .prompt {
-    font-size: 12px;
-    .note {
-      font-size: 9px;
+  a {
+    color: secondary-ink;
+    text-decoration: none;
+
+    &:hover {
+      color: sole-accent;
     }
   }
 }
 
+@media (max-width: small-screen) {
+  .find-place {
+    width: calc(100% - 32px);
+    max-width: 440px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 16px;
+  }
+
+  .find-place.centered {
+    top: 16vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+  }
+
+  .site-logo {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 8px;
+  }
+
+  h3.site-header {
+    font-size: 26px;
+    letter-spacing: 0.1em;
+  }
+
+  .description {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 4px 8px;
+  }
+
+  .search-box {
+    height: 48px;
+    margin-top: 12px;
+  }
+
+  input {
+    font-size: 16px !important;
+  }
+
+  .suggestions ul {
+    max-height: calc(100dvh - 240px);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .suggestion {
+    min-height: 52px;
+    padding: 10px 14px;
+
+    &:active {
+      background: subtle-fill;
+      opacity: 0.85;
+    }
+  }
+
+  .message {
+    font-size: 12px;
+  }
+
+  .prompt {
+    font-size: 12px;
+
+    .note {
+      font-size: 10px;
+    }
+  }
+}
 </style>

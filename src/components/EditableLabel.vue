@@ -37,23 +37,31 @@ export default {
 
 .editable-label {
   position: relative;
+  max-width: calc(100vw - 32px);
 
   span {
     position: relative;
     top: 0;
     left: 0;
     display: flex;
-    align-items : center;
+    align-items: center;
     font-family: labels-font;
-    white-space: pre;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: pre-wrap;
+    word-break: break-word;
     padding: 8px;
     border: 1px solid transparent;
   }
 
   input {
-    caret-color: primary-text;
+    caret-color: highlight-color;
     color: transparent;
     font-family: labels-font;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     background: transparent;
     display: flex;
     align-items: center;
@@ -63,6 +71,8 @@ export default {
     left: 0;
     width: 100%;
     padding: 8px;
+    outline: none;
+    border: none;
   }
 }
   

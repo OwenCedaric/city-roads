@@ -6,14 +6,19 @@ import {isWebGLEnabled} from 'w-gl';
 import App from './App.vue';
 import NoWebGL from './NoWebGL.vue';
 import Query from './lib/Query.js';
+import { cityRoads, setupPostMessageBridge } from './lib/cityRoadsAPI.js';
 
 // const wgl = require('w-gl');
 
 window.addEventListener('error', logError);
 
-// expose the console API
+// expose the developer & integration API
 window.requireModule = d3Require;
 window.Query = Query;
+window.cityRoads = cityRoads;
+
+// Enable cross-window / iframe integration for projects like GrowingGalaxy
+setupPostMessageBridge();
 
 if (isWebGLEnabled(document.querySelector('#canvas'))) {
   createApp(App).mount('#host');

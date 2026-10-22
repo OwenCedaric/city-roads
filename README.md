@@ -1,5 +1,81 @@
 # city-roads
 
+> Visualizing every single road in any city at once with WebGL and minimalist cartographic aesthetics.
+
+**Repository:** [https://github.com/OwenCedaric/city-roads](https://github.com/OwenCedaric/city-roads) (forked from [anvaka/city-roads](https://github.com/anvaka/city-roads))
+
+---
+
+### Highlights in this Fork:
+- **Refined Typography & Visual Restraint**: Serif headings, warm-ivory paper surface (`#fbf9f6`), deep ink roads (`#3d4451`), and muted blue-gray accents (`#82a1b9`).
+- **Mobile-First Touch Redesign**: Responsive layout, thumb-friendly export cards, iOS Safari auto-zoom prevention, and centered modal color picker via Vue 3 Teleport.
+- **Open Grid Cartography Logo & Favicon**: Custom vector street network emblem with automatic browser dark/light mode switching.
+- **Programmatic Vector & Image API**: Direct SVG / PNG extraction via `window.cityRoads` and iframe `postMessage` integration (optimized for tools like **GrowingGalaxy / Traces**).
+- **UI One-Click SVG Copy**: Added "Copy SVG Code" button in the Export menu to copy raw vector paths directly to clipboard.
+
+---
+
+## Integration & Export API (for GrowingGalaxy / Traces)
+
+`city-roads` provides programmatic interfaces to extract vector paths and images directly without triggering browser download prompts.
+
+### 1. JavaScript API (`window.cityRoads`)
+
+```js
+// 1. Get raw SVG XML markup (ideal for Traces path animation)
+const svg = window.cityRoads.getSVG({
+  minLength: 2,         // Filter out tiny line segments (< 2px) to optimize performance
+  includeLabels: false  // Exclude text labels, exporting pure road geometry
+});
+
+// 2. Get SVG Data URL (for <img src="..."> or WebGL canvas texture)
+const svgDataUrl = window.cityRoads.getSVGDataURL();
+
+// 3. Get SVG as a Blob
+const svgBlob = window.cityRoads.getSVGBlob();
+
+// 4. Get rendered PNG as Data URL or Blob
+const pngDataUrl = await window.cityRoads.getPNG('dataUrl');
+const pngBlob = await window.cityRoads.getPNG('blob');
+
+// 5. One-click copy SVG markup to clipboard
+await window.cityRoads.copySVG();
+
+// 6. Programmatically load any city and retrieve its SVG
+const result = await window.cityRoads.loadCity('Paris', { minLength: 2 });
+console.log(result.svg);
+```
+
+### 2. Iframe / Cross-Window Integration (`postMessage`)
+
+When embedding `city-roads` in an `<iframe>` within another project:
+
+```js
+// In host window (e.g. GrowingGalaxy):
+const iframe = document.querySelector('#city-roads-iframe');
+
+// Request SVG:
+iframe.contentWindow.postMessage({
+  type: 'GET_SVG',
+  city: 'Seattle',      // Optional: loads Seattle if specified, or exports current city
+  options: { minLength: 2, includeLabels: false }
+}, '*');
+
+// Receive SVG:
+window.addEventListener('message', (event) => {
+  if (event.data?.type === 'CITY_ROADS_SVG_RESPONSE' && event.data.success) {
+    const { city, svg, dataUrl } = event.data;
+    traces.loadTraceFromSVG(svg);
+  }
+});
+```
+
+*See [API.md](API.md) for full scene scripting documentation.*
+
+---
+
+## About the Project
+
 Render every single road in any city at once: https://anvaka.github.io/city-roads/
 
 ![demo](https://i.imgur.com/6bFhX3e.png)

@@ -3,6 +3,9 @@
   <div id="app">
     <div v-if='placeFound'>
       <div class='controls'>
+        <div class='brand-emblem' title='City Roads'>
+          <city-logo :size='24'></city-logo>
+        </div>
         <a href="#" class='print-button' @click.prevent='toggleSettings'>Customize...</a>
         <a href="#" class='try-another' @click.prevent='startOver'>Try another city</a>
       </div>
@@ -48,6 +51,16 @@
             Save the current screen as a vector image.
           </span>
         </div>
+
+        <div class='row'>
+          <a href='#'  @click.prevent='copySVGCode' class='col'>Copy SVG Code</a> 
+          <span class='col c-2'>
+            Copy raw SVG paths to clipboard (ideal for Traces in GrowingGalaxy).
+          </span>
+        </div>
+        <div v-if='copyFeedback' class='preview-actions message'>
+          {{ copyFeedback }}
+        </div>
         <div v-if='false' class='row'>
           <a href='#' @click.prevent='toProtobuf' class='col'>To a .PBF file</a> 
           <span class='col c-2'>
@@ -57,13 +70,11 @@
 
         <h3>About</h3>
         <div>
-          <p>This website was created by <a href='https://twitter.com/anvaka' target='_blank'>@anvaka</a>.
-          It downloads roads from OpenStreetMap and renders them with WebGL.
+          <p>
+            Renders every road within a city using OpenStreetMap data and WebGL.
           </p>
           <p>
-           You can find the entire <a href='https://github.com/anvaka/city-roads'>source code here</a>. 
-           If you love this website you can also <a href='https://www.paypal.com/paypalme2/anvakos/3'>buy me a coffee</a> or 
-           <a href='https://www.patreon.com/anvaka'>support me on Patreon</a>, but you don't have to.
+            Redesigned and maintained by <a href='https://github.com/OwenCedaric/city-roads' target='_blank'>Owen Cedaric</a>, originally created by <a href='https://github.com/anvaka/city-roads' target='_blank'>@anvaka</a>.
           </p>
         </div>
       </div>
@@ -79,11 +90,13 @@ import FindPlace from './components/FindPlace.vue';
 import LoadingIcon from './components/LoadingIcon.vue';
 import EditableLabel from './components/EditableLabel.vue';
 import ColorPicker from './components/ColorPicker.vue';
+import CityLogo from './components/CityLogo.vue';
 import createScene from './lib/createScene.js';
 import GridLayer from './lib/GridLayer.js';
 import generateZazzleLink from './lib/getZazzleLink.js';
 import appState from './lib/appState.js';
-import {getPrintableCanvas, getCanvas} from './lib/saveFile.js';
+import {getPrintableCanvas, getCanvas, getSVGString} from './lib/saveFile.js';
+import {registerAppInstance} from './lib/cityRoadsAPI.js';
 import config from './config.js';
 import './lib/canvas2BlobPolyfill.js';
 import bus from './lib/bus.js';
@@ -104,7 +117,8 @@ export default {
     FindPlace,
     LoadingIcon,
     EditableLabel,
-    ColorPicker
+    ColorPicker,
+    CityLogo
   },
   data() {
     return {
@@ -114,6 +128,7 @@ export default {
       generatingPreview: false,
       showSettings: false,
       settingsOpen: false,
+      copyFeedback: null,
       labelColor: config.getLabelColor().toRgb(),
       backgroundColor: config.getBackgroundColor().toRgb(),
       layers: []
@@ -125,6 +140,7 @@ export default {
     }
   },
   created() {
+    registerAppInstance(this);
     bus.on('scene-transform', this.handleSceneTransform);
     bus.on('background-color', this.syncBackground);
     bus.on('line-color', this.syncLineColor);
@@ -201,6 +217,31 @@ export default {
 
     toSVGFile(e) { 
       scene.saveToSVG(this.name)
+    },
+
+    async copySVGCode() {
+      recordOpenClick('copy-svg');
+      try {
+        const svg = getSVGString(this.scene, { name: this.name });
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(svg);
+        } else {
+          let textarea = document.createElement('textarea');
+          textarea.value = svg;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
+        this.copyFeedback = 'SVG code copied to clipboard!';
+        setTimeout(() => {
+          this.copyFeedback = null;
+        }, 3000);
+      } catch (err) {
+        this.copyFeedback = 'Failed to copy SVG: ' + err.message;
+      }
     },
 
     updateLayers() {
@@ -298,12 +339,13 @@ function recordOpenClick(link) {
 @import('./vars.styl');
 
 #app {
-  margin: 8px;
+  margin: 16px;
   max-height: 100vh;
   position: absolute;
-  z-index: 1;
+  z-index: 10;
+
   h3 {
-    font-weight: normal;
+    font-weight: 600;
   }
 }
 
@@ -321,61 +363,106 @@ function recordOpenClick(link) {
 }
 
 .overlay-active {
-  border: 1px dashed highlight-color;
+  border: 1px dashed sole-accent;
 }
 .overlay-active.exclusive {
   border-style: solid;
 }
 
 .controls {
-  height: 48px;
-  background: white;
+  height: 44px;
+  background: glass-surface;
+  backdrop-filter: blur(glass-blur);
+  -webkit-backdrop-filter: blur(glass-blur);
   display: flex;
   flex-direction: row;
   align-items: stretch;
   width: desktop-controls-width;
   justify-content: space-around;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+  border: 1px solid subtle-border;
+  border-radius: 3px;
+  box-shadow: 0 4px 16px rgba(61, 68, 81, 0.05);
+
+  .brand-emblem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    border-right: 1px solid subtle-border;
+    opacity: 0.85;
+    transition: opacity 0.15s ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 
   a {
     text-decoration: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: highlight-color;
+    color: primary-ink;
+    font-family: sans-font;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     margin: 0;
     border: 0;
+    transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+
     &:hover {
-      color: emphasis-background;
-      background: highlight-color;
+      color: sole-accent;
+      background: subtle-fill;
     }
   }
+
   a.try-another {
     flex: 1;
   }
 
   a.print-button {
     flex: 1;
-    border-right: 1px solid border-color;
+    border-right: 1px solid subtle-border;
+
     &:focus {
-      border: 1px dashed highlight-color;
+      outline: none;
+      background: subtle-fill;
     }
   }
 }
 
 .col {
-    display: flex;
-    flex: 1;
-    select {
-      margin-left: 14px;
-    }
+  display: flex;
+  flex: 1;
+  align-items: center;
+  font-family: sans-font;
+  font-size: 13px;
+
+  select {
+    margin-left: 14px;
   }
+}
+
 .row {
-  margin-top: 4px;
+  margin-top: 8px;
   display: flex;
   flex-direction: row;
-  min-height: 32px;
+  min-height: 36px;
+  align-items: center;
+
+  a.col {
+    color: primary-ink;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.15s ease-in-out;
+
+    &:hover {
+      color: sole-accent;
+    }
+  }
 }
+
 .colors {
   display: flex;
   flex-direction: row;
@@ -386,10 +473,17 @@ function recordOpenClick(link) {
     flex-direction: column;
     align-items: center;
     width: 64px;
+    margin-right: 8px;
   }
 
   .color-label {
-    font-size: 12px;
+    font-size: 11px;
+    font-family: sans-font;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: secondary-ink;
+    margin-top: 4px;
   }
 }
 
@@ -397,73 +491,133 @@ a {
   border: 1px solid transparent;
   margin: -1px;
   text-decoration: none;
-  color: highlight-color
+  color: sole-accent;
+  transition: color 0.15s ease-in-out;
 }
+
 a:focus {
-  border: 1px dashed highlight-color;
   outline: none;
 }
+
 .print-window {
-  max-height: calc(100vh - 48px);
+  max-height: calc(100vh - 80px);
   overflow-y: auto;
-  border-top: 1px solid border-color;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border: 1px solid subtle-border;
+  border-top: none;
+  background: glass-surface;
+  backdrop-filter: blur(glass-blur);
+  -webkit-backdrop-filter: blur(glass-blur);
+  box-shadow: 0 8px 32px rgba(61, 68, 81, 0.06);
   width: desktop-controls-width;
-  padding: 8px;
+  padding: 18px;
+  border-radius: 0 0 3px 3px;
+
   .row a {
-    margin-right: 4px;
+    margin-right: 8px;
   }
 
   h3 {
+    margin: 18px 0 10px 0;
+    font-family: serif-font;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: primary-ink;
+    text-align: left;
+    border-bottom: 1px solid subtle-border;
+    padding-bottom: 6px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  p {
+    font-family: sans-font;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 1.85;
+    color: secondary-ink;
     margin: 8px 0;
-    text-align: right;
+
+    a {
+      color: primary-ink;
+      border-bottom: 1px solid stroke-tint;
+
+      &:hover {
+        color: sole-accent;
+        border-bottom-color: sole-accent;
+      }
+    }
   }
 }
 
 .message {
-  border-top: 1px solid border-color
-  border-bottom: 1px solid border-color
-  background: #F5F5F5;
+  border-top: 1px solid subtle-border;
+  border-bottom: 1px solid subtle-border;
+  background: subtle-fill;
 }
 
 .preview-actions {
   display: flex;
-  padding: 8px 0;
-  margin-left: -8px;
-  margin-bottom: 14px;
-  margin-top: 1px;
-  width: desktop-controls-width;
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
   flex-direction: column;
-  align-items: stretch;
-  font-size: 14px;
   align-items: center;
-  display: flex;
+  font-size: 13px;
+  color: primary-ink;
+  border-radius: 3px;
 
   .popup-help {
     text-align: center;
+    font-family: sans-font;
+    font-weight: 300;
+    line-height: 1.6;
+
+    a {
+      color: sole-accent;
+      font-weight: 500;
+    }
+  }
+
+  .loading-container {
+    display: flex;
+    align-items: center;
+    color: sole-accent;
+
+    .loader {
+      margin-right: 8px;
+    }
   }
 }
 
 .city-name {
   position: absolute;
-  right: 32px;
-  bottom: 54px;
-  font-size: 24px;
-  color: #434343;
+  right: 40px;
+  bottom: 60px;
+  font-size: 28px;
+  color: primary-ink;
+
   input {
-    font-size: 24px;
+    font-size: 28px;
   }
 }
 
 .license {
   text-align: right;
   position: fixed;
-  font-family: labels-font;
-  right: 32px;
-  bottom: 32px;
-  font-size: 12px;
+  font-family: sans-font;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  right: 40px;
+  bottom: 34px;
+  font-size: 11px;
   padding-right: 8px;
+  opacity: 0.8;
+
   a {
     text-decoration: none;
     display: inline-block;
@@ -471,35 +625,98 @@ a:focus {
 }
 
 .c-2 {
-  flex: 2
+  flex: 2;
+  color: secondary-ink;
+  font-family: sans-font;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 @media (max-width: small-screen) {
   #app {
-    width: 100%;
-    margin: 0;
+    width: calc(100% - 24px);
+    margin: 12px;
+    left: 0;
+    right: 0;
 
-    .preview-actions,.error,
+    .preview-actions, .error,
     .controls, .print-window {
       width: 100%;
     }
+
     .loading-container {
       font-size: 12px;
     }
 
     .print-window {
-      font-size: 14px;
-    }
+      max-height: calc(82dvh - 54px);
+      -webkit-overflow-scrolling: touch;
+      font-size: 13px;
+      padding: 14px;
 
+      .row {
+        flex-direction: column;
+        align-items: stretch;
+        margin-top: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid subtle-border;
+
+        &:last-of-type {
+          border-bottom: none;
+        }
+
+        a.col {
+          display: flex;
+          align-items: center;
+          padding: 8px 12px;
+          background: subtle-fill;
+          border: 1px solid subtle-border;
+          border-radius: 3px;
+          font-size: 13px;
+          margin-bottom: 4px;
+          margin-right: 0;
+
+          &:active {
+            opacity: 0.8;
+          }
+        }
+
+        .c-2 {
+          padding-left: 2px;
+          font-size: 12px;
+          line-height: 1.45;
+        }
+      }
+
+      .colors {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        margin-top: 6px;
+
+        .color-container {
+          margin: 0;
+        }
+      }
+    }
   }
-  .city-name  {
-    right: 8px;
-    bottom: 24px;
+
+  .city-name {
+    right: 16px;
+    bottom: "calc(48px + env(safe-area-inset-bottom, 0px))";
+    font-size: 20px;
+    max-width: calc(100vw - 32px);
+
+    input {
+      font-size: 20px;
+    }
   }
-  .license  {
-    right: 8px;
-    bottom: 8px;
+
+  .license {
+    right: 16px;
+    bottom: "calc(20px + env(safe-area-inset-bottom, 0px))";
+    font-size: 10px;
   }
 }
-
 </style>

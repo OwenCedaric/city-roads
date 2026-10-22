@@ -1,13 +1,25 @@
 // import protobufExport from './protobufExport.js';
 import svgExport from './svgExport.js';
 
-export function toSVG(scene, options) {
-  options = options || {};
-  let svg = svgExport(scene, { 
-    printable: collectPrintable(),
+export function getSVGString(scene, options = {}) {
+  return svgExport(scene, { 
+    printable: options.includeLabels === false ? [] : collectPrintable(),
     ...options
   });
-  let blob = new Blob([svg], {type: "image/svg+xml"});
+}
+
+export function getSVGBlob(scene, options = {}) {
+  let svg = getSVGString(scene, options);
+  return new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+}
+
+export function getSVGDataURL(scene, options = {}) {
+  let svg = getSVGString(scene, options);
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
+export function toSVG(scene, options = {}) {
+  let blob = getSVGBlob(scene, options);
   let url = window.URL.createObjectURL(blob);
   let fileName = getFileName(options.name, '.svg');
   // For some reason, safari doesn't like when download happens on the same
@@ -18,24 +30,34 @@ export function toSVG(scene, options) {
     a.download = fileName;
     a.click();
     revokeLater(url);
-  }, 30)
+  }, 30);
+  return blob;
 }
 
-export function toPNG(scene, options) {
-  options = options || {};
+export function getPNGBlob(scene) {
+  return getPrintableCanvas(scene).then((printableCanvas) => {
+    return new Promise(resolve => {
+      printableCanvas.toBlob(resolve, 'image/png');
+    });
+  });
+}
 
-  getPrintableCanvas(scene).then((printableCanvas) => {
+export function getPNGDataURL(scene) {
+  return getPrintableCanvas(scene).then((printableCanvas) => {
+    return printableCanvas.toDataURL('image/png');
+  });
+}
+
+export function toPNG(scene, options = {}) {
+  getPNGBlob(scene).then((blob) => {
     let fileName = getFileName(options.name, '.png');
-
-    printableCanvas.toBlob(function(blob) {
-      let url = window.URL.createObjectURL(blob);
-      let a = document.createElement("a");
-      a.href = url;
-      a.download = fileName;
-      a.click();
-      revokeLater(url);
-    }, 'image/png')
-  })
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    revokeLater(url);
+  });
 }
 
 export function getPrintableCanvas(scene) {

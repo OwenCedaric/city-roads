@@ -5,7 +5,15 @@ import LoadOptions from './LoadOptions.js';
 import config from '../config.js';
 import tinycolor from 'tinycolor2';
 import eventify from 'ngraph.events';
-import {toSVG, toPNG} from './saveFile.js';
+import {
+  toSVG,
+  toPNG,
+  getSVGString,
+  getSVGBlob,
+  getSVGDataURL,
+  getPNGBlob,
+  getPNGDataURL
+} from './saveFile.js';
 import * as wgl from 'w-gl';
 
 /**
@@ -130,7 +138,42 @@ export default function createScene(canvas) {
 
     saveToPNG,
 
-    saveToSVG
+    saveToSVG,
+
+    /**
+     * Returns the SVG XML markup string of the current scene
+     */
+    getSVG(options) {
+      return getSVGString(sceneAPI, options);
+    },
+
+    /**
+     * Returns the SVG as a Blob (image/svg+xml)
+     */
+    getSVGBlob(options) {
+      return getSVGBlob(sceneAPI, options);
+    },
+
+    /**
+     * Returns the SVG as a Data URL (data:image/svg+xml;...)
+     */
+    getSVGDataURL(options) {
+      return getSVGDataURL(sceneAPI, options);
+    },
+
+    /**
+     * Returns the PNG as a Blob Promise
+     */
+    getPNGBlob() {
+      return getPNGBlob(sceneAPI);
+    },
+
+    /**
+     * Returns the PNG as a Data URL Promise
+     */
+    getPNGDataURL() {
+      return getPNGDataURL(sceneAPI);
+    }
   };
 
   return eventify(sceneAPI); // Public bit is over. Below are just implementation details.

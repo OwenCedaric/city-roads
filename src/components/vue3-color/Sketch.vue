@@ -67,10 +67,10 @@ import alpha from './common/Alpha.vue'
 import checkboard from './common/Checkboard.vue'
 
 const presetColors = [
-  '#D0021B', '#F5A623', '#F8E71C', '#8B572A', '#7ED321',
-  '#417505', '#BD10E0', '#9013FE', '#4A90E2', '#50E3C2',
-  '#B8E986', '#000000', '#4A4A4A', '#9B9B9B', '#FFFFFF',
-  'rgba(0,0,0,0)'
+  '#fbf9f6', '#3d4451', '#757d8a', '#82a1b9',
+  '#1c1f26', '#d2d6dd', '#a0a7b4', '#9cb4cd',
+  '#1a2b3c', '#2c3e50', '#4a5568', '#718096',
+  '#ffffff', '#000000', '#2d3748', 'rgba(0,0,0,0)'
 ]
 
 export default {

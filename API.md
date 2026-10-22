@@ -99,6 +99,72 @@ scene.saveToSVG('hello', {minLength: 2});
 // All paths with length shorter than 2px are removed from the final SVG.
 ```
 
+---
+
+## Programmatic Image & SVG Export API (`window.cityRoads`)
+
+For external applications (such as **GrowingGalaxy / Traces**), `city-roads` provides a programmatic interface on `window.cityRoads` and cross-origin `postMessage` support to extract raw SVG vector paths without triggering browser downloads:
+
+### 1. JavaScript API (`window.cityRoads`)
+
+```js
+// 1. Get raw SVG XML string directly (ideal for Traces SVG path parsers)
+const svgString = window.cityRoads.getSVG({
+  minLength: 2,           // Filter out tiny road segments (< 2px) to optimize performance
+  includeLabels: false    // Exclude city name & attribution text, exporting pure road lines
+});
+
+// 2. Get SVG Data URL (ready for <img src="..."> or WebGL canvas texture)
+const svgDataUrl = window.cityRoads.getSVGDataURL();
+
+// 3. Get SVG as a Blob (image/svg+xml)
+const svgBlob = window.cityRoads.getSVGBlob();
+
+// 4. Get rendered PNG as Data URL or Blob
+const pngDataUrl = await window.cityRoads.getPNG('dataUrl');
+const pngBlob = await window.cityRoads.getPNG('blob');
+
+// 5. One-click copy SVG markup to clipboard
+await window.cityRoads.copySVG();
+
+// 6. Programmatically load any city and receive its SVG
+const result = await window.cityRoads.loadCity('Paris', { minLength: 2 });
+console.log(result.svg); // SVG string of Paris roads
+```
+
+### 2. Iframe / Cross-Window Integration (`postMessage`)
+
+If embedding `city-roads` in an `<iframe>` within GrowingGalaxy:
+
+```js
+// In GrowingGalaxy (parent window):
+const iframe = document.querySelector('#city-roads-iframe');
+
+// Request SVG of the currently loaded city:
+iframe.contentWindow.postMessage({
+  type: 'GET_SVG',
+  options: { minLength: 2, includeLabels: false }
+}, '*');
+
+// Or request a specific city:
+iframe.contentWindow.postMessage({
+  type: 'GET_SVG',
+  city: 'Tokyo',
+  options: { minLength: 3 }
+}, '*');
+
+// Listen for the SVG response:
+window.addEventListener('message', (event) => {
+  if (event.data?.type === 'CITY_ROADS_SVG_RESPONSE' && event.data.success) {
+    const { city, svg, dataUrl } = event.data;
+    // Pass svg directly to Traces engine!
+    traces.loadSVG(svg);
+  }
+});
+```
+
+---
+
 ## Examples
 
 Here are a few example of working with the API.
