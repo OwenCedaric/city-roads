@@ -1,30 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TXT6313TGG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TXT6313TGG');
-</script>
-    <meta property="og:title" content="Draw all roads in any city at once" />
-    <meta property="og:image" content="https://i.imgur.com/Fbbe5a6.png" />
-    <meta property="og:description" content="This website allows you to select a city and then draws every single road on a screen." />
+    <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-    <meta charset="utf-8">
-    <meta name="Description" content="This website allows you to select a city and then draws every single road on a screen.">
-    <meta name="keywords" content="city roads visualization, roads, graph, visualization, anvaka" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TXT6313TGG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TXT6313TGG');
+    </script>
+
+    <!-- Primary SEO Meta Tags -->
+    <title>City Roads — Minimalist Cartography & Urban Road Visualizer</title>
+    <meta name="title" content="City Roads — Minimalist Cartography & Urban Road Visualizer">
+    <meta name="description" content="Render and visualize every single road in any city at once with WebGL. Explore urban road networks, customize minimalist cartography styles, and export high-resolution SVG and PNG vector graphics.">
+    <meta name="keywords" content="city roads visualization, minimalist cartography, urban road networks, openstreetmap, street maps, vector svg export, city map poster, road graph">
     <meta name="author" content="Owen Cedaric (original by Andrei Kashcha)">
-    <title>City Roads — Minimalist Cartography</title>
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://anvaka.github.io/city-roads/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://anvaka.github.io/city-roads/">
+    <meta property="og:site_name" content="City Roads">
+    <meta property="og:title" content="City Roads — Minimalist Cartography & Urban Road Visualizer">
+    <meta property="og:description" content="Render and visualize every single road in any city at once with WebGL. Export crisp vector SVG paths or high-res posters.">
+    <meta property="og:image" content="https://i.imgur.com/Fbbe5a6.png">
+    <meta property="og:image:alt" content="City Roads visualization showing every street rendered in minimalist aesthetic">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://anvaka.github.io/city-roads/">
+    <meta name="twitter:title" content="City Roads — Minimalist Cartography & Urban Road Visualizer">
+    <meta name="twitter:description" content="Render and visualize every single road in any city at once with WebGL. Export crisp vector SVG paths or high-res posters.">
+    <meta name="twitter:image" content="https://i.imgur.com/Fbbe5a6.png">
+
+    <!-- Icons & Manifest -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" href="/favicon.svg">
+
+    <!-- Fonts Preconnect & Optimization -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Structured Data (JSON-LD) for SEO and GEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://anvaka.github.io/city-roads/#webapp",
+          "name": "City Roads",
+          "url": "https://anvaka.github.io/city-roads/",
+          "description": "Visualizes every single road in any city at once using OpenStreetMap data and high-performance WebGL. Allows custom color palette styling, high-resolution PNG export, and vector SVG download.",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires WebGL support",
+          "author": {
+            "@type": "Person",
+            "name": "Andrei Kashcha"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "screenshot": "https://i.imgur.com/Fbbe5a6.png"
+        },
+        {
+          "@type": "Dataset",
+          "@id": "https://anvaka.github.io/city-roads/#dataset",
+          "name": "Global City Road Networks Dataset",
+          "description": "OpenStreetMap road network data indexed and serialized for thousands of world metropolitan areas.",
+          "license": "https://opendatacommons.org/licenses/odbl/",
+          "creator": {
+            "@type": "Organization",
+            "name": "OpenStreetMap Contributors"
+          }
+        }
+      ]
+    }
+    </script>
 
     <style>
       * {
@@ -60,6 +126,21 @@
   <body>
     <canvas id='canvas'></canvas>
     <div id="host"></div>
+
+    <noscript>
+      <div style="max-width: 720px; margin: 40px auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #3d4451; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 12px;">City Roads — Minimalist Cartography</h1>
+        <p><strong>City Roads</strong> renders every single road in any city at once using OpenStreetMap vector data and WebGL graphics.</p>
+        <h2>Key Capabilities</h2>
+        <ul>
+          <li><strong>Worldwide Coverage:</strong> Visualizes street networks across thousands of global cities.</li>
+          <li><strong>Vector SVG Export:</strong> Clean XML paths filtered by minimum length for graphic design, Figma, and pen plotters.</li>
+          <li><strong>High-Resolution PNG:</strong> Print-ready raster exports for posters and minimalist wall art.</li>
+          <li><strong>Programmatic API:</strong> Integrate directly via <code>window.cityRoads</code> or iframe <code>postMessage</code>.</li>
+        </ul>
+        <p><em>Please enable JavaScript and WebGL in your browser to experience interactive 3D map exploration and real-time styling.</em></p>
+      </div>
+    </noscript>
 
     <script type="module" src="/src/main.js"></script>
 </body>

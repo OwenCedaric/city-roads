@@ -1,0 +1,2348 @@
+[
+  {
+    "slug": "paris",
+    "name": "Paris",
+    "localName": "Paris",
+    "country": "France",
+    "countryCode": "FR",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "bbox": [
+      48.8155,
+      2.2241,
+      48.9021,
+      2.4699
+    ],
+    "layoutType": "Radial-Concentric & Haussmannian Boulevards",
+    "description": "Paris features a world-renowned urban road network defined by historic radial boulevards radiating from the Arc de Triomphe, the Boulevard Périphérique ring road, and the gentle curves of the Seine riverbanks.",
+    "primaryStreets": "Champs-Élysées, Boulevard Saint-Germain, Rue de Rivoli, Boulevard Haussmann",
+    "networkMetrics": {
+      "estimatedRoads": "14,000+",
+      "gridPattern": "Radial / Organic Star",
+      "dominantType": "Haussmannian Avenues & Historic Cobblestones"
+    }
+  },
+  {
+    "slug": "tokyo",
+    "name": "Tokyo",
+    "localName": "東京",
+    "country": "Japan",
+    "countryCode": "JP",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "bbox": [
+      35.5288,
+      139.5312,
+      35.8175,
+      139.919
+    ],
+    "layoutType": "Multi-Centric Ring & Spoke Matrix",
+    "description": "Tokyo exhibits an intricate multi-nodal road geometry formed around the Imperial Palace, connected by the Shuto Expressway network and high-density, pedestrian-scaled local residential alleyways.",
+    "primaryStreets": "Meiji-dori, Aoyama-dori, Ginza Chuo-dori, Shuto Expressway",
+    "networkMetrics": {
+      "estimatedRoads": "85,000+",
+      "gridPattern": "Polycentric Radial-Loop",
+      "dominantType": "Narrow Residential Alleys & Multi-Level Elevated Expressways"
+    }
+  },
+  {
+    "slug": "new-york",
+    "name": "New York",
+    "localName": "New York City",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "bbox": [
+      40.496,
+      -74.2557,
+      40.9152,
+      -73.7003
+    ],
+    "layoutType": "Commissioners' Orthogonal Grid & Waterfront Beltways",
+    "description": "Defined by the historic 1811 Commissioners' Plan in Manhattan, New York boasts one of the most recognizable right-angled street grids in the world, intersected diagonally by Broadway.",
+    "primaryStreets": "Broadway, 5th Avenue, FDR Drive, West Side Highway, Queens Boulevard",
+    "networkMetrics": {
+      "estimatedRoads": "60,000+",
+      "gridPattern": "Rigid Orthogonal Grid",
+      "dominantType": "Numbered Avenues, Streets & Waterfront Expressways"
+    }
+  },
+  {
+    "slug": "london",
+    "name": "London",
+    "localName": "London",
+    "country": "United Kingdom",
+    "countryCode": "GB",
+    "lat": 51.5074,
+    "lon": -0.1278,
+    "bbox": [
+      51.2867,
+      -0.5103,
+      51.6918,
+      0.334
+    ],
+    "layoutType": "Organic Medieval Polycentric Network",
+    "description": "Evolving organically over two millennia from Roman Londinium, London's road network has no single master grid. Instead, it forms an intricate tapestry of curved lanes and historic arterial post roads.",
+    "primaryStreets": "Oxford Street, Piccadilly, Strand, Regent Street, M25 Motorway",
+    "networkMetrics": {
+      "estimatedRoads": "70,000+",
+      "gridPattern": "Organic Medieval / Concentric Rings",
+      "dominantType": "Historic Roman Arteries & Curving Victorian Terraces"
+    }
+  },
+  {
+    "slug": "beijing",
+    "name": "Beijing",
+    "localName": "北京",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "bbox": [
+      39.69,
+      116.1,
+      40.18,
+      116.72
+    ],
+    "layoutType": "Imperial Orthogonal Axis & Concentric Ring Roads",
+    "description": "Beijing features an ancient north-south central imperial axis complemented by monumental nested concentric ring roads (2nd through 6th Ring Roads) and traditional rectangular hutong alley grids.",
+    "primaryStreets": "Chang'an Avenue, 2nd-6th Ring Roads, Badaling Expressway, Jianguomenwai Avenue",
+    "networkMetrics": {
+      "estimatedRoads": "55,000+",
+      "gridPattern": "Cardinal Grid & Nested Concentric Rings",
+      "dominantType": "Multi-lane Avenues, Ring Expressways & Ancient Hutongs"
+    }
+  },
+  {
+    "slug": "shanghai",
+    "name": "Shanghai",
+    "localName": "上海",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 31.2304,
+    "lon": 121.4737,
+    "bbox": [
+      31,
+      121.15,
+      31.45,
+      121.75
+    ],
+    "layoutType": "Huangpu River Curvilinear Axis & Elevated Ring Viaducts",
+    "description": "Shanghai's street network is shaped by the sweeping curve of the Huangpu River, the historic circular core of Puxi, and a dense multi-tiered elevated expressway system that contrasts with Pudong's modern superblocks.",
+    "primaryStreets": "Yan'an Elevated Road, Inner Ring Road, Huaihai Road, Nanjing Road, Century Avenue",
+    "networkMetrics": {
+      "estimatedRoads": "65,000+",
+      "gridPattern": "Curvilinear Riverfront & Multi-Tier Rings",
+      "dominantType": "Elevated Expressways & Concession-Era Tree-lined Avenues"
+    }
+  },
+  {
+    "slug": "berlin",
+    "name": "Berlin",
+    "localName": "Berlin",
+    "country": "Germany",
+    "countryCode": "DE",
+    "lat": 52.52,
+    "lon": 13.405,
+    "bbox": [
+      52.3382,
+      13.0883,
+      52.6754,
+      13.7611
+    ],
+    "layoutType": "Spree River Basin & Broad Radial Boulevards",
+    "description": "Berlin is characterized by expansive tree-lined boulevards, generous public squares, and radial thoroughfares connecting formerly divided East and West districts, surrounded by the Berliner Ring autobahn.",
+    "primaryStreets": "Unter den Linden, Kurfürstendamm, Friedrichstraße, Karl-Marx-Allee, A100 Autobahn",
+    "networkMetrics": {
+      "estimatedRoads": "38,000+",
+      "gridPattern": "Radial Boulevards & Neighborhood Grids",
+      "dominantType": "Broad Tree-Lined Avenues & Wide Tram Corridors"
+    }
+  },
+  {
+    "slug": "rome",
+    "name": "Rome",
+    "localName": "Roma",
+    "country": "Italy",
+    "countryCode": "IT",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "bbox": [
+      41.77,
+      12.33,
+      42.02,
+      12.65
+    ],
+    "layoutType": "Ancient Roman Consular Roads & Seven Hills Topography",
+    "description": "Rome's road geometry still traces ancient consular highways radiating outward from the Capitoline Hill to all corners of the Roman Empire, bound together by the modern Grande Raccordo Anulare (GRA) orbital motorway.",
+    "primaryStreets": "Via del Corso, Via Appia Antica, Via Nazionale, Via Flaminia, GRA Orbital",
+    "networkMetrics": {
+      "estimatedRoads": "32,000+",
+      "gridPattern": "Ancient Radial Consular / Topographic",
+      "dominantType": "Historic Sanpietrini Cobblestones & Radial Consular Ways"
+    }
+  },
+  {
+    "slug": "san-francisco",
+    "name": "San Francisco",
+    "localName": "San Francisco",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 37.7749,
+    "lon": -122.4194,
+    "bbox": [
+      37.7081,
+      -122.5179,
+      37.8324,
+      -122.357
+    ],
+    "layoutType": "Steep Topographical Grid & Diagonal Waterfront Arterials",
+    "description": "San Francisco famously projects rigid geometric grids across dramatic steep hills, offset by Market Street's diagonal divider and the scenic waterfront curves of the Embarcadero.",
+    "primaryStreets": "Market Street, Lombard Street, Van Ness Avenue, The Embarcadero, Geary Boulevard",
+    "networkMetrics": {
+      "estimatedRoads": "12,500+",
+      "gridPattern": "Topographic Orthogonal Grid",
+      "dominantType": "Steep Grid Streets, Cable Car Corridors & Coastal Highways"
+    }
+  },
+  {
+    "slug": "amsterdam",
+    "name": "Amsterdam",
+    "localName": "Amsterdam",
+    "country": "Netherlands",
+    "countryCode": "NL",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "bbox": [
+      52.28,
+      4.73,
+      52.43,
+      5.07
+    ],
+    "layoutType": "Concentric Canal Belts (Grachtengordel) & Bicycle-First Streets",
+    "description": "Amsterdam's urban layout is defined by the historic UNESCO-listed 17th-century canal rings, forming concentric semi-circular rings crossed by radial bridges with world-leading cycling infrastructure.",
+    "primaryStreets": "Prinsengracht, Keizersgracht, Herengracht, Damrak, A10 Ringroad",
+    "networkMetrics": {
+      "estimatedRoads": "18,000+",
+      "gridPattern": "Concentric Canal Horseshoe",
+      "dominantType": "Canal-side Quays, Cycle Tracks & Historic Brick Pavements"
+    }
+  },
+  {
+    "slug": "sydney",
+    "name": "Sydney",
+    "localName": "Sydney",
+    "country": "Australia",
+    "countryCode": "AU",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "bbox": [
+      -34.12,
+      150.65,
+      -33.57,
+      151.35
+    ],
+    "layoutType": "Harbour-Constrained Coastal Arterials",
+    "description": "Constrained by the intricate bays of Sydney Harbour and the Pacific coastline, Sydney's roads curve around natural inlets connected by major bridge and tunnel expressways.",
+    "primaryStreets": "George Street, Oxford Street, Sydney Harbour Bridge, Parramatta Road",
+    "networkMetrics": {
+      "estimatedRoads": "42,000+",
+      "gridPattern": "Harbour-Curvilinear & Suburban Sprawl",
+      "dominantType": "Coastal Arterials, Motorway Tunnels & Suburban Connectors"
+    }
+  },
+  {
+    "slug": "singapore",
+    "name": "Singapore",
+    "localName": "Singapore (新加坡)",
+    "country": "Singapore",
+    "countryCode": "SG",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "bbox": [
+      1.2,
+      103.6,
+      1.48,
+      104.04
+    ],
+    "layoutType": "Island-Wide Ring-Radial Expressway System",
+    "description": "Singapore combines British colonial civic grids near Marina Bay with garden city parkway connectors and high-capacity island-wide expressways such as the PIE, ECP, and AYE.",
+    "primaryStreets": "Orchard Road, Pan Island Expressway (PIE), East Coast Parkway (ECP), Shenton Way",
+    "networkMetrics": {
+      "estimatedRoads": "16,000+",
+      "gridPattern": "Garden City Radial & Island Beltways",
+      "dominantType": "Lush Boulevard Parkways & Intelligent Electronic Toll Ways"
+    }
+  },
+  {
+    "slug": "barcelona",
+    "name": "Barcelona",
+    "localName": "Barcelona",
+    "country": "Spain",
+    "countryCode": "ES",
+    "lat": 41.3851,
+    "lon": 2.1734,
+    "bbox": [
+      41.32,
+      2.05,
+      41.47,
+      2.23
+    ],
+    "layoutType": "Cerdà Superblocks (Eixample) & Octagonal Chamfered Corners",
+    "description": "Barcelona is celebrated for Ildefons Cerdà's revolutionary 1859 Eixample plan featuring chamfered octagonal street corners designed to maximize sunlight, airflow, and visibility, sliced diagonally by Avinguda Diagonal.",
+    "primaryStreets": "Avinguda Diagonal, Passeig de Gràcia, Gran Via de les Corts Catalanes, La Rambla",
+    "networkMetrics": {
+      "estimatedRoads": "19,500+",
+      "gridPattern": "Cerdà Octagonal Superblocks",
+      "dominantType": "Chamfered Corner Boulevards & Pedestrian Superblocks (Superilles)"
+    }
+  },
+  {
+    "slug": "seoul",
+    "name": "Seoul",
+    "localName": "서울",
+    "country": "South Korea",
+    "countryCode": "KR",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "bbox": [
+      37.42,
+      126.76,
+      37.7,
+      127.18
+    ],
+    "layoutType": "Han River Transversal Corridors & Mountain Ring Defense",
+    "description": "Bisected by the wide Han River and bounded by surrounding granite mountains, Seoul integrates Joseon Dynasty royal fortress roads with Gangnam's modern orthogonal grid avenues.",
+    "primaryStreets": "Teheran-ro, Olympic-daero, Gangnam-daero, Sejong-daero, Riverside Ringway",
+    "networkMetrics": {
+      "estimatedRoads": "58,000+",
+      "gridPattern": "Riverine Dual-Grid & Valley Arteries",
+      "dominantType": "Multi-Lane Boulevard Corridors & Mountain-Pass Overpasses"
+    }
+  },
+  {
+    "slug": "chicago",
+    "name": "Chicago",
+    "localName": "Chicago",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 41.8781,
+    "lon": -87.6298,
+    "bbox": [
+      41.6443,
+      -87.9401,
+      42.0231,
+      -87.524
+    ],
+    "layoutType": "Great Chicago Fire Uniform Mile Grid System",
+    "description": "Rebuilt following the 1871 fire, Chicago features one of the world's most consistent section-mile grid systems, centered around State and Madison Streets with Lake Shore Drive framing Lake Michigan.",
+    "primaryStreets": "Michigan Avenue, Lake Shore Drive, State Street, Wacker Drive, Kennedy Expressway",
+    "networkMetrics": {
+      "estimatedRoads": "48,000+",
+      "gridPattern": "Strict One-Mile Section Grid",
+      "dominantType": "Multi-Level Streets (Wacker Drive), Alleys & Lakefront Parkways"
+    }
+  },
+  {
+    "slug": "los-angeles",
+    "name": "Los Angeles",
+    "localName": "Los Angeles",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 34.0522,
+    "lon": -118.2437,
+    "bbox": [
+      33.7037,
+      -118.6682,
+      34.3373,
+      -118.1553
+    ],
+    "layoutType": "Expansive Multi-County Freeway Super-Network",
+    "description": "Los Angeles represents the quintessential 20th-century automobile metropolis, spanning hundreds of square miles connected by iconic multi-stack freeway interchanges.",
+    "primaryStreets": "Wilshire Boulevard, Sunset Boulevard, Santa Monica Boulevard, I-405, US-101",
+    "networkMetrics": {
+      "estimatedRoads": "82,000+",
+      "gridPattern": "Sprawling Basin Grid & Freeway Matrix",
+      "dominantType": "Interstate Freeways, Wide Multi-Lane Boulevards & Canyon Roads"
+    }
+  },
+  {
+    "slug": "madrid",
+    "name": "Madrid",
+    "localName": "Madrid",
+    "country": "Spain",
+    "countryCode": "ES",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "bbox": [
+      40.31,
+      -3.83,
+      40.54,
+      -3.58
+    ],
+    "layoutType": "Nested Orbital Motorways (M-30, M-40, M-50) & Gran Vía",
+    "description": "Centred at the Puerta del Sol (Kilometre Zero), Madrid boasts successive concentric orbital motorways enclosing historic Hapsburg quarters and the grand Gran Vía boulevard.",
+    "primaryStreets": "Gran Vía, Paseo de la Castellana, Calle de Alcalá, M-30 Ring Road, M-40 Motorway",
+    "networkMetrics": {
+      "estimatedRoads": "26,000+",
+      "gridPattern": "Kilometre-Zero Radial & Triple Rings",
+      "dominantType": "Gran Vía Theatrical Avenues & Subterranean Highway Tunnels"
+    }
+  },
+  {
+    "slug": "vienna",
+    "name": "Vienna",
+    "localName": "Wien",
+    "country": "Austria",
+    "countryCode": "AT",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "bbox": [
+      48.11,
+      16.18,
+      48.32,
+      16.58
+    ],
+    "layoutType": "Ringstraße Circular Boulevard & Gürtel Outer Belt",
+    "description": "Vienna is famous for its majestic 19th-century Ringstraße boulevard, constructed along dismantled ancient city fortifications to encircle the historic Innere Stadt with grand monumental architecture.",
+    "primaryStreets": "Ringstraße, Gürtel, Mariahilfer Straße, Kärntner Straße, Donauuferautobahn",
+    "networkMetrics": {
+      "estimatedRoads": "17,500+",
+      "gridPattern": "Fortification Ring & Radial Arterials",
+      "dominantType": "Monumental Ring Boulevards & Historic Paved Alleys"
+    }
+  },
+  {
+    "slug": "hong-kong",
+    "name": "Hong Kong",
+    "localName": "Hong Kong (香港)",
+    "country": "China",
+    "countryCode": "HK",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "bbox": [
+      22.15,
+      113.83,
+      22.56,
+      114.44
+    ],
+    "layoutType": "Extreme Topographical Multi-Level Coastal & Mountain System",
+    "description": "Built between Victoria Harbour and steep granite peaks, Hong Kong features an intricate multi-level road network with harbour cross-tunnels, elevated flyovers, and winding hillside passes.",
+    "primaryStreets": "Nathan Road, Hennessy Road, Connaught Road, Cross-Harbour Tunnel, Route 9",
+    "networkMetrics": {
+      "estimatedRoads": "22,000+",
+      "gridPattern": "Steep Topographical & Harbour-Side Bridges",
+      "dominantType": "Multi-Level Flyovers, Cross-Harbour Tunnels & Winding Peak Roads"
+    }
+  },
+  {
+    "slug": "toronto",
+    "name": "Toronto",
+    "localName": "Toronto",
+    "country": "Canada",
+    "countryCode": "CA",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "bbox": [
+      43.58,
+      -79.64,
+      43.86,
+      -79.12
+    ],
+    "layoutType": "British Concession Concession-Line Grid & Ravine Network",
+    "description": "Toronto's road geometry originated from the British colonial concession grid system, framed by Lake Ontario and crossed by deep forested ravine parkways and Highway 401.",
+    "primaryStreets": "Yonge Street, Gardiner Expressway, Don Valley Parkway, Queen Street, Highway 401",
+    "networkMetrics": {
+      "estimatedRoads": "36,000+",
+      "gridPattern": "Orthogonal Concession Road Grid",
+      "dominantType": "Major Arterial Concessions & Ravine Parkways"
+    }
+  },
+  {
+    "slug": "seattle",
+    "name": "Seattle",
+    "localName": "Seattle",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 47.6062,
+    "lon": -122.3321,
+    "bbox": [
+      47.4919,
+      -122.4597,
+      47.7341,
+      -122.2244
+    ],
+    "layoutType": "Isthmus Topography & Offset Downtown Plats",
+    "description": "Pinched between Puget Sound and Lake Washington, Seattle features competing 19th-century downtown grid plats offset along Yesler Way and steep ridges crossed by Interstate 5.",
+    "primaryStreets": "Pike Street, Pine Street, 4th Avenue, Alaskan Way, Aurora Avenue (SR 99)",
+    "networkMetrics": {
+      "estimatedRoads": "14,500+",
+      "gridPattern": "Offset Plat Grids & Waterfront Viaducts",
+      "dominantType": "Steep Hill Grids & Waterfront Highways"
+    }
+  },
+  {
+    "slug": "boston",
+    "name": "Boston",
+    "localName": "Boston",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 42.3601,
+    "lon": -71.0589,
+    "bbox": [
+      42.2279,
+      -71.1912,
+      42.3974,
+      -70.9228
+    ],
+    "layoutType": "Colonial Cowpaths & Subterranean Central Artery (Big Dig)",
+    "description": "Boston's street plan follows organic 17th-century colonial paths, transformed by the Back Bay Victorian grid and the famous Big Dig subterranean highway system.",
+    "primaryStreets": "Beacon Street, Commonwealth Avenue, Boylston Street, Storrow Drive, I-93 Central Artery",
+    "networkMetrics": {
+      "estimatedRoads": "16,000+",
+      "gridPattern": "Colonial Organic / Back Bay Grid",
+      "dominantType": "Historic Winding Lanes & Subsurface Expressway Tunnels"
+    }
+  },
+  {
+    "slug": "washington-dc",
+    "name": "Washington D.C.",
+    "localName": "Washington, District of Columbia",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 38.9072,
+    "lon": -77.0369,
+    "bbox": [
+      38.7916,
+      -77.1198,
+      38.9955,
+      -76.9094
+    ],
+    "layoutType": "L'Enfant Baroque Plan: Diagonals, Avenues & Traffic Circles",
+    "description": "Designed by Pierre Charles L'Enfant in 1791, Washington D.C. layers wide diagonal state-named avenues and ceremonial traffic circles over a rectangular quadrant grid.",
+    "primaryStreets": "Pennsylvania Avenue, Constitution Avenue, Massachusetts Avenue, K Street, Connecticut Avenue",
+    "networkMetrics": {
+      "estimatedRoads": "15,000+",
+      "gridPattern": "Baroque Radial Diagonals over Quadrant Grid",
+      "dominantType": "Monumental Avenues & Traffic Roundabouts"
+    }
+  },
+  {
+    "slug": "austin",
+    "name": "Austin",
+    "localName": "Austin",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 30.2672,
+    "lon": -97.7431,
+    "bbox": [
+      30.0987,
+      -97.9384,
+      30.5169,
+      -97.5615
+    ],
+    "layoutType": "Colorado River Corridor & Rapidly Sprawling Tech Corridors",
+    "description": "Centred on the historic 1839 Waller grid between Shoal Creek and Waller Creek, Austin radiates outward across Lady Bird Lake and the Texas Hill Country via major interstate and tollway spines.",
+    "primaryStreets": "Congress Avenue, Lamar Boulevard, MoPac Expressway (Loop 1), I-35, 6th Street",
+    "networkMetrics": {
+      "estimatedRoads": "24,000+",
+      "gridPattern": "Historic Core Grid & Hill Country Sprawl",
+      "dominantType": "Frontage Road Highways & Tree-Lined Residential Streets"
+    }
+  },
+  {
+    "slug": "miami",
+    "name": "Miami",
+    "localName": "Miami",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 25.7617,
+    "lon": -80.1918,
+    "bbox": [
+      25.709,
+      -80.3198,
+      25.8556,
+      -80.1392
+    ],
+    "layoutType": "Biscayne Bay Causeway Connectors & Section Grids",
+    "description": "Miami's street network is distinguished by scenic causeways spanning Biscayne Bay to Miami Beach and a numbered rectangular street grid centered at Flagler Street and Miami Avenue.",
+    "primaryStreets": "Biscayne Boulevard, Brickell Avenue, MacArthur Causeway, Calle Ocho (SW 8th St)",
+    "networkMetrics": {
+      "estimatedRoads": "20,000+",
+      "gridPattern": "Cartesian Numbered Grid & Island Causeways",
+      "dominantType": "Causeways over Water & Coastal Palm Boulevards"
+    }
+  },
+  {
+    "slug": "vancouver",
+    "name": "Vancouver",
+    "localName": "Vancouver",
+    "country": "Canada",
+    "countryCode": "CA",
+    "lat": 49.2827,
+    "lon": -123.1207,
+    "bbox": [
+      49.1989,
+      -123.2247,
+      49.3161,
+      -123.0232
+    ],
+    "layoutType": "Freeway-Free Urbanism & Coastal Peninsula Grids",
+    "description": "Vancouver is internationally recognized for its rejection of downtown freeways, relying instead on high-density pedestrian grids, bicycle greenways, and scenic waterfront perimeters.",
+    "primaryStreets": "Robson Street, Granville Street, Georgia Street, Burrard Street, Marine Drive",
+    "networkMetrics": {
+      "estimatedRoads": "11,000+",
+      "gridPattern": "Dense Peninsula Grid & Protected Greenways",
+      "dominantType": "Pedestrian Avenues, Cycle Tracks & Coastal Drives"
+    }
+  },
+  {
+    "slug": "montreal",
+    "name": "Montreal",
+    "localName": "Montréal",
+    "country": "Canada",
+    "countryCode": "CA",
+    "lat": 45.5017,
+    "lon": -73.5673,
+    "bbox": [
+      45.41,
+      -73.97,
+      45.7,
+      -73.47
+    ],
+    "layoutType": "Mount Royal Peripheral Axis & Saint Lawrence Grid",
+    "description": "Oriented perpendicular and parallel to the Saint Lawrence River rather than true magnetic north, Montreal's streets wrap around Mount Royal with extensive bicycle network integration.",
+    "primaryStreets": "Sainte-Catherine Street, Saint-Laurent Boulevard, René-Lévesque Boulevard, Sherbrooke Street",
+    "networkMetrics": {
+      "estimatedRoads": "28,000+",
+      "gridPattern": "River-Parallel Grid & Mountain Radial Loop",
+      "dominantType": "Victorian Row-House Streets & Underground City Corridors"
+    }
+  },
+  {
+    "slug": "mexico-city",
+    "name": "Mexico City",
+    "localName": "Ciudad de México",
+    "country": "Mexico",
+    "countryCode": "MX",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "bbox": [
+      19.2,
+      -99.35,
+      19.59,
+      -98.94
+    ],
+    "layoutType": "Ancient Aztec Lakebed Geometry & Expansive Ejes Viales",
+    "description": "Built atop ancient Tenochtitlan's causeways in a high mountain valley, Mexico City features monumental avenues like Paseo de la Reforma and the massive Anillo Periférico ring motorway.",
+    "primaryStreets": "Paseo de la Reforma, Avenida Insurgentes, Anillo Periférico, Viaducto Miguel Alemán",
+    "networkMetrics": {
+      "estimatedRoads": "75,000+",
+      "gridPattern": "Historic Center Grid & Sprawling Valley Matrix",
+      "dominantType": "Monumental Continental Boulevards & Double-Decker Freeways"
+    }
+  },
+  {
+    "slug": "prague",
+    "name": "Prague",
+    "localName": "Praha",
+    "country": "Czech Republic",
+    "countryCode": "CZ",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "bbox": [
+      49.94,
+      14.22,
+      50.18,
+      14.71
+    ],
+    "layoutType": "Vltava River Horseshoe Curves & Medieval Bohemian Alleys",
+    "description": "Prague's urban fabric meanders along the Vltava River, linking the Old Town's dense Gothic labyrinth across historic stone bridges with the hillside castle districts.",
+    "primaryStreets": "Wenceslas Square, Charles Bridge axis, Národní třída, Vinohradská",
+    "networkMetrics": {
+      "estimatedRoads": "19,000+",
+      "gridPattern": "Medieval Riverine Organic",
+      "dominantType": "Cobblestone Lanes, Historic Bridges & Tram Corridors"
+    }
+  },
+  {
+    "slug": "milan",
+    "name": "Milan",
+    "localName": "Milano",
+    "country": "Italy",
+    "countryCode": "IT",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "bbox": [
+      45.38,
+      9.04,
+      45.54,
+      9.28
+    ],
+    "layoutType": "Duomo Centric Concentric Rings (Cerchia dei Navigli)",
+    "description": "Milan radiates outwards from the Piazza del Duomo along concentric rings tracing former Roman walls, medieval moats, and the historic Spanish ramparts.",
+    "primaryStreets": "Corso Buenos Aires, Corso Vittorio Emanuele II, Via Montenapoleone, Viale Monza",
+    "networkMetrics": {
+      "estimatedRoads": "21,000+",
+      "gridPattern": "Concentric Rings & Radial Avenues",
+      "dominantType": "Fashion District Boulevards & Ring Bastion Roads"
+    }
+  },
+  {
+    "slug": "florence",
+    "name": "Florence",
+    "localName": "Firenze",
+    "country": "Italy",
+    "countryCode": "IT",
+    "lat": 43.7696,
+    "lon": 11.2558,
+    "bbox": [
+      43.72,
+      11.15,
+      43.83,
+      11.33
+    ],
+    "layoutType": "Renaissance Arno Riverfront & Roman Cardo-Decumanus",
+    "description": "Florence preserves the ancient Roman orthogonal grid at its center, enveloped by dense Renaissance stone streets connected across the Arno River by the iconic Ponte Vecchio.",
+    "primaryStreets": "Via de' Tornabuoni, Via dei Calzaiuoli, Viale dei Colli, Lungarno",
+    "networkMetrics": {
+      "estimatedRoads": "9,800+",
+      "gridPattern": "Roman Castrum Core & Arno River Quays",
+      "dominantType": "Pedestrianized Renaissance Flagstone Streets"
+    }
+  },
+  {
+    "slug": "munich",
+    "name": "Munich",
+    "localName": "München",
+    "country": "Germany",
+    "countryCode": "DE",
+    "lat": 48.1351,
+    "lon": 11.582,
+    "bbox": [
+      48.05,
+      11.36,
+      48.25,
+      11.72
+    ],
+    "layoutType": "Isar River Axis & Concentric Ring Highways (Mittlerer Ring)",
+    "description": "Munich balances a pedestrianized historic core centered on Marienplatz with concentric circular bypasses like the Mittlerer Ring and scenic riverbank parkways along the Isar.",
+    "primaryStreets": "Maximilianstraße, Leopoldstraße, Mittlerer Ring, Ludwigstraße",
+    "networkMetrics": {
+      "estimatedRoads": "23,000+",
+      "gridPattern": "Historic Radial & Tri-Ring Bypass",
+      "dominantType": "Bavarian Neoclassical Boulevards & Parkside Avenues"
+    }
+  },
+  {
+    "slug": "dublin",
+    "name": "Dublin",
+    "localName": "Baile Átha Cliath",
+    "country": "Ireland",
+    "countryCode": "IE",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "bbox": [
+      53.25,
+      -6.4,
+      53.43,
+      -6.11
+    ],
+    "layoutType": "River Liffey Quays & Georgian Squares",
+    "description": "Dublin's streetscape is divided into Northside and Southside by the River Liffey, famous for elegant Georgian brick terraces, expansive green squares, and the M50 orbital motorway.",
+    "primaryStreets": "O'Connell Street, Grafton Street, Dame Street, M50 Motorway, River Liffey Quays",
+    "networkMetrics": {
+      "estimatedRoads": "17,000+",
+      "gridPattern": "River-Centric Radial & Georgian Blocks",
+      "dominantType": "River Quays, Georgian Residential Streets & Coastal Roads"
+    }
+  },
+  {
+    "slug": "edinburgh",
+    "name": "Edinburgh",
+    "localName": "Edinburgh",
+    "country": "United Kingdom",
+    "countryCode": "GB",
+    "lat": 55.9533,
+    "lon": -3.1883,
+    "bbox": [
+      55.88,
+      -3.35,
+      56.02,
+      -3.05
+    ],
+    "layoutType": "Volcanic Ridge (Royal Mile) & Georgian New Town Grid",
+    "description": "Edinburgh presents a dramatic dual urban character: the medieval Royal Mile sloping down an extinct volcanic crag, contrasted with James Craig's 1767 neoclassical New Town grid.",
+    "primaryStreets": "Princes Street, Royal Mile, George Street, Queen Street, Lothian Road",
+    "networkMetrics": {
+      "estimatedRoads": "12,000+",
+      "gridPattern": "Volcanic Sloping Ridge / Neoclassical Grid",
+      "dominantType": "Historic Stone Closes, Terraces & Grand Boulevards"
+    }
+  },
+  {
+    "slug": "lisbon",
+    "name": "Lisbon",
+    "localName": "Lisboa",
+    "country": "Portugal",
+    "countryCode": "PT",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "bbox": [
+      38.69,
+      -9.24,
+      38.8,
+      -9.09
+    ],
+    "layoutType": "Tagus Estuary & Pombaline Downtown Grid (Baixa)",
+    "description": "Rebuilt after the 1755 earthquake, Lisbon showcases the orthogonal Pombaline grid of Baixa rising into steep medieval hills served by historic vintage yellow trams and Tagus suspension bridges.",
+    "primaryStreets": "Avenida da Liberdade, Rua Augusta, Avenida 24 de Julho, Segunda Circular",
+    "networkMetrics": {
+      "estimatedRoads": "15,500+",
+      "gridPattern": "Enlightenment Grid Core & Hillside Labyrinth",
+      "dominantType": "Calcada Portuguesa Paved Streets & Miradouro Passes"
+    }
+  },
+  {
+    "slug": "copenhagen",
+    "name": "Copenhagen",
+    "localName": "København",
+    "country": "Denmark",
+    "countryCode": "DK",
+    "lat": 55.6761,
+    "lon": 12.5683,
+    "bbox": [
+      55.6,
+      12.45,
+      55.75,
+      12.67
+    ],
+    "layoutType": "Five Finger Plan (Fingerplanen) & Cycling Superhighways",
+    "description": "Copenhagen's renowned 1947 Finger Plan directs urban development and transit along five linear corridors extending from the city center, interspersed with green wedges and cycle tracks.",
+    "primaryStreets": "Strøget, Nørrebrogade, H.C. Andersens Boulevard, Ring 2, Øresund Bridge Connector",
+    "networkMetrics": {
+      "estimatedRoads": "14,000+",
+      "gridPattern": "Finger Corridors & Harbour Ring",
+      "dominantType": "World-Class Protected Cycleways & Pedestrian Boulevards"
+    }
+  },
+  {
+    "slug": "stockholm",
+    "name": "Stockholm",
+    "localName": "Stockholm",
+    "country": "Sweden",
+    "countryCode": "SE",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "bbox": [
+      59.22,
+      17.85,
+      59.42,
+      18.25
+    ],
+    "layoutType": "Archipelago Islands & Bridge-Connected Waterways",
+    "description": "Spread across 14 islands where Lake Mälaren flows into the Baltic Sea, Stockholm's street network connects distinct island neighborhoods via iconic bridges and the historic Gamla Stan.",
+    "primaryStreets": "Drottninggatan, Sveavägen, Kungsgatan, Essingeleden, Strandvägen",
+    "networkMetrics": {
+      "estimatedRoads": "16,000+",
+      "gridPattern": "Island Archipelago Matrix",
+      "dominantType": "Bridge Corridors, Island Quays & Waterfront Avenues"
+    }
+  },
+  {
+    "slug": "oslo",
+    "name": "Oslo",
+    "localName": "Oslo",
+    "country": "Norway",
+    "countryCode": "NO",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "bbox": [
+      59.82,
+      10.55,
+      60.03,
+      10.95
+    ],
+    "layoutType": "Oslofjord Basin & Subterranean Opera Tunnel System",
+    "description": "Nestled between forested hills and the Oslofjord, Oslo has transformed its waterfront by routing vehicular traffic into submerged tunnels, creating vast pedestrianized harbor promenades.",
+    "primaryStreets": "Karl Johans gate, Ring 3, Dronning Eufemias gate, E18 Highway",
+    "networkMetrics": {
+      "estimatedRoads": "11,500+",
+      "gridPattern": "Fjord-Head Horseshoe & Subsurface Rings",
+      "dominantType": "Subterranean Motorways & Tram-Friendly Urban Corridors"
+    }
+  },
+  {
+    "slug": "helsinki",
+    "name": "Helsinki",
+    "localName": "Helsinki",
+    "country": "Finland",
+    "countryCode": "FI",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "bbox": [
+      60.11,
+      24.8,
+      60.28,
+      25.15
+    ],
+    "layoutType": "Peninsular Neoclassical Grid & Orbital Ring Roads (Kehä I-III)",
+    "description": "Occupying a peninsula in the Gulf of Finland, Helsinki combines neoclassical granite grids around Senate Square with successive outer ring expressways (Kehä I, II, III).",
+    "primaryStreets": "Mannerheimintie, Aleksanterinkatu, Esplanadi, Kehä I Ring Road",
+    "networkMetrics": {
+      "estimatedRoads": "13,000+",
+      "gridPattern": "Peninsula Grid & Nested Orbital Rings",
+      "dominantType": "Neoclassical Avenues, Tram Lines & Nordic Ringways"
+    }
+  },
+  {
+    "slug": "warsaw",
+    "name": "Warsaw",
+    "localName": "Warszawa",
+    "country": "Poland",
+    "countryCode": "PL",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "bbox": [
+      52.1,
+      20.85,
+      52.36,
+      21.25
+    ],
+    "layoutType": "Vistula River Transversal Bridges & Broad Post-War Avenues",
+    "description": "Painstakingly reconstructed after WWII, Warsaw features wide modernist boulevards, a faithfully restored Old Town, and major expressway bridges spanning the Vistula River.",
+    "primaryStreets": "Marszałkowska, Aleje Jerozolimskie, Nowy Świat, Wisłostrada Highway",
+    "networkMetrics": {
+      "estimatedRoads": "27,000+",
+      "gridPattern": "Riverine Transversal & Monumental Grid",
+      "dominantType": "Wide Multi-Lane Arterials & Reconstructed Historic Alleys"
+    }
+  },
+  {
+    "slug": "budapest",
+    "name": "Budapest",
+    "localName": "Budapest",
+    "country": "Hungary",
+    "countryCode": "HU",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "bbox": [
+      47.35,
+      18.9,
+      47.62,
+      19.25
+    ],
+    "layoutType": "Buda Hills Organic Curves vs Pest Grand Ring Boulevards (Nagykörút)",
+    "description": "Budapest showcases a dual urban structure: hilly Buda's winding castle paths on the west bank, contrasted with flat Pest's grand concentric ring boulevards and radial avenues.",
+    "primaryStreets": "Andrássy Avenue, Grand Boulevard (Nagykörút), Chain Bridge axis, Rákóczi út",
+    "networkMetrics": {
+      "estimatedRoads": "25,000+",
+      "gridPattern": "Dualistic: Hillside Organic (Buda) + Ring-Radial (Pest)",
+      "dominantType": "Grand European Boulevards & Historic River Bridges"
+    }
+  },
+  {
+    "slug": "athens",
+    "name": "Athens",
+    "localName": "Αθήνα",
+    "country": "Greece",
+    "countryCode": "GR",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "bbox": [
+      37.85,
+      23.6,
+      38.12,
+      23.85
+    ],
+    "layoutType": "Attica Basin Topography & Acropolis Archaeological Ring",
+    "description": "Cradled between four mountains in the Attica Basin, Athens features a continuous urban fabric surrounding the ancient Acropolis, connected to the port of Piraeus by historic avenues.",
+    "primaryStreets": "Panepistimiou, Stadiou, Leoforos Vasilissis Sofias, Attiki Odos Motorway",
+    "networkMetrics": {
+      "estimatedRoads": "34,000+",
+      "gridPattern": "Basin Dense Infill & Archaeological Walkway",
+      "dominantType": "High-Density Urban Streets & Mountain Basin Tollways"
+    }
+  },
+  {
+    "slug": "brussels",
+    "name": "Brussels",
+    "localName": "Bruxelles",
+    "country": "Belgium",
+    "countryCode": "BE",
+    "lat": 50.8503,
+    "lon": 4.3517,
+    "bbox": [
+      50.75,
+      4.25,
+      50.92,
+      4.45
+    ],
+    "layoutType": "Pentagon Ring (Petite Ceinture) & European Quarter Arteries",
+    "description": "Brussels' historic heart forms a distinct pentagonal ring (Petite Ceinture) built over former 14th-century defensive ramparts, leading east into the modern European Union administrative quarter.",
+    "primaryStreets": "Boulevard Anspach, Avenue Louise, Rue de la Loi, Petite Ceinture Ring",
+    "networkMetrics": {
+      "estimatedRoads": "16,500+",
+      "gridPattern": "Pentagonal Inner Ring & Radial Boulevards",
+      "dominantType": "Boulevard Tunnels, Art Nouveau Streets & Cobblestone Centers"
+    }
+  },
+  {
+    "slug": "zurich",
+    "name": "Zurich",
+    "localName": "Zürich",
+    "country": "Switzerland",
+    "countryCode": "CH",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "bbox": [
+      47.32,
+      8.45,
+      47.45,
+      8.62
+    ],
+    "layoutType": "Limmat River Valley & Lake Zurich Shorelines",
+    "description": "Where Lake Zurich empties into the Limmat River, Zurich connects financial banking quarters along Bahnhofstrasse with hill-climbing residential funicular and tram routes.",
+    "primaryStreets": "Bahnhofstrasse, Limmatquai, Langstrasse, Bellerivestrasse, A1 Autobahn",
+    "networkMetrics": {
+      "estimatedRoads": "10,500+",
+      "gridPattern": "River Valley Axial & Lakeside Avenues",
+      "dominantType": "Pristine Tramway Corridors & Lakeside Drives"
+    }
+  },
+  {
+    "slug": "kyoto",
+    "name": "Kyoto",
+    "localName": "京都",
+    "country": "Japan",
+    "countryCode": "JP",
+    "lat": 35.0116,
+    "lon": 135.7681,
+    "bbox": [
+      34.9,
+      135.65,
+      35.1,
+      135.85
+    ],
+    "layoutType": "Heian-kyo Classical Chinese Feng Shui Checkerboard Grid",
+    "description": "Modeled after Tang Dynasty Chang'an in 794 AD, Kyoto preserves a classical cardinal checkerboard street grid bounded by mountains on three sides and dissected by the Kamogawa River.",
+    "primaryStreets": "Shijo-dori, Karasuma-dori, Kawaramachi-dori, Horikawa-dori, Oike-dori",
+    "networkMetrics": {
+      "estimatedRoads": "24,000+",
+      "gridPattern": "Classical Ancient Cardinal Grid",
+      "dominantType": "Historic Machiya Wooden Alleyways & Numbered Avenues"
+    }
+  },
+  {
+    "slug": "osaka",
+    "name": "Osaka",
+    "localName": "大阪",
+    "country": "Japan",
+    "countryCode": "JP",
+    "lat": 34.6937,
+    "lon": 135.5023,
+    "bbox": [
+      34.55,
+      135.35,
+      34.78,
+      135.6
+    ],
+    "layoutType": "Water City Canal Axis & Hanshin Elevated Expressway Labyrinth",
+    "description": "Osaka, historically known as the 'City of Water', combines orthogonal grid streets with canals, iconic multi-story elevated Hanshin expressways, and vibrant pedestrian arcades in Dotonbori.",
+    "primaryStreets": "Midosuji Boulevard, Sakaisuji, Nagahori-dori, Hanshin Expressway Loop",
+    "networkMetrics": {
+      "estimatedRoads": "38,000+",
+      "gridPattern": "Orthogonal Grid & Multi-Tier Elevated Loops",
+      "dominantType": "Wide Ginkgo-Lined Boulevards & Double-Decker Flyovers"
+    }
+  },
+  {
+    "slug": "guangzhou",
+    "name": "Guangzhou",
+    "localName": "广州",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 23.1291,
+    "lon": 113.2644,
+    "bbox": [
+      22.95,
+      113.1,
+      23.35,
+      113.55
+    ],
+    "layoutType": "Pearl River Delta Curvilinear Corridors & Tianhe Central Axis",
+    "description": "Guangzhou's street layout follows the meandering Pearl River, blending historic arcade-lined Lingnan streets with the monumental modern Tianhe CBD axis facing Canton Tower.",
+    "primaryStreets": "Zhongshan Road, Tianhe Road, Dongfeng Road, Guangzhou Avenue, Ring Expressway",
+    "networkMetrics": {
+      "estimatedRoads": "52,000+",
+      "gridPattern": "River Axis & Concentric Delta Expressways",
+      "dominantType": "Lingnan Qilou Arcades & Dense Multi-Level Flyovers"
+    }
+  },
+  {
+    "slug": "shenzhen",
+    "name": "Shenzhen",
+    "localName": "深圳",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 22.5431,
+    "lon": 114.0579,
+    "bbox": [
+      22.45,
+      113.8,
+      22.8,
+      114.35
+    ],
+    "layoutType": "East-West Linear Coastal Corridors & Planned Superblocks",
+    "description": "Developed rapidly from a fishing village into a megacity, Shenzhen stretches along linear east-west expressways (Shennan Avenue, Binhai Boulevard) framed by green mountain parks.",
+    "primaryStreets": "Shennan Avenue, Binhai Boulevard, Beihuan Avenue, Keyuan Road",
+    "networkMetrics": {
+      "estimatedRoads": "45,000+",
+      "gridPattern": "Linear East-West Corridors & Tech Superblocks",
+      "dominantType": "Green Parkways, Multi-Tier Interchanges & High-Tech Campus Loops"
+    }
+  },
+  {
+    "slug": "hangzhou",
+    "name": "Hangzhou",
+    "localName": "杭州",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 30.2741,
+    "lon": 120.1551,
+    "bbox": [
+      30.12,
+      120,
+      30.4,
+      120.35
+    ],
+    "layoutType": "West Lake Scenic Perimeters & Qiantang River Axis",
+    "description": "Hangzhou balances the protected scenic perimeters of West Lake on the west with rapid contemporary development along the wide Qiantang River in Qianjiang New Town.",
+    "primaryStreets": "Yan'an Road, Jiangnan Avenue, Zhonghe Elevated Road, Qiushi Elevated Road",
+    "networkMetrics": {
+      "estimatedRoads": "39,000+",
+      "gridPattern": "Lake Perimeter & Riverine Dual Axis",
+      "dominantType": "Tree-Canopied Lake Drives & Riverfront Viaducts"
+    }
+  },
+  {
+    "slug": "chengdu",
+    "name": "Chengdu",
+    "localName": "成都",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 30.5728,
+    "lon": 104.0668,
+    "bbox": [
+      30.4,
+      103.85,
+      30.8,
+      104.3
+    ],
+    "layoutType": "Concentric Ring Highways (1st through 6th Ring) & South Central Axis",
+    "description": "Centred on Tianfu Square, Chengdu unfolds across circular concentric ring expressways in the fertile Sichuan Basin, anchored by the high-tech Tianfu Avenue south axis.",
+    "primaryStreets": "Tianfu Avenue, Renmin Road, 1st-4th Ring Elevated Expressways, Shuxuan Road",
+    "networkMetrics": {
+      "estimatedRoads": "54,000+",
+      "gridPattern": "Nested Concentric Circular Rings & South Axis",
+      "dominantType": "Circular Elevated Viaducts & Wide Greenway Boulevards"
+    }
+  },
+  {
+    "slug": "taipei",
+    "name": "Taipei",
+    "localName": "臺北",
+    "country": "Taiwan",
+    "countryCode": "TW",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "bbox": [
+      24.96,
+      121.45,
+      25.18,
+      121.65
+    ],
+    "layoutType": "Basin River Convergence & Japanese Colonial Grid Avenues",
+    "description": "Situated in the Taipei Basin framed by the Tamsui and Keelung rivers, Taipei features wide Japanese-era arterial boulevards, elevated expressways, and dense vibrant night market alleys.",
+    "primaryStreets": "Zhongxiao East Road, Dunhua South Road, Renai Road, Civic Boulevard Expressway",
+    "networkMetrics": {
+      "estimatedRoads": "28,000+",
+      "gridPattern": "Orthogonal Boulevard Grid & River Bridges",
+      "dominantType": "Tree-Lined Main Avenues & Permeable Residential Alleys"
+    }
+  },
+  {
+    "slug": "bangkok",
+    "name": "Bangkok",
+    "localName": "กรุงเทพมหานคร",
+    "country": "Thailand",
+    "countryCode": "TH",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "bbox": [
+      13.55,
+      100.35,
+      13.95,
+      100.85
+    ],
+    "layoutType": "Chao Phraya River Meanders & Soi Alley Sub-Networks",
+    "description": "Evolving from canal waterways (khlongs) along the Chao Phraya River, Bangkok's modern road system features massive multi-level tollway flyovers branching into winding residential sois.",
+    "primaryStreets": "Sukhumvit Road, Silom Road, Rama IV Road, Sirat Expressway, Phahonyothin",
+    "networkMetrics": {
+      "estimatedRoads": "46,000+",
+      "gridPattern": "Arterial Spines with Deep Dendritic Sois",
+      "dominantType": "Elevated Tollways, Skytrain Flyovers & Narrow Sois"
+    }
+  },
+  {
+    "slug": "kuala-lumpur",
+    "name": "Kuala Lumpur",
+    "localName": "Kuala Lumpur",
+    "country": "Malaysia",
+    "countryCode": "MY",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "bbox": [
+      3,
+      101.55,
+      3.25,
+      101.78
+    ],
+    "layoutType": "Klang River Valley & Dual-Deck SMART Stormwater Tunnel",
+    "description": "Founded at the confluence of the Klang and Gombak rivers, Kuala Lumpur connects landmark skyscrapers through complex multi-tier highway flyovers and the innovative SMART stormwater tunnel.",
+    "primaryStreets": "Jalan Bukit Bintang, Jalan Ampang, Federal Highway, SMART Tunnel, MRR2",
+    "networkMetrics": {
+      "estimatedRoads": "27,000+",
+      "gridPattern": "Valley Arterial & Multi-Tier Expressway Loop",
+      "dominantType": "Elevated Viaducts & Tropical Parkway Highways"
+    }
+  },
+  {
+    "slug": "dubai",
+    "name": "Dubai",
+    "localName": "دبي",
+    "country": "United Arab Emirates",
+    "countryCode": "AE",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "bbox": [
+      24.95,
+      54.95,
+      25.35,
+      55.45
+    ],
+    "layoutType": "Sheikh Zayed Road Desert Highway Axis & Coastal Mega-Projects",
+    "description": "Dubai is organized around the monumental 14-lane Sheikh Zayed Road (E11) corridor parallel to the Persian Gulf, feeding into man-made palm archipelagos and desert master-planned communities.",
+    "primaryStreets": "Sheikh Zayed Road (E11), Al Khail Road, Jumeirah Beach Road, Emirates Road",
+    "networkMetrics": {
+      "estimatedRoads": "29,000+",
+      "gridPattern": "Linear Coastal Super-Highway & Radial Palms",
+      "dominantType": "Multi-Lane Continental Expressways & Iconic Interchanges"
+    }
+  },
+  {
+    "slug": "buenos-aires",
+    "name": "Buenos Aires",
+    "localName": "Buenos Aires",
+    "country": "Argentina",
+    "countryCode": "AR",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "bbox": [
+      -34.705,
+      -58.531,
+      -34.534,
+      -58.335
+    ],
+    "layoutType": "Río de la Plata Grid & World's Widest Avenue (Avenida 9 de Julio)",
+    "description": "Buenos Aires is renowned for its Parisian-influenced neoclassical boulevards, Spanish colonial square blocks (manzanas), and the monumental 16-lane Avenida 9 de Julio with its iconic Obelisk.",
+    "primaryStreets": "Avenida 9 de Julio, Avenida Corrientes, Avenida de Mayo, General Paz Ringroad",
+    "networkMetrics": {
+      "estimatedRoads": "35,000+",
+      "gridPattern": "Spanish Manzana Grid & Monumental Avenues",
+      "dominantType": "Extra-Wide Continental Avenues & Cobblestone Quarters"
+    }
+  },
+  {
+    "slug": "sao-paulo",
+    "name": "São Paulo",
+    "localName": "São Paulo",
+    "country": "Brazil",
+    "countryCode": "BR",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "bbox": [
+      -23.75,
+      -46.85,
+      -23.35,
+      -46.4
+    ],
+    "layoutType": "River Valley Marginais (Tietê & Pinheiros) & Hilly Plateaus",
+    "description": "South America's largest metropolis spans undulating plateaus connected by monumental multi-lane riverside expressways (Marginal Tietê and Marginal Pinheiros) and Avenida Paulista.",
+    "primaryStreets": "Avenida Paulista, Marginal Tietê, Marginal Pinheiros, Avenida 23 de Maio",
+    "networkMetrics": {
+      "estimatedRoads": "95,000+",
+      "gridPattern": "Sprawling Valley Marginal Highways & Hill Grids",
+      "dominantType": "High-Volume Multi-Lane River Freeways & Urban Canyons"
+    }
+  },
+  {
+    "slug": "rio-de-janeiro",
+    "name": "Rio de Janeiro",
+    "localName": "Rio de Janeiro",
+    "country": "Brazil",
+    "countryCode": "BR",
+    "lat": -22.9068,
+    "lon": -43.1729,
+    "bbox": [
+      -23.05,
+      -43.75,
+      -22.75,
+      -43.1
+    ],
+    "layoutType": "Dramatic Coastal Mountains & Mountain Tunnel Connectors",
+    "description": "Squeezed between steep granite peaks and the Atlantic Ocean, Rio connects famous beach districts (Copacabana, Ipanema) through extensive mountain tunnels like the Rebouças Tunnel.",
+    "primaryStreets": "Avenida Atlântica, Avenida Brasil, Linha Vermelha, Túnel Rebouças",
+    "networkMetrics": {
+      "estimatedRoads": "48,000+",
+      "gridPattern": "Coastal Strip & Mountain Piercing Tunnels",
+      "dominantType": "Beachfront Promenades & High-Capacity Mountain Tunnels"
+    }
+  },
+  {
+    "slug": "melbourne",
+    "name": "Melbourne",
+    "localName": "Melbourne",
+    "country": "Australia",
+    "countryCode": "AU",
+    "lat": -37.8136,
+    "lon": 144.9631,
+    "bbox": [
+      -38.05,
+      144.75,
+      -37.6,
+      145.25
+    ],
+    "layoutType": "Hoddle Grid & World-Famous Laneway Pedestrian Culture",
+    "description": "Melbourne is centered on Robert Hoddle's 1837 grid of wide streets intersected by narrow service laneways, now celebrated for street art, cafes, and the world's largest tram network.",
+    "primaryStreets": "Collins Street, Bourke Street, Flinders Street, CityLink, Swanston Street",
+    "networkMetrics": {
+      "estimatedRoads": "50,000+",
+      "gridPattern": "Strict Hoddle Grid & Sprawling Radial Freeways",
+      "dominantType": "Wide Tram Boulevards & Intimate Cobblestone Laneways"
+    }
+  },
+  {
+    "slug": "istanbul",
+    "name": "Istanbul",
+    "localName": "İstanbul",
+    "country": "Turkey",
+    "countryCode": "TR",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "bbox": [
+      40.85,
+      28.6,
+      41.25,
+      29.35
+    ],
+    "layoutType": "Intercontinental Bosphorus Suspension Bridges & Historic Peninsulas",
+    "description": "Bridging Europe and Asia across the Bosphorus Strait, Istanbul links historic Roman/Byzantine hills with transcontinental suspension bridges (Bosphorus, FSM, Yavuz Sultan Selim).",
+    "primaryStreets": "İstiklal Avenue, Bağdat Avenue, D100 Highway, Bosphorus Bridge, O-1 Motorway",
+    "networkMetrics": {
+      "estimatedRoads": "68,000+",
+      "gridPattern": "Intercontinental Straits & Seven Hills Organic",
+      "dominantType": "Continental Suspension Bridges & Winding Historic Quarters"
+    }
+  },
+  {
+    "slug": "chongqing",
+    "name": "Chongqing",
+    "localName": "重庆",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 29.563,
+    "lon": 106.5516,
+    "bbox": [
+      29.35,
+      106.35,
+      29.8,
+      106.75
+    ],
+    "layoutType": "Mountain & River 3D Multi-Layer Bridge Matrix",
+    "description": "Known as the 3D Mountain City at the confluence of the Yangtze and Jialing rivers, Chongqing features extreme vertical topography with winding hillside overpasses and bridge networks.",
+    "primaryStreets": "Jiefangbei Pedestrian Street, Chaotianmen Axis, Nanbin Road, Neihuan Expressway",
+    "networkMetrics": {
+      "estimatedRoads": "42,000+",
+      "gridPattern": "Vertical Topographic & River Bridges",
+      "dominantType": "Multi-Level Mountain Flyovers & Riverfront Promenades"
+    }
+  },
+  {
+    "slug": "wuhan",
+    "name": "Wuhan",
+    "localName": "武汉",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 30.5928,
+    "lon": 114.3055,
+    "bbox": [
+      30.4,
+      114.1,
+      30.75,
+      114.5
+    ],
+    "layoutType": "Tri-City Convergence (Wuchang, Hankou, Hanyang) & Yangtze Bridges",
+    "description": "Wuhan is divided into three historic towns by the confluence of the Yangtze and Han rivers, woven together by monumental bridges and concentric ring expressways.",
+    "primaryStreets": "Zhongshan Avenue, Wuluo Road, Jianshe Avenue, 2nd & 3rd Ring Roads",
+    "networkMetrics": {
+      "estimatedRoads": "46,000+",
+      "gridPattern": "Tri-Centric River Crossing System",
+      "dominantType": "Yangtze River Bridges & Urban Beltways"
+    }
+  },
+  {
+    "slug": "nanjing",
+    "name": "Nanjing",
+    "localName": "南京",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 32.0603,
+    "lon": 118.7969,
+    "bbox": [
+      31.9,
+      118.6,
+      32.2,
+      119
+    ],
+    "layoutType": "Ming Dynasty City Wall Perimeter & Purple Mountain Axis",
+    "description": "Nanjing balances ancient Ming Dynasty city walls and scenic Purple Mountain reserves with French plane tree boulevards and modern elevated expressways.",
+    "primaryStreets": "Zhongshan Road, Hanzhong Road, Jiangdong Middle Road, Inner Ring Viaduct",
+    "networkMetrics": {
+      "estimatedRoads": "36,000+",
+      "gridPattern": "Historic Fortress Enclosure & Axial Avenues",
+      "dominantType": "Plane-Tree Shaded Avenues & City Wall Ringways"
+    }
+  },
+  {
+    "slug": "xian",
+    "name": "Xi'an",
+    "localName": "西安",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 34.3416,
+    "lon": 108.9398,
+    "bbox": [
+      34.15,
+      108.75,
+      34.45,
+      109.1
+    ],
+    "layoutType": "Intact Ming Fortification Rectangle & Tang Chang'an Grid",
+    "description": "Xi'an preserves China's most intact ancient city wall rectangle, radiating outwards into cardinal grid avenues aligned with the Bell Tower at its epicenter.",
+    "primaryStreets": "South Street, East Street, Chang'an Middle Road, 2nd & 3rd Ring Roads",
+    "networkMetrics": {
+      "estimatedRoads": "38,000+",
+      "gridPattern": "Cardinal Checkerboard Grid & Rectangular Ramparts",
+      "dominantType": "Ancient Rampart Bypasses & Wide Cardinal Avenues"
+    }
+  },
+  {
+    "slug": "suzhou",
+    "name": "Suzhou",
+    "localName": "苏州",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 31.2989,
+    "lon": 120.5853,
+    "bbox": [
+      31.15,
+      120.4,
+      31.45,
+      120.8
+    ],
+    "layoutType": "Double Chessboard: Parallel Waterways and Stone Streets",
+    "description": "Suzhou's classical core follows the ancient Song Dynasty Pingjiang map layout of dual parallel streets and canals, contrasting with the high-tech SIP modern grid.",
+    "primaryStreets": "Renmin Road, Ganjiang Road, Xiandai Avenue (SIP), Jinji Lake Ringway",
+    "networkMetrics": {
+      "estimatedRoads": "35,000+",
+      "gridPattern": "Canal-Street Parallel Double Grid",
+      "dominantType": "Canalside Alleys & Master-Planned Tech Parkways"
+    }
+  },
+  {
+    "slug": "tianjin",
+    "name": "Tianjin",
+    "localName": "天津",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 39.0842,
+    "lon": 117.2009,
+    "bbox": [
+      38.9,
+      117,
+      39.3,
+      117.4
+    ],
+    "layoutType": "Haihe River Meander Concession Grids & Ring Roads",
+    "description": "Tianjin's road system is framed by the curves of the Haihe River, historic 19th-century European concession street grids, and multiple nested circular outer rings.",
+    "primaryStreets": "Nanjing Road, Jiefang North Road, Haihe East Road, Central Ring Road",
+    "networkMetrics": {
+      "estimatedRoads": "44,000+",
+      "gridPattern": "River Meander & Multi-Colonial Concessions",
+      "dominantType": "European Concession Boulevards & Nested Rings"
+    }
+  },
+  {
+    "slug": "changsha",
+    "name": "Changsha",
+    "localName": "长沙",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 28.2282,
+    "lon": 112.9388,
+    "bbox": [
+      28.05,
+      112.8,
+      28.35,
+      113.15
+    ],
+    "layoutType": "Xiang River Corridor & Orange Isle Riverfront Spines",
+    "description": "Changsha straddles the scenic Xiang River and Mount Yuelu, defined by broad north-south riverfront avenues and vibrant pedestrian commercial corridors.",
+    "primaryStreets": "Wuyi Avenue, Xiangjiang Avenue, Furong Road, South Second Ring Road",
+    "networkMetrics": {
+      "estimatedRoads": "33,000+",
+      "gridPattern": "River Axis & Mountain-Flanked Grid",
+      "dominantType": "Riverfront Expressways & Nightlife Commercial Avenues"
+    }
+  },
+  {
+    "slug": "qingdao",
+    "name": "Qingdao",
+    "localName": "青岛",
+    "country": "China",
+    "countryCode": "CN",
+    "lat": 36.0671,
+    "lon": 120.3826,
+    "bbox": [
+      35.95,
+      120.2,
+      36.25,
+      120.55
+    ],
+    "layoutType": "Jiaozhou Bay Coastal Curves & Badaguan Tree-Lined Grid",
+    "description": "Qingdao curves around the Yellow Sea and Jiaozhou Bay, featuring hilly German colonial architectural quarters (Badaguan) and the monumental Jiaozhou Bay Bridge.",
+    "primaryStreets": "Hong Kong Middle Road, Donghai West Road, Jiaozhou Bay Bridge, Badaguan Scenic Roads",
+    "networkMetrics": {
+      "estimatedRoads": "29,000+",
+      "gridPattern": "Coastal Topographic & Bay-Spanning Viaducts",
+      "dominantType": "Undulating Coastal Drives & Shaded Villa Streets"
+    }
+  },
+  {
+    "slug": "philadelphia",
+    "name": "Philadelphia",
+    "localName": "Philadelphia",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 39.9526,
+    "lon": -75.1652,
+    "bbox": [
+      39.867,
+      -75.2803,
+      40.1379,
+      -74.9558
+    ],
+    "layoutType": "William Penn 1682 Five-Square River-to-River Grid",
+    "description": "Planned by William Penn between the Delaware and Schuylkill rivers, Philadelphia features America's first planned grid with five civic squares and the diagonal Benjamin Franklin Parkway.",
+    "primaryStreets": "Broad Street, Market Street, Benjamin Franklin Parkway, Vine Street Expressway",
+    "networkMetrics": {
+      "estimatedRoads": "26,000+",
+      "gridPattern": "Penn Colonial Grid & Five Civic Squares",
+      "dominantType": "Historic Rowhouse Cobblestones & Parkway Boulevards"
+    }
+  },
+  {
+    "slug": "denver",
+    "name": "Denver",
+    "localName": "Denver",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 39.7392,
+    "lon": -104.9903,
+    "bbox": [
+      39.6143,
+      -105.1099,
+      39.9142,
+      -104.6003
+    ],
+    "layoutType": "Dual Downtown Diagonal Plats & Rocky Mountain Section Grid",
+    "description": "Denver features an original 1858 street grid parallel to Cherry Creek downtown, transitioning abruptly into cardinal north-south mile-grid squares overlooking the Rocky Mountain Front Range.",
+    "primaryStreets": "Colfax Avenue, 16th Street Mall, Speer Boulevard, Broadway, I-25 Valley Highway",
+    "networkMetrics": {
+      "estimatedRoads": "28,000+",
+      "gridPattern": "Diagonal Creek Core & Mile-Section Grid",
+      "dominantType": "Broad High-Plains Avenues & Mountain Connectors"
+    }
+  },
+  {
+    "slug": "dallas",
+    "name": "Dallas",
+    "localName": "Dallas",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 32.7767,
+    "lon": -96.797,
+    "bbox": [
+      32.61,
+      -96.99,
+      33.02,
+      -96.55
+    ],
+    "layoutType": "Concentric Highway Loops (Loop 12, I-635) & Stemmons Corridor",
+    "description": "Dallas is a central hub of Texas highway infrastructure, encircled by multiple ring freeways and radiating expressways converging around the historic Dealey Plaza and Arts District.",
+    "primaryStreets": "Central Expressway (US-75), I-35E Stemmons, I-635 LBJ, Main Street",
+    "networkMetrics": {
+      "estimatedRoads": "52,000+",
+      "gridPattern": "Concentric Multi-Loop & Radial Freeway Hub",
+      "dominantType": "Massive Multi-Level Stack Interchanges & Frontage Roads"
+    }
+  },
+  {
+    "slug": "houston",
+    "name": "Houston",
+    "localName": "Houston",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 29.7604,
+    "lon": -95.3698,
+    "bbox": [
+      29.5,
+      -95.75,
+      30.1,
+      -95.1
+    ],
+    "layoutType": "Triple Orbital Ring Highway System (Loop 610, Beltway 8, Grand Parkway)",
+    "description": "Houston spans a vast Gulf coastal plain without municipal zoning laws, structured around three colossal concentric ring loops and major bayou natural drainage corridors.",
+    "primaryStreets": "Westheimer Road, Loop 610, Katy Freeway (I-10), Memorial Drive",
+    "networkMetrics": {
+      "estimatedRoads": "68,000+",
+      "gridPattern": "Triple Concentric Loops & Bayou Crossings",
+      "dominantType": "World's Widest Interstate Sections & High-Volume Tollways"
+    }
+  },
+  {
+    "slug": "portland",
+    "name": "Portland",
+    "localName": "Portland",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 45.5152,
+    "lon": -122.6784,
+    "bbox": [
+      45.43,
+      -122.83,
+      45.65,
+      -122.48
+    ],
+    "layoutType": "Small 200-Foot Blocks & Willamette River Bridges",
+    "description": "Portland is famed for its uniquely walkable 200x200 foot downtown blocks, light rail integration, and iconic steel bridges spanning the Willamette River.",
+    "primaryStreets": "Burnside Street, Broadway, Hawthorne Boulevard, Martin Luther King Jr Boulevard",
+    "networkMetrics": {
+      "estimatedRoads": "21,000+",
+      "gridPattern": "Pedestrian Micro-Blocks & River Bridge Array",
+      "dominantType": "Pedestrian-Scaled Streets & Green Street Bicycle Corridors"
+    }
+  },
+  {
+    "slug": "san-diego",
+    "name": "San Diego",
+    "localName": "San Diego",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 32.7157,
+    "lon": -117.1611,
+    "bbox": [
+      32.53,
+      -117.3,
+      33.1,
+      -116.9
+    ],
+    "layoutType": "Mesa and Canyon Topography & Coronado Bay Bridge",
+    "description": "San Diego's roads weave through undulating coastal mesas, steep chaparral canyons, and Pacific beaches, linked to Coronado Island by its graceful curved bridge.",
+    "primaryStreets": "Broadway, Harbor Drive, I-5 Freeway, Mission Boulevard, Balboa Park Drives",
+    "networkMetrics": {
+      "estimatedRoads": "36,000+",
+      "gridPattern": "Canyon-Curvilinear & Mesa Grids",
+      "dominantType": "Scenic Coastal Highways & Canyon-Spanning Viaducts"
+    }
+  },
+  {
+    "slug": "las-vegas",
+    "name": "Las Vegas",
+    "localName": "Las Vegas",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 36.1699,
+    "lon": -115.1398,
+    "bbox": [
+      36,
+      -115.35,
+      36.32,
+      -115
+    ],
+    "layoutType": "Las Vegas Strip Linear Axis & Desert Section Grid (CC-215)",
+    "description": "Surrounded by the Mojave Desert, Las Vegas centers around the glittering 4-mile Strip (Las Vegas Boulevard) within an expansive square-mile grid framed by the CC-215 beltway.",
+    "primaryStreets": "Las Vegas Boulevard (The Strip), Fremont Street, Flamingo Road, I-15",
+    "networkMetrics": {
+      "estimatedRoads": "32,000+",
+      "gridPattern": "Linear Strip Corridor & Desert Mile Grid",
+      "dominantType": "Multi-Lane Resort Boulevards & Outer Desert Ringways"
+    }
+  },
+  {
+    "slug": "new-orleans",
+    "name": "New Orleans",
+    "localName": "New Orleans",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 29.9511,
+    "lon": -90.0715,
+    "bbox": [
+      29.86,
+      -90.2,
+      30.08,
+      -89.9
+    ],
+    "layoutType": "Crescent City Mississippi River Horseshoe & French Quarter Grid",
+    "description": "Known as the Crescent City, New Orleans' street layout curves with the Mississippi River meanders, from the historic French Quarter (Vieux Carré) along radial streetcar avenues.",
+    "primaryStreets": "Canal Street, St. Charles Avenue, Bourbon Street, Poydras Street, Magazine Street",
+    "networkMetrics": {
+      "estimatedRoads": "18,000+",
+      "gridPattern": "River Meander Radial & Colonial Quarters",
+      "dominantType": "Canopy Neutral Ground Avenues & Historic French Quarter Streets"
+    }
+  },
+  {
+    "slug": "nashville",
+    "name": "Nashville",
+    "localName": "Nashville",
+    "country": "United States",
+    "countryCode": "US",
+    "lat": 36.1627,
+    "lon": -86.7816,
+    "bbox": [
+      36.02,
+      -86.95,
+      36.3,
+      -86.6
+    ],
+    "layoutType": "Cumberland River Loops & Radial Pikes (Music City Spines)",
+    "description": "Nashville radiates outward from the Cumberland River along historic 'pikes' (turnpikes), converging on Broadway's world-famous Honky Tonk row and surrounding recording studios.",
+    "primaryStreets": "Broadway, West End Avenue, Music Row (16th/17th Ave), I-440 Ring",
+    "networkMetrics": {
+      "estimatedRoads": "24,000+",
+      "gridPattern": "Radial Pikes & Interstate Junction Matrix",
+      "dominantType": "Radial Pikes & River-Valley Rolling Hills Roads"
+    }
+  },
+  {
+    "slug": "geneva",
+    "name": "Geneva",
+    "localName": "Genève",
+    "country": "Switzerland",
+    "countryCode": "CH",
+    "lat": 46.2044,
+    "lon": 6.1432,
+    "bbox": [
+      46.16,
+      6.08,
+      46.25,
+      6.19
+    ],
+    "layoutType": "Lake Geneva Outflow (Rhône River) & Diplomatic Districts",
+    "description": "Geneva embraces Lake Geneva where the Rhône River begins, featuring elegant lakeside quays, historic cobblestone Old Town streets, and tree-lined diplomatic avenues.",
+    "primaryStreets": "Rue du Rhône, Quai du Mont-Blanc, Route de Lausanne, Avenue de la Paix",
+    "networkMetrics": {
+      "estimatedRoads": "8,500+",
+      "gridPattern": "Lakeside Radial & Diplomatic Avenues",
+      "dominantType": "Lakeside Quays & International Organization Corridors"
+    }
+  },
+  {
+    "slug": "seville",
+    "name": "Seville",
+    "localName": "Sevilla",
+    "country": "Spain",
+    "countryCode": "ES",
+    "lat": 37.3891,
+    "lon": -5.9845,
+    "bbox": [
+      37.32,
+      -6.04,
+      37.45,
+      -5.91
+    ],
+    "layoutType": "Guadalquivir River Axis & Moorish Barrio de Santa Cruz Labyrinth",
+    "description": "Seville's urban street network weaves through Moorish whitewashed alleys in Santa Cruz, opening onto majestic Plaza de España and historic bridges spanning the Guadalquivir.",
+    "primaryStreets": "Avenida de la Constitución, Calle Sierpes, Paseo de las Delicias, SE-30 Ring",
+    "networkMetrics": {
+      "estimatedRoads": "16,000+",
+      "gridPattern": "Moorish Organic Maze & River Axis",
+      "dominantType": "Shaded Historic Alleys & Riverside Orange-Tree Boulevards"
+    }
+  },
+  {
+    "slug": "valencia",
+    "name": "Valencia",
+    "localName": "València",
+    "country": "Spain",
+    "countryCode": "ES",
+    "lat": 39.4699,
+    "lon": -0.3763,
+    "bbox": [
+      39.41,
+      -0.44,
+      39.52,
+      -0.31
+    ],
+    "layoutType": "Diverted Turia Riverbed Park (Jardín del Turia) Promenade",
+    "description": "Valencia uniquely transformed its diverted Turia riverbed into a 9-kilometer green parkway crossed by historic stone bridges and anchored by Calatrava's City of Arts and Sciences.",
+    "primaryStreets": "Calle Colón, Gran Vía Marqués del Turia, Avenida del Puerto, Ronda Norte",
+    "networkMetrics": {
+      "estimatedRoads": "18,500+",
+      "gridPattern": "Riverbed Ribbon Park & Coastal Rings",
+      "dominantType": "Park-Flanked Boulevards & Historic Silk Quarter Streets"
+    }
+  },
+  {
+    "slug": "venice",
+    "name": "Venice",
+    "localName": "Venezia",
+    "country": "Italy",
+    "countryCode": "IT",
+    "lat": 45.4408,
+    "lon": 12.3155,
+    "bbox": [
+      45.41,
+      12.28,
+      45.46,
+      12.37
+    ],
+    "layoutType": "Canal-First Pedestrian Labyrinth (No Cars) & Grand Canal S-Curve",
+    "description": "Venice is the world's most famous car-free historic city, built across 118 lagoon islands connected by over 400 stone footbridges along the serpentine Grand Canal.",
+    "primaryStreets": "Strada Nova, Mercerie, Riva degli Schiavoni, Ponte di Rialto axis",
+    "networkMetrics": {
+      "estimatedRoads": "4,200+ (Pedestrian Calli)",
+      "gridPattern": "Serpentine Waterways & Footpaths",
+      "dominantType": "Pedestrian Stone Calli, Fondamente Quays & Bridges"
+    }
+  },
+  {
+    "slug": "krakow",
+    "name": "Krakow",
+    "localName": "Kraków",
+    "country": "Poland",
+    "countryCode": "PL",
+    "lat": 50.0647,
+    "lon": 19.945,
+    "bbox": [
+      49.98,
+      19.8,
+      50.14,
+      20.15
+    ],
+    "layoutType": "Planty Green Belt Ring & 1257 Medieval Market Square Grid",
+    "description": "Krakow's UNESCO-listed Old Town is enclosed by the Planty green parkway (former medieval walls), centered on Rynek Główny—Europe's largest medieval town square.",
+    "primaryStreets": "Floriańska, Grodzka, Aleje Trzech Wieszczów, Dietla",
+    "networkMetrics": {
+      "estimatedRoads": "19,000+",
+      "gridPattern": "Medieval Castrum & Green Park Belt",
+      "dominantType": "Cobblestone Pedestrian Corridors & Ringway Tramways"
+    }
+  },
+  {
+    "slug": "porto",
+    "name": "Porto",
+    "localName": "Porto",
+    "country": "Portugal",
+    "countryCode": "PT",
+    "lat": 41.1579,
+    "lon": -8.6291,
+    "bbox": [
+      41.12,
+      -8.7,
+      41.19,
+      -8.55
+    ],
+    "layoutType": "Douro Gorge Riverbed Terraces & Dom Luís I Iron Bridge",
+    "description": "Steeped on granite bluffs above the Douro River gorge, Porto connects medieval Ribeira quays to port wine cellars across monumental double-deck iron bridges.",
+    "primaryStreets": "Avenida dos Aliados, Rua de Santa Catarina, Rua das Flores, VCI Orbital",
+    "networkMetrics": {
+      "estimatedRoads": "12,000+",
+      "gridPattern": "Gorge Terraced Slopes & River Bridges",
+      "dominantType": "Granite Paved Steep Streets & Double-Deck Bridge Viaducts"
+    }
+  },
+  {
+    "slug": "manchester",
+    "name": "Manchester",
+    "localName": "Manchester",
+    "country": "United Kingdom",
+    "countryCode": "GB",
+    "lat": 53.4808,
+    "lon": -2.2426,
+    "bbox": [
+      53.38,
+      -2.35,
+      53.55,
+      -2.15
+    ],
+    "layoutType": "Industrial Revolution Canal Grids & Irwell River Crossings",
+    "description": "The birthplace of the Industrial Revolution, Manchester's street matrix integrates Victorian red-brick mill quarters, historic canal basins, and the modern Metrolink tram network.",
+    "primaryStreets": "Deansgate, Market Street, Oxford Road, Mancunian Way (A57M), M60 Ring",
+    "networkMetrics": {
+      "estimatedRoads": "24,000+",
+      "gridPattern": "Industrial Canal Grid & Radial Arterials",
+      "dominantType": "Victorian Brick Mill Corridors & Elevated Urban Flyovers"
+    }
+  },
+  {
+    "slug": "birmingham",
+    "name": "Birmingham",
+    "localName": "Birmingham",
+    "country": "United Kingdom",
+    "countryCode": "GB",
+    "lat": 52.4862,
+    "lon": -1.8904,
+    "bbox": [
+      52.38,
+      -2.02,
+      52.6,
+      -1.75
+    ],
+    "layoutType": "Midlands Canal Confluence & Spaghetti Junction Motorway Hub",
+    "description": "Boasting more miles of canal than Venice, Birmingham balances its 18th-century industrial waterways with Britain's most iconic multi-tier highway interchange (Spaghetti Junction).",
+    "primaryStreets": "New Street, Corporation Street, Broad Street, A38(M) Aston Expressway, M6",
+    "networkMetrics": {
+      "estimatedRoads": "31,000+",
+      "gridPattern": "Radial Midlands Hub & Canal Matrix",
+      "dominantType": "Multi-Level Motorway Stacks & Pedestrian Civic Squares"
+    }
+  },
+  {
+    "slug": "lyon",
+    "name": "Lyon",
+    "localName": "Lyon",
+    "country": "France",
+    "countryCode": "FR",
+    "lat": 45.764,
+    "lon": 4.8357,
+    "bbox": [
+      45.7,
+      4.75,
+      45.82,
+      4.93
+    ],
+    "layoutType": "Presqu'île Peninsula between Rhône and Saône Rivers & Traboules",
+    "description": "Nestled between two rivers, Lyon features the dense Renaissance Presqu'île peninsula and famous secret covered passageways (traboules) through hillside silk quarters.",
+    "primaryStreets": "Rue de la République, Boulevard des Belges, Quai Saint-Antoine, Périphérique",
+    "networkMetrics": {
+      "estimatedRoads": "19,500+",
+      "gridPattern": "Dual River Peninsula & Hillside Traboules",
+      "dominantType": "River Quays, Traboule Corridors & Haussmannian Avenues"
+    }
+  },
+  {
+    "slug": "marseille",
+    "name": "Marseille",
+    "localName": "Marseille",
+    "country": "France",
+    "countryCode": "FR",
+    "lat": 43.2965,
+    "lon": 5.3698,
+    "bbox": [
+      43.2,
+      5.28,
+      43.4,
+      5.5
+    ],
+    "layoutType": "Vieux-Port Natural Basin & Mediterranean Coastal Corniche",
+    "description": "France's oldest city radiates from the historic Vieux-Port, bordered by the picturesque Corniche Kennedy overlooking the Mediterranean Sea and steep limestone calanques.",
+    "primaryStreets": "La Canebière, Corniche Président John F. Kennedy, Rue Paradis, Prado",
+    "networkMetrics": {
+      "estimatedRoads": "25,000+",
+      "gridPattern": "Port-Centric Horseshoe & Mediterranean Corniches",
+      "dominantType": "Cliffside Coastal Drives & Historic Mediterranean Streets"
+    }
+  },
+  {
+    "slug": "rotterdam",
+    "name": "Rotterdam",
+    "localName": "Rotterdam",
+    "country": "Netherlands",
+    "countryCode": "NL",
+    "lat": 51.9244,
+    "lon": 4.4777,
+    "bbox": [
+      51.85,
+      4.35,
+      52,
+      4.6
+    ],
+    "layoutType": "Erasmus Bridge Axis & Post-War Architectural Super-Grids",
+    "description": "Completely reconstructed after WWII, Rotterdam is Europe's largest port and an architectural laboratory of bold modern bridges, wide boulevards, and pedestrian zones.",
+    "primaryStreets": "Coolsingel, Erasmus Bridge (Erasmusbrug), Weena, Lijnbaan, Ring Rotterdam",
+    "networkMetrics": {
+      "estimatedRoads": "17,000+",
+      "gridPattern": "Modernist Port Riverine & Deep Harbour Axis",
+      "dominantType": "Monumental Cable Bridges & Pioneering Pedestrian Streets"
+    }
+  },
+  {
+    "slug": "busan",
+    "name": "Busan",
+    "localName": "부산",
+    "country": "South Korea",
+    "countryCode": "KR",
+    "lat": 35.1796,
+    "lon": 129.0756,
+    "bbox": [
+      35.05,
+      128.9,
+      35.3,
+      129.25
+    ],
+    "layoutType": "Coastal Mountain Valleys & Gwangan Diamond Suspension Bridge",
+    "description": "South Korea's maritime capital weaves through narrow coastal valleys framed by rugged mountains, crowned by the majestic Gwangan Diamond Suspension Bridge.",
+    "primaryStreets": "Jungang-daero, Gwangan Bridge, Haeundae Beach Road, Beonyeong-ro",
+    "networkMetrics": {
+      "estimatedRoads": "34,000+",
+      "gridPattern": "Valley Ridge Line & Coastal Sea Crossings",
+      "dominantType": "Oceanfront Bridges & Mountain Valley Arterials"
+    }
+  },
+  {
+    "slug": "sapporo",
+    "name": "Sapporo",
+    "localName": "札幌",
+    "country": "Japan",
+    "countryCode": "JP",
+    "lat": 43.0618,
+    "lon": 141.3545,
+    "bbox": [
+      42.95,
+      141.2,
+      43.18,
+      141.5
+    ],
+    "layoutType": "North American Style Rectangular Grid & Odori Park Green Axis",
+    "description": "Designed in 1871 with assistance from American planners, Sapporo features an exceptionally rare North American orthogonal grid in Japan, bisected east-west by Odori Park.",
+    "primaryStreets": "Odori, Ekimae-dori, Soseigawa-dori, Minami 1-jo, Sasson Expressway",
+    "networkMetrics": {
+      "estimatedRoads": "22,000+",
+      "gridPattern": "Rigid Cardinal Grid & Linear Central Park",
+      "dominantType": "Wide Snow-Planned Avenues & Underground Pedestrian Walkways"
+    }
+  },
+  {
+    "slug": "yokohama",
+    "name": "Yokohama",
+    "localName": "横浜",
+    "country": "Japan",
+    "countryCode": "JP",
+    "lat": 35.4437,
+    "lon": 139.638,
+    "bbox": [
+      35.3,
+      139.5,
+      35.55,
+      139.72
+    ],
+    "layoutType": "Tokyo Bay Port Waterfront & Minato Mirai Modern Axis",
+    "description": "Opening Japan to international trade in 1859, Yokohama connects historic Western treaty ports and Chinatown with Minato Mirai's modern waterfront grid and Yokohama Bay Bridge.",
+    "primaryStreets": "Minato Mirai Boulevard, Motomachi Shopping Street, Yokohama Bay Bridge",
+    "networkMetrics": {
+      "estimatedRoads": "41,000+",
+      "gridPattern": "Harbour Radial & Coastal Reclamation Grid",
+      "dominantType": "Oceanfront Promenades & High-Speed Bay Expressways"
+    }
+  },
+  {
+    "slug": "jakarta",
+    "name": "Jakarta",
+    "localName": "Jakarta",
+    "country": "Indonesia",
+    "countryCode": "ID",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "bbox": [
+      -6.35,
+      106.65,
+      -6.08,
+      107
+    ],
+    "layoutType": "Golden Triangle Corridors & Elevated Inner/Outer Ring Tollways",
+    "description": "Southeast Asia's largest megacity is traversed by major arterial corridors (Sudirman-Thamrin) and multi-level tollway viaducts connecting dense residential kampung neighborhoods.",
+    "primaryStreets": "Jalan Jenderal Sudirman, Jalan M.H. Thamrin, Jakarta Inner Ring Road, Gatot Subroto",
+    "networkMetrics": {
+      "estimatedRoads": "72,000+",
+      "gridPattern": "Sprawling Radial Tollways & Kampung Matrix",
+      "dominantType": "Multi-Lane Monumental Avenues & Elevated Tollways"
+    }
+  },
+  {
+    "slug": "manila",
+    "name": "Manila",
+    "localName": "Maynila",
+    "country": "Philippines",
+    "countryCode": "PH",
+    "lat": 14.5995,
+    "lon": 120.9842,
+    "bbox": [
+      14.45,
+      120.9,
+      14.75,
+      121.15
+    ],
+    "layoutType": "Manila Bay Coastline, Historic Intramuros & EDSA Circumferential",
+    "description": "From Spanish-walled Intramuros and Pasig River crossings to the iconic 10-lane Epifanio de los Santos Avenue (EDSA), Manila forms a dense multi-tiered metropolitan crossroads.",
+    "primaryStreets": "EDSA (C-4), Roxas Boulevard, Taft Avenue, Skyway Elevated Tollway, Ayala Avenue",
+    "networkMetrics": {
+      "estimatedRoads": "58,000+",
+      "gridPattern": "Radial Circumferential (C-1 to C-6) Rings",
+      "dominantType": "Elevated Skyways, Coastal Boulevards & Jeepney Corridors"
+    }
+  },
+  {
+    "slug": "hanoi",
+    "name": "Hanoi",
+    "localName": "Hà Nội",
+    "country": "Vietnam",
+    "countryCode": "VN",
+    "lat": 21.0285,
+    "lon": 105.8542,
+    "bbox": [
+      20.9,
+      105.7,
+      21.15,
+      106
+    ],
+    "layoutType": "Red River Basin, Hoan Kiem Lake & French Colonial Boulevards",
+    "description": "Hanoi radiates around Hoan Kiem Lake and West Lake, combining the bustling medieval 36 Guild Streets of the Old Quarter with elegant French Indochina tree-lined boulevards.",
+    "primaryStreets": "Trang Tien, Phan Dinh Phung, Ring Road 3 Elevated Highway, Thang Long Boulevard",
+    "networkMetrics": {
+      "estimatedRoads": "36,000+",
+      "gridPattern": "Lakeside Organic & Colonial Boulevards",
+      "dominantType": "Motorbike-Centric Alleys & Broad Shaded Avenues"
+    }
+  },
+  {
+    "slug": "ho-chi-minh-city",
+    "name": "Ho Chi Minh City",
+    "localName": "Thành phố Hồ Chí Minh",
+    "country": "Vietnam",
+    "countryCode": "VN",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "bbox": [
+      10.65,
+      106.45,
+      11,
+      106.85
+    ],
+    "layoutType": "Saigon River S-Curve & French Colonial Diagonal Avenues",
+    "description": "Centered along the winding Saigon River, District 1 features French neoclassical boulevards expanding into bustling motorcycle-filled arterial networks and modern Thu Thiem river tunnels.",
+    "primaryStreets": "Nguyen Hue Walking Street, Le Loi Boulevard, Vo Van Kiet Highway, Mai Chi Tho",
+    "networkMetrics": {
+      "estimatedRoads": "48,000+",
+      "gridPattern": "River Meander Radial & Modern Canal Ways",
+      "dominantType": "Canal-Parallel Expressways & Vibrant Alley Networks (Hem)"
+    }
+  },
+  {
+    "slug": "mumbai",
+    "name": "Mumbai",
+    "localName": "मुंबई",
+    "country": "India",
+    "countryCode": "IN",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "bbox": [
+      18.89,
+      72.77,
+      19.28,
+      72.99
+    ],
+    "layoutType": "Linear Island Peninsula, Marine Drive & Bandra-Worli Sea Link",
+    "description": "Stretching along a narrow north-south peninsula into the Arabian Sea, Mumbai is anchored by the sweeping curve of Marine Drive (Queen's Necklace) and the Bandra-Worli Sea Link bridge.",
+    "primaryStreets": "Marine Drive, Bandra-Worli Sea Link, Western Express Highway, Eastern Freeway",
+    "networkMetrics": {
+      "estimatedRoads": "45,000+",
+      "gridPattern": "Linear Peninsular North-South Corridors",
+      "dominantType": "Arabian Sea Coastal Links & High-Capacity North Arterials"
+    }
+  },
+  {
+    "slug": "delhi",
+    "name": "Delhi",
+    "localName": "दिल्ली",
+    "country": "India",
+    "countryCode": "IN",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "bbox": [
+      28.4,
+      76.95,
+      28.85,
+      77.4
+    ],
+    "layoutType": "Lutyens' Grand Hexagonal Circles & Ring Road Beltways",
+    "description": "Delhi juxtaposes Mughal Old Delhi's labyrinth around Chandni Chowk with Sir Edwin Lutyens' 1912 New Delhi imperial master plan of grand hexagonal avenues and circular roundabouts.",
+    "primaryStreets": "Rajpath (Kartavya Path), Janpath, Ring Road, Outer Ring Road, Connaught Place",
+    "networkMetrics": {
+      "estimatedRoads": "65,000+",
+      "gridPattern": "Lutyens Hexagonal Circles & Concentric Rings",
+      "dominantType": "Grand Ceremonial Axes & Multi-Lane Outer Beltways"
+    }
+  },
+  {
+    "slug": "bengaluru",
+    "name": "Bengaluru",
+    "localName": "ಬೆಂಗಳೂರು",
+    "country": "India",
+    "countryCode": "IN",
+    "lat": 12.9716,
+    "lon": 77.5946,
+    "bbox": [
+      12.8,
+      77.45,
+      13.15,
+      77.75
+    ],
+    "layoutType": "Deccan Plateau Radial Rings (Outer Ring Road & NICE Road)",
+    "description": "Known as the Silicon Valley of India, Bengaluru expands from the historic colonial cantonment into high-tech corridors along the Outer Ring Road and Hosur Road flyovers.",
+    "primaryStreets": "M.G. Road, Outer Ring Road (ORR), Hosur Road Elevated Expressway, NICE Road",
+    "networkMetrics": {
+      "estimatedRoads": "52,000+",
+      "gridPattern": "Plateau Radial Rings & IT Tech Corridors",
+      "dominantType": "Elevated Tech Corridor Viaducts & Garden City Parkways"
+    }
+  },
+  {
+    "slug": "tel-aviv",
+    "name": "Tel Aviv",
+    "localName": "תל אביב",
+    "country": "Israel",
+    "countryCode": "IL",
+    "lat": 32.0853,
+    "lon": 34.7818,
+    "bbox": [
+      32.02,
+      34.73,
+      32.14,
+      34.84
+    ],
+    "layoutType": "Patrick Geddes Garden City Master Plan & Mediterranean Promenade",
+    "description": "Planned by Sir Patrick Geddes in 1925, Tel Aviv features Bauhaus White City residential blocks, green boulevard boulevards (Rothschild), and a Mediterranean seaside promenade.",
+    "primaryStreets": "Rothschild Boulevard, Dizengoff Street, Ayalon Highway (Route 20), Ibn Gabirol",
+    "networkMetrics": {
+      "estimatedRoads": "12,500+",
+      "gridPattern": "Geddes Garden City & Highway Trench",
+      "dominantType": "Tree-Canopied Pedestrian Boulevards & Coastal Drives"
+    }
+  },
+  {
+    "slug": "cairo",
+    "name": "Cairo",
+    "localName": "القاهرة",
+    "country": "Egypt",
+    "countryCode": "EG",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "bbox": [
+      29.85,
+      31.1,
+      30.25,
+      31.45
+    ],
+    "layoutType": "Nile River Banks, Historic Islamic Quarters & Ring Road Beltway",
+    "description": "Spanning both banks of the Nile, Cairo pairs historic Islamic minaret quarters and Parisian-style Belle Époque downtown avenues with the massive Ring Road and Ring bridges.",
+    "primaryStreets": "Tahrir Square, Nile Corniche, 6th October Bridge, Ring Road, Salah Salem",
+    "networkMetrics": {
+      "estimatedRoads": "55,000+",
+      "gridPattern": "River Basin Radial & Monumental Ringways",
+      "dominantType": "Multi-Level Nile Bridges & Expansive Desert Corridors"
+    }
+  },
+  {
+    "slug": "cape-town",
+    "name": "Cape Town",
+    "localName": "Cape Town",
+    "country": "South Africa",
+    "countryCode": "ZA",
+    "lat": -33.9249,
+    "lon": 18.4241,
+    "bbox": [
+      -34.15,
+      18.3,
+      -33.75,
+      18.65
+    ],
+    "layoutType": "Table Mountain Natural Amphitheatre & Coastal Peninsula Passes",
+    "description": "Framed by Table Mountain and two oceans, Cape Town features dramatic scenic mountain passes, coastal drives along Chapman's Peak, and City Bowl street grids.",
+    "primaryStreets": "Long Street, Nelson Mandela Boulevard, Chapman's Peak Drive, N1 / N2 Freeways",
+    "networkMetrics": {
+      "estimatedRoads": "32,000+",
+      "gridPattern": "Mountain Amphitheatre & Peninsula Drives",
+      "dominantType": "Panoramic Coastal Cliffside Roads & Table Mountain Passes"
+    }
+  },
+  {
+    "slug": "santiago",
+    "name": "Santiago",
+    "localName": "Santiago",
+    "country": "Chile",
+    "countryCode": "CL",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "bbox": [
+      -33.6,
+      -70.85,
+      -33.3,
+      -70.45
+    ],
+    "layoutType": "Mapocho River Basin & Costanera Norte Subterranean Highway",
+    "description": "Set against the snow-capped Andes mountains, Santiago features colonial grids rising into modern financial districts along the Mapocho River, connected by the Costanera Norte tunnel.",
+    "primaryStreets": "Avenida Libertador General Bernardo O'Higgins (Alameda), Costanera Norte, Americo Vespucio Ring",
+    "networkMetrics": {
+      "estimatedRoads": "44,000+",
+      "gridPattern": "Andean Valley Basin & River Tunnel Matrix",
+      "dominantType": "Subterranean River Expressways & Mountain View Boulevards"
+    }
+  },
+  {
+    "slug": "bogota",
+    "name": "Bogotá",
+    "localName": "Bogotá",
+    "country": "Colombia",
+    "countryCode": "CO",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "bbox": [
+      4.45,
+      -74.25,
+      4.85,
+      -74
+    ],
+    "layoutType": "Andean Plateau Cardinal Carrera & Calle Coordinate Grid",
+    "description": "Perched at 2,640m in the Andes, Bogotá employs a strict numbered coordinate system: Carreras run parallel to the eastern mountains, intersected by Calles, connected by TransMilenio BRT.",
+    "primaryStreets": "Carrera 7, Avenida El Dorado (Calle 26), TransMilenio Corridors, Carrera 30 (NQS)",
+    "networkMetrics": {
+      "estimatedRoads": "48,000+",
+      "gridPattern": "Numbered Carrera-Calle Grid & Ciclovía",
+      "dominantType": "Dedicated Bus Rapid Transit Corridors & Mountain-Parallel Carreras"
+    }
+  }
+]

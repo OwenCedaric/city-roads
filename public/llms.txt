@@ -1,0 +1,40 @@
+# City Roads — Minimalist Cartography & Urban Road Visualizer
+
+> High-resolution vector road network visualization, analysis, and cartographic export tool for cities worldwide.
+
+## Overview
+City Roads (city-roads) renders every single road within any city or metropolitan area using OpenStreetMap (OSM) vector data and WebGL GPU acceleration. It allows urban planners, cartographers, graphic designers, software engineers, and AI agents to explore urban geometries, evaluate road network topology, and export crisp vector graphics (SVG) or high-resolution raster images (PNG).
+
+## Key Features & Capabilities
+- **Worldwide Coverage**: Visualizes roads for thousands of global cities using OpenStreetMap Overpass API and pre-cached binary protobuf road graphs.
+- **Minimalist Cartographic Aesthetics**: Refined typography, warm-ivory paper background (`#fbf9f6`), deep ink roads (`#3d4451`), and slate blue-gray accents.
+- **Export Capabilities**:
+  - Raw vector SVG XML markup (filtered by road length, with or without city labels).
+  - High-resolution PNG images and canvas data URLs for printing or rendering textures.
+  - Direct clipboard copy of SVG markup for instant pasting into Figma, Illustrator, or pen plotter software.
+- **Programmatic Developer API**: Full JavaScript client API exposed via `window.cityRoads` and cross-origin iframe `postMessage` protocol (optimized for Traces, GrowingGalaxy, and custom web applications).
+
+## Programmatic API Reference (`window.cityRoads`)
+- `window.cityRoads.getSVG(options)`: Returns raw SVG XML string. Options include `minLength` (number in px) and `includeLabels` (boolean).
+- `window.cityRoads.getSVGDataURL()`: Returns `data:image/svg+xml;utf8,...` string.
+- `window.cityRoads.getSVGBlob()`: Returns standard `Blob` instance.
+- `window.cityRoads.getPNG('dataUrl' | 'blob')`: Asynchronously renders canvas snapshot.
+- `window.cityRoads.copySVG()`: Copies SVG vector markup directly to system clipboard.
+- `window.cityRoads.loadCity(cityName, options)`: Programmatically queries, downloads, and renders any city.
+
+## Iframe Integration Protocol (`postMessage`)
+Host pages can communicate with City Roads via iframe:
+- Send: `{ type: 'GET_SVG', city: 'Paris', options: { minLength: 2, includeLabels: false } }`
+- Receive: `{ type: 'CITY_ROADS_SVG_RESPONSE', success: true, city: 'Paris', svg: '<svg...>...</svg>' }`
+
+## Data Sources & Legal Attribution
+- **Map Data**: © OpenStreetMap contributors, licensed under the Open Database License (ODbL).
+- **Name Resolution**: OpenStreetMap Nominatim.
+- **Original Author**: Andrei Kashcha (@anvaka).
+- **Fork Maintainer**: Owen Cedaric.
+- **Source Code**: https://github.com/OwenCedaric/city-roads (Original: https://github.com/anvaka/city-roads).
+
+## Canonical Documentation
+- Full API Reference: https://github.com/OwenCedaric/city-roads/blob/main/API.md
+- Full LLM Details: https://anvaka.github.io/city-roads/llms-full.txt
+- City Directory Sitemap: https://anvaka.github.io/city-roads/sitemap.xml
