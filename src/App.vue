@@ -326,12 +326,12 @@ function toRGBA(c) {
 }
 
 function recordOpenClick(link) {
-  if (typeof gtag === 'undefined') return;
-
-  gtag('event', 'click', {
-    'event_category': 'Outbound Link',
-    'event_label': link
-  });
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'click', {
+      'event_category': 'Outbound Link',
+      'event_label': link
+    });
+  }
 }
 </script>
 

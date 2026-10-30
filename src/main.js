@@ -27,12 +27,13 @@ if (isWebGLEnabled(document.querySelector('#canvas'))) {
 }
 
 function logError(e) {
-  if (typeof gtag !== 'function') return;
+  console.error(e);
 
-  const exDescription = e ? `${e.message} in ${e.filename}:${e.lineno}` : 'Unknown exception';
-
-  gtag('send', 'exception', {
-    description: exDescription,
-    fatal: false
-  });
+  if (typeof window.gtag === 'function') {
+    const exDescription = e ? `${e.message} in ${e.filename}:${e.lineno}` : 'Unknown exception';
+    window.gtag('send', 'exception', {
+      description: exDescription,
+      fatal: false
+    });
+  }
 }

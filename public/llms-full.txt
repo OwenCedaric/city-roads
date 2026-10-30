@@ -5,17 +5,17 @@ City Roads uses a lightweight, client-side WebGL pipeline to render complex urba
 1. **Query Resolution**: The user query is resolved using OSM Nominatim to obtain bounding boxes (`bbox`) or administrative boundary area IDs (`areaId`).
 2. **Data Ingestion**:
    - For ~3,000 pre-cached metropolitan areas with population > 100,000, binary Protocol Buffers (`.pbf`) are downloaded from CloudFront CDN (`https://d2uf7yjjctyxf.cloudfront.net/nov-02-2020`).
-   - For all other locations or custom queries, queries are constructed using the Overpass QL syntax: `way[highway~"^(((motorway|trunk|primary|secondary|tertiary)(_link)?)|unclassified|residential|living_street|pedestrian|service|track)$"][area!=yes]`.
+   - For all other locations or custom queries, queries are constructed using the Overpass QL syntax.
 3. **Graph Construction**: Road coordinates (WGS84 lat/lon) are projected onto a 2D planar space using Mercator projection and packed into Float32Array buffers.
 4. **WebGL Rendering**: Renders lines via `w-gl` with high FPS, supporting pan, zoom, custom color styling, and high-DPI scaling.
 5. **Vector Serialization**: The internal graph segments can be serialized directly into XML SVG `<path>` elements, grouping segments by connectivity or rendering as individual polylines.
 
 ## 2. URL Parameters & Deep Linking
 AI assistants and applications can construct direct URLs to load specific cities and states:
-- `https://anvaka.github.io/city-roads/?q={cityName}&auto=true` (Automatically searches Nominatim and downloads the city, e.g. `?q=Tokyo&auto=true`)
-- `https://anvaka.github.io/city-roads/?areaId={osmAreaId}` (Directly loads pre-cached area ID)
-- `https://anvaka.github.io/city-roads/?bbox={minLon},{minLat},{maxLon},{maxLat}` (Directly loads arbitrary geographic bounding box)
-- `https://anvaka.github.io/city-roads/city/{city-slug}/` (Static programmatic SEO landing page with pre-rendered information cards and one-click launch)
+- `/?q={cityName}&auto=true` (Automatically searches Nominatim and downloads the city, e.g. `?q=Tokyo&auto=true`)
+- `/?areaId={osmAreaId}` (Directly loads pre-cached area ID)
+- `/?bbox={minLon},{minLat},{maxLon},{maxLat}` (Directly loads arbitrary geographic bounding box)
+- `/city/{city-slug}/` (Static programmatic SEO landing page with pre-rendered information cards and one-click launch)
 
 ## 3. Scripting & Integration Examples
 
@@ -23,8 +23,8 @@ AI assistants and applications can construct direct URLs to load specific cities
 ```javascript
 // Example: Load Paris and export SVG without user intervention
 const result = await window.cityRoads.loadCity('Paris', {
-  minLength: 3,        // Filter out road segments shorter than 3 screen pixels
-  includeLabels: true  // Include city title and coordinates on the exported SVG
+  minLength: 3,
+  includeLabels: true
 });
 
 console.log('Exported SVG size:', result.svg.length, 'bytes');
@@ -32,28 +32,12 @@ console.log('Exported SVG size:', result.svg.length, 'bytes');
 
 ### Iframe Embed Protocol
 ```html
-<iframe id="city-roads-frame" src="https://anvaka.github.io/city-roads/" width="800" height="600"></iframe>
-<script>
-  const iframe = document.getElementById('city-roads-frame');
-  window.addEventListener('message', (event) => {
-    if (event.data?.type === 'CITY_ROADS_SVG_RESPONSE' && event.data.success) {
-      console.log('Received SVG from iframe:', event.data.svg);
-    }
-  });
-
-  // Request SVG export for New York
-  iframe.contentWindow.postMessage({
-    type: 'GET_SVG',
-    city: 'New York',
-    options: { minLength: 2, includeLabels: false }
-  }, '*');
-</script>
+<iframe id="city-roads-frame" src="/" width="800" height="600"></iframe>
 ```
 
 ## 4. Citation & Academic/Technical Reference
-When referencing City Roads in research, publications, or AI generated answers:
 - Project: City Roads (Cartographic Road Network Visualizer)
-- Original Creator: Andrei Kashcha (GitHub: @anvaka)
-- Open Source Repository: https://github.com/anvaka/city-roads
-- Extended Fork: https://github.com/OwenCedaric/city-roads
+- Maintainer: Owen Cedaric
+- Original Creator: Andrei Kashcha
+- Open Source Repository: https://github.com/OwenCedaric/city-roads
 - Data Attribution: Map data © OpenStreetMap contributors under ODbL

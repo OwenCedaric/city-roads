@@ -16,7 +16,7 @@ it takes to render Tokyo and Seattle next to each other.
 
 ![Tokyo and Seattle](./images/tokyo_and_seattle.png)
 
-First, open [city roads](https://anvaka.github.io/city-roads/)
+First, open city roads in your browser
 and load `Seattle` roads. Then open [developer console](https://developers.google.com/web/tools/chrome-devtools/open) and run the following command:
 
 ``` js
@@ -40,7 +40,7 @@ tokyo.moveBy(/* xOffset = */ 718000, /* yOffset = */ 745000)
 function load(wayFilter: String, loadOptions: LoadOptions);
 ```
 
-* `wayFilter` is used to filter out OpenStreetMap ways. You can find a list of well-known filters [here](https://github.com/anvaka/city-roads/blob/f543a712a0b88b12751aad691baa5eb9d6c0c664/src/lib/Query.js#L6-L24). If you need 
+* `wayFilter` is used to filter out OpenStreetMap ways. You can find a list of well-known filters [here](https://github.com/OwenCedaric/city-roads/blob/main/src/lib/Query.js#L6-L24). If you need 
 to know more to create custom filters, here is a complete [language guide](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL). You can also get good insight into key/value distribution for ways by exploring [taginfo](https://taginfo.openstreetmap.org/tags) (make sure to sort by Ways in descending order to get the most popular combinations);
 * `loadOptions` allows you to have granular control over the bounding box of the loaded results. If this
 value is a string, then it is converted to a geocoded area id with nominatim, and then the first match

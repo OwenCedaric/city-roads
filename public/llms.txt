@@ -30,11 +30,11 @@ Host pages can communicate with City Roads via iframe:
 ## Data Sources & Legal Attribution
 - **Map Data**: © OpenStreetMap contributors, licensed under the Open Database License (ODbL).
 - **Name Resolution**: OpenStreetMap Nominatim.
+- **Maintainer**: Owen Cedaric.
 - **Original Author**: Andrei Kashcha (@anvaka).
-- **Fork Maintainer**: Owen Cedaric.
-- **Source Code**: https://github.com/OwenCedaric/city-roads (Original: https://github.com/anvaka/city-roads).
+- **Source Code**: https://github.com/OwenCedaric/city-roads.
 
 ## Canonical Documentation
 - Full API Reference: https://github.com/OwenCedaric/city-roads/blob/main/API.md
-- Full LLM Details: https://anvaka.github.io/city-roads/llms-full.txt
-- City Directory Sitemap: https://anvaka.github.io/city-roads/sitemap.xml
+- Full LLM Details: /llms-full.txt
+- City Directory Sitemap: /sitemap.xml

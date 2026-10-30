@@ -76,7 +76,7 @@ window.addEventListener('message', (event) => {
 
 ## About the Project
 
-Render every single road in any city at once: https://anvaka.github.io/city-roads/
+Render every single road in any city at once with WebGL.
 
 ![demo](https://i.imgur.com/6bFhX3e.png)
 
@@ -97,7 +97,7 @@ and fallback to overpass if area is not present in cache.
 
 Behind simple UI software engineers would also find scripting capabilities. You can develop programs on top
 of the city-roads. A few examples are available in [city-script](https://github.com/anvaka/city-script). Scene
-API is documented here: https://github.com/anvaka/city-roads/blob/main/API.md
+API is documented here: https://github.com/OwenCedaric/city-roads/blob/main/API.md
 
 Please share your creations and do not hesitate to reach out if you have any questions.
 
@@ -112,11 +112,9 @@ powerful device.
 
 Luckily, most of the cities can be rendered without problems, resulting in a beautiful art.
 
-## Support
+## Support & Credits
 
-If you like this work and want to use it in your projects - you are more than welcome to do so!
-
-Please [let me](https://twitter.com/anvaka) know how it goes. You can also sponsor my projects [here](https://github.com/sponsors/anvaka) - your funds will be dedicated to more awesome and free data visualizations.
+Originally created by [Andrei Kashcha (@anvaka)](https://github.com/anvaka). Redesigned, enhanced with programmatic vector APIs, and maintained by [Owen Cedaric](https://github.com/OwenCedaric/city-roads).
 
 ## Local development
 

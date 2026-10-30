@@ -6,40 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TXT6313TGG"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-TXT6313TGG');
-    </script>
-
     <!-- Primary SEO Meta Tags -->
-    <title>City Roads — Minimalist Cartography & Urban Road Visualizer</title>
-    <meta name="title" content="City Roads — Minimalist Cartography & Urban Road Visualizer">
-    <meta name="description" content="Render and visualize every single road in any city at once with WebGL. Explore urban road networks, customize minimalist cartography styles, and export high-resolution SVG and PNG vector graphics.">
-    <meta name="keywords" content="city roads visualization, minimalist cartography, urban road networks, openstreetmap, street maps, vector svg export, city map poster, road graph">
-    <meta name="author" content="Owen Cedaric (original by Andrei Kashcha)">
+    <title>__SITE_TITLE__</title>
+    <meta name="title" content="__SITE_TITLE__">
+    <meta name="description" content="__SITE_DESCRIPTION__">
+    <meta name="keywords" content="__SITE_KEYWORDS__">
+    <meta name="author" content="__SITE_AUTHOR__ (original by Andrei Kashcha)">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <link rel="canonical" href="https://anvaka.github.io/city-roads/">
+    <link rel="canonical" href="__SITE_URL__/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anvaka.github.io/city-roads/">
-    <meta property="og:site_name" content="City Roads">
-    <meta property="og:title" content="City Roads — Minimalist Cartography & Urban Road Visualizer">
-    <meta property="og:description" content="Render and visualize every single road in any city at once with WebGL. Export crisp vector SVG paths or high-res posters.">
-    <meta property="og:image" content="https://i.imgur.com/Fbbe5a6.png">
+    <meta property="og:url" content="__SITE_URL__/">
+    <meta property="og:site_name" content="__SITE_NAME__">
+    <meta property="og:title" content="__SITE_TITLE__">
+    <meta property="og:description" content="__SITE_DESCRIPTION__">
+    <meta property="og:image" content="__OG_IMAGE__">
     <meta property="og:image:alt" content="City Roads visualization showing every street rendered in minimalist aesthetic">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://anvaka.github.io/city-roads/">
-    <meta name="twitter:title" content="City Roads — Minimalist Cartography & Urban Road Visualizer">
-    <meta name="twitter:description" content="Render and visualize every single road in any city at once with WebGL. Export crisp vector SVG paths or high-res posters.">
-    <meta name="twitter:image" content="https://i.imgur.com/Fbbe5a6.png">
+    <meta name="twitter:url" content="__SITE_URL__/">
+    <meta name="twitter:title" content="__SITE_TITLE__">
+    <meta name="twitter:description" content="__SITE_DESCRIPTION__">
+    <meta name="twitter:image" content="__OG_IMAGE__">
 
     <!-- Icons & Manifest -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -59,14 +50,18 @@
       "@graph": [
         {
           "@type": "WebApplication",
-          "@id": "https://anvaka.github.io/city-roads/#webapp",
-          "name": "City Roads",
-          "url": "https://anvaka.github.io/city-roads/",
-          "description": "Visualizes every single road in any city at once using OpenStreetMap data and high-performance WebGL. Allows custom color palette styling, high-resolution PNG export, and vector SVG download.",
+          "@id": "__SITE_URL__/#webapp",
+          "name": "__SITE_NAME__",
+          "url": "__SITE_URL__/",
+          "description": "__SITE_DESCRIPTION__",
           "applicationCategory": "DesignApplication",
           "operatingSystem": "All",
           "browserRequirements": "Requires WebGL support",
           "author": {
+            "@type": "Person",
+            "name": "__SITE_AUTHOR__"
+          },
+          "contributor": {
             "@type": "Person",
             "name": "Andrei Kashcha"
           },
@@ -75,11 +70,11 @@
             "price": "0",
             "priceCurrency": "USD"
           },
-          "screenshot": "https://i.imgur.com/Fbbe5a6.png"
+          "screenshot": "__OG_IMAGE__"
         },
         {
           "@type": "Dataset",
-          "@id": "https://anvaka.github.io/city-roads/#dataset",
+          "@id": "__SITE_URL__/#dataset",
           "name": "Global City Road Networks Dataset",
           "description": "OpenStreetMap road network data indexed and serialized for thousands of world metropolitan areas.",
           "license": "https://opendatacommons.org/licenses/odbl/",

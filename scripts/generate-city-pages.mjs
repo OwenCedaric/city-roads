@@ -3,6 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import siteConfig, { buildUrl, normalizeUrl } from '../site.config.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +11,7 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const DIST_DIR = path.resolve(ROOT_DIR, 'dist');
 const DATA_FILE = path.resolve(ROOT_DIR, 'src/data/top-cities.json');
 
-const BASE_URL = 'https://anvaka.github.io/city-roads';
+const BASE_URL = siteConfig.siteUrl;
 
 export function loadCities() {
   const content = fs.readFileSync(DATA_FILE, 'utf8');
@@ -20,7 +21,7 @@ export function loadCities() {
 export function generateCityHTML(city, allCities = []) {
   const pageTitle = `${city.name} Road Network Map & Minimalist Vector Poster | City Roads`;
   const metaDescription = `Explore and export every single road in ${city.name} (${city.country}) as clean vector SVG or high-resolution PNG. Discover the ${city.layoutType} cartography of ${city.name}.`;
-  const canonicalUrl = `${BASE_URL}/city/${city.slug}/`;
+  const canonicalUrl = buildUrl(BASE_URL, `city/${city.slug}/`);
   const interactiveUrl = `../../?q=${encodeURIComponent(city.name)}&auto=true`;
 
   const relatedCities = allCities
@@ -32,15 +33,15 @@ export function generateCityHTML(city, allCities = []) {
     "@graph": [
       {
         "@type": "WebApplication",
-        "@id": `${BASE_URL}/#webapp`,
+        "@id": BASE_URL ? `${buildUrl(BASE_URL, '')}#webapp` : "#webapp",
         "name": "City Roads",
-        "url": BASE_URL,
+        "url": buildUrl(BASE_URL, ''),
         "applicationCategory": "DesignApplication",
         "operatingSystem": "All"
       },
       {
         "@type": "Place",
-        "@id": `${canonicalUrl}#place`,
+        "@id": BASE_URL ? `${canonicalUrl}#place` : `#place-${city.slug}`,
         "name": city.name,
         "alternateName": city.localName,
         "containedInPlace": {
@@ -57,7 +58,7 @@ export function generateCityHTML(city, allCities = []) {
       },
       {
         "@type": "Dataset",
-        "@id": `${canonicalUrl}#dataset`,
+        "@id": BASE_URL ? `${canonicalUrl}#dataset` : `#dataset-${city.slug}`,
         "name": `${city.name} Vector Road Network`,
         "description": `Vectorized road segments of ${city.name} extracted from OpenStreetMap, including motorways, primary, secondary, and residential streets.`,
         "license": "https://opendatacommons.org/licenses/odbl/",
@@ -68,7 +69,7 @@ export function generateCityHTML(city, allCities = []) {
       },
       {
         "@type": "FAQPage",
-        "@id": `${canonicalUrl}#faq`,
+        "@id": BASE_URL ? `${canonicalUrl}#faq` : `#faq-${city.slug}`,
         "mainEntity": [
           {
             "@type": "Question",
@@ -488,15 +489,16 @@ console.log(res.svg); // Clean XML &lt;path&gt; markup</code></pre>
 
 export function generateSitemapXML(cities) {
   const now = new Date().toISOString().split('T')[0];
+  const homeLoc = buildUrl(BASE_URL, '');
   const urls = [
     `  <url>
-    <loc>${BASE_URL}/</loc>
+    <loc>${homeLoc}</loc>
     <lastmod>${now}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>`,
     ...cities.map(c => `  <url>
-    <loc>${BASE_URL}/city/${c.slug}/</loc>
+    <loc>${buildUrl(BASE_URL, `city/${c.slug}/`)}</loc>
     <lastmod>${now}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -507,6 +509,143 @@ export function generateSitemapXML(cities) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.join('\n')}
 </urlset>
+`;
+}
+
+export function generateRobotsTxt() {
+  const sitemapUrl = buildUrl(BASE_URL, 'sitemap.xml');
+  return `User-agent: *
+Allow: /
+
+# Generative Engine Optimization (GEO): Allow AI search crawlers and models
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Sitemaps
+Sitemap: ${sitemapUrl}
+`;
+}
+
+export function generateLlmsTxt() {
+  const llmsFullUrl = buildUrl(BASE_URL, 'llms-full.txt');
+  const sitemapUrl = buildUrl(BASE_URL, 'sitemap.xml');
+
+  return `# City Roads — Minimalist Cartography & Urban Road Visualizer
+
+> High-resolution vector road network visualization, analysis, and cartographic export tool for cities worldwide.
+
+## Overview
+City Roads (city-roads) renders every single road within any city or metropolitan area using OpenStreetMap (OSM) vector data and WebGL GPU acceleration. It allows urban planners, cartographers, graphic designers, software engineers, and AI agents to explore urban geometries, evaluate road network topology, and export crisp vector graphics (SVG) or high-resolution raster images (PNG).
+
+## Key Features & Capabilities
+- **Worldwide Coverage**: Visualizes roads for thousands of global cities using OpenStreetMap Overpass API and pre-cached binary protobuf road graphs.
+- **Minimalist Cartographic Aesthetics**: Refined typography, warm-ivory paper background (\`#fbf9f6\`), deep ink roads (\`#3d4451\`), and slate blue-gray accents.
+- **Export Capabilities**:
+  - Raw vector SVG XML markup (filtered by road length, with or without city labels).
+  - High-resolution PNG images and canvas data URLs for printing or rendering textures.
+  - Direct clipboard copy of SVG markup for instant pasting into Figma, Illustrator, or pen plotter software.
+- **Programmatic Developer API**: Full JavaScript client API exposed via \`window.cityRoads\` and cross-origin iframe \`postMessage\` protocol (optimized for Traces, GrowingGalaxy, and custom web applications).
+
+## Programmatic API Reference (\`window.cityRoads\`)
+- \`window.cityRoads.getSVG(options)\`: Returns raw SVG XML string. Options include \`minLength\` (number in px) and \`includeLabels\` (boolean).
+- \`window.cityRoads.getSVGDataURL()\`: Returns \`data:image/svg+xml;utf8,...\` string.
+- \`window.cityRoads.getSVGBlob()\`: Returns standard \`Blob\` instance.
+- \`window.cityRoads.getPNG('dataUrl' | 'blob')\`: Asynchronously renders canvas snapshot.
+- \`window.cityRoads.copySVG()\`: Copies SVG vector markup directly to system clipboard.
+- \`window.cityRoads.loadCity(cityName, options)\`: Programmatically queries, downloads, and renders any city.
+
+## Iframe Integration Protocol (\`postMessage\`)
+Host pages can communicate with City Roads via iframe:
+- Send: \`{ type: 'GET_SVG', city: 'Paris', options: { minLength: 2, includeLabels: false } }\`
+- Receive: \`{ type: 'CITY_ROADS_SVG_RESPONSE', success: true, city: 'Paris', svg: '<svg...>...</svg>' }\`
+
+## Data Sources & Legal Attribution
+- **Map Data**: © OpenStreetMap contributors, licensed under the Open Database License (ODbL).
+- **Name Resolution**: OpenStreetMap Nominatim.
+- **Maintainer**: ${siteConfig.author}.
+- **Original Author**: ${siteConfig.originalAuthor}.
+- **Source Code**: ${siteConfig.githubRepo}.
+
+## Canonical Documentation
+- Full API Reference: ${siteConfig.githubRepo}/blob/main/API.md
+- Full LLM Details: ${llmsFullUrl}
+- City Directory Sitemap: ${sitemapUrl}
+`;
+}
+
+export function generateLlmsFullTxt() {
+  const homeUrl = buildUrl(BASE_URL, '');
+  const cleanHomeUrl = homeUrl.endsWith('/') ? homeUrl.slice(0, -1) : homeUrl;
+
+  return `# City Roads — Complete Technical Guide & Dataset Specifications
+
+## 1. System Architecture & Rendering Pipeline
+City Roads uses a lightweight, client-side WebGL pipeline to render complex urban road networks containing up to hundreds of thousands of line segments:
+1. **Query Resolution**: The user query is resolved using OSM Nominatim to obtain bounding boxes (\`bbox\`) or administrative boundary area IDs (\`areaId\`).
+2. **Data Ingestion**:
+   - For ~3,000 pre-cached metropolitan areas with population > 100,000, binary Protocol Buffers (\`.pbf\`) are downloaded from CloudFront CDN (\`https://d2uf7yjjctyxf.cloudfront.net/nov-02-2020\`).
+   - For all other locations or custom queries, queries are constructed using the Overpass QL syntax.
+3. **Graph Construction**: Road coordinates (WGS84 lat/lon) are projected onto a 2D planar space using Mercator projection and packed into Float32Array buffers.
+4. **WebGL Rendering**: Renders lines via \`w-gl\` with high FPS, supporting pan, zoom, custom color styling, and high-DPI scaling.
+5. **Vector Serialization**: The internal graph segments can be serialized directly into XML SVG \`<path>\` elements, grouping segments by connectivity or rendering as individual polylines.
+
+## 2. URL Parameters & Deep Linking
+AI assistants and applications can construct direct URLs to load specific cities and states:
+- \`${cleanHomeUrl}/?q={cityName}&auto=true\` (Automatically searches Nominatim and downloads the city, e.g. \`?q=Tokyo&auto=true\`)
+- \`${cleanHomeUrl}/?areaId={osmAreaId}\` (Directly loads pre-cached area ID)
+- \`${cleanHomeUrl}/?bbox={minLon},{minLat},{maxLon},{maxLat}\` (Directly loads arbitrary geographic bounding box)
+- \`${buildUrl(BASE_URL, 'city/{city-slug}/')}\` (Static programmatic SEO landing page with pre-rendered information cards and one-click launch)
+
+## 3. Scripting & Integration Examples
+
+### JavaScript Browser Console / Custom Script
+\`\`\`javascript
+const result = await window.cityRoads.loadCity('Paris', {
+  minLength: 3,
+  includeLabels: true
+});
+
+console.log('Exported SVG size:', result.svg.length, 'bytes');
+\`\`\`
+
+### Iframe Embed Protocol
+\`\`\`html
+<iframe id="city-roads-frame" src="${homeUrl}" width="800" height="600"></iframe>
+\`\`\`
+
+## 4. Citation & Academic/Technical Reference
+- Project: City Roads (Cartographic Road Network Visualizer)
+- Maintainer: ${siteConfig.author}
+- Original Creator: ${siteConfig.originalAuthor}
+- Open Source Repository: ${siteConfig.githubRepo}
+- Data Attribution: Map data © OpenStreetMap contributors under ODbL
 `;
 }
 
@@ -534,7 +673,13 @@ export function buildPages() {
   const sitemapXML = generateSitemapXML(cities);
   fs.writeFileSync(path.resolve(DIST_DIR, 'sitemap.xml'), sitemapXML, 'utf8');
 
-  console.log(`[SEO/GEO Build] Successfully built ${cities.length} city pages and dist/sitemap.xml! (0 files committed to public)`);
+  // Generate robots.txt and llms.txt directly into dist/ using centralized siteConfig.siteUrl
+  fs.writeFileSync(path.resolve(DIST_DIR, 'robots.txt'), generateRobotsTxt(), 'utf8');
+  fs.writeFileSync(path.resolve(DIST_DIR, 'llms.txt'), generateLlmsTxt(), 'utf8');
+  fs.writeFileSync(path.resolve(DIST_DIR, 'llms-full.txt'), generateLlmsFullTxt(), 'utf8');
+
+  const domainNotice = BASE_URL ? `using domain: ${BASE_URL}` : '(domain not specified; generated clean domain-agnostic relative paths)';
+  console.log(`[SEO/GEO Build] Successfully built ${cities.length} city pages, sitemap.xml, robots.txt, and llms.txt ${domainNotice}`);
 }
 
 // Execute when run directly
