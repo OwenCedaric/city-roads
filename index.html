@@ -49,7 +49,7 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "WebApplication",
+          "@type": ["WebApplication", "SoftwareApplication"],
           "@id": "__SITE_URL__/#webapp",
           "name": "__SITE_NAME__",
           "url": "__SITE_URL__/",
@@ -57,6 +57,13 @@
           "applicationCategory": "DesignApplication",
           "operatingSystem": "All",
           "browserRequirements": "Requires WebGL support",
+          "featureList": [
+            "Draw all roads in any city at once with high-performance WebGL",
+            "Export clean vector SVG for Figma, Illustrator, and pen plotters",
+            "Download high-resolution PNG for custom city map posters",
+            "Customize minimalist color themes and typography",
+            "Programmatic API and iframe integration"
+          ],
           "author": {
             "@type": "Person",
             "name": "__SITE_AUTHOR__"
@@ -124,14 +131,14 @@
 
     <noscript>
       <div style="max-width: 720px; margin: 40px auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #3d4451; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-        <h1 style="font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 12px;">City Roads — Minimalist Cartography</h1>
-        <p><strong>City Roads</strong> renders every single road in any city at once using OpenStreetMap vector data and WebGL graphics.</p>
-        <h2>Key Capabilities</h2>
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 12px;">City Roads — Draw & Export All Roads in Any City</h1>
+        <p><strong>City Roads</strong> is a free web tool to draw all roads in any city at once using OpenStreetMap vector data and WebGL graphics.</p>
+        <h2>Key Capabilities & Use Cases</h2>
         <ul>
-          <li><strong>Worldwide Coverage:</strong> Visualizes street networks across thousands of global cities.</li>
-          <li><strong>Vector SVG Export:</strong> Clean XML paths filtered by minimum length for graphic design, Figma, and pen plotters.</li>
-          <li><strong>High-Resolution PNG:</strong> Print-ready raster exports for posters and minimalist wall art.</li>
-          <li><strong>Programmatic API:</strong> Integrate directly via <code>window.cityRoads</code> or iframe <code>postMessage</code>.</li>
+          <li><strong>Draw All Roads in a City:</strong> Instantly visualize complete street networks across thousands of global metropolitan areas.</li>
+          <li><strong>Vector SVG Export:</strong> Clean XML paths filtered by minimum length for graphic design, Figma, laser cutting, and pen plotters.</li>
+          <li><strong>High-Resolution PNG Posters:</strong> Print-ready raster exports for minimalist city street map wall art and merchandise.</li>
+          <li><strong>Developer API & Automation:</strong> Programmatic access via <code>window.cityRoads</code> or iframe <code>postMessage</code>.</li>
         </ul>
         <p><em>Please enable JavaScript and WebGL in your browser to experience interactive 3D map exploration and real-time styling.</em></p>
       </div>

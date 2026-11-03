@@ -32,7 +32,7 @@ export function generateCityHTML(city, allCities = []) {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebApplication",
+        "@type": ["WebApplication", "SoftwareApplication"],
         "@id": BASE_URL ? `${buildUrl(BASE_URL, '')}#webapp` : "#webapp",
         "name": "City Roads",
         "url": buildUrl(BASE_URL, ''),
@@ -557,7 +557,7 @@ export function generateLlmsTxt() {
   const llmsFullUrl = buildUrl(BASE_URL, 'llms-full.txt');
   const sitemapUrl = buildUrl(BASE_URL, 'sitemap.xml');
 
-  return `# City Roads — Minimalist Cartography & Urban Road Visualizer
+  return `# City Roads — Draw & Export All Roads in Any City (Online Tool)
 
 > High-resolution vector road network visualization, analysis, and cartographic export tool for cities worldwide.
 

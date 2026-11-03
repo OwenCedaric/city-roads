@@ -2,13 +2,31 @@
 <div class='find-place' :class='{centered: boxInTheMiddle }'>
   <div v-if='boxInTheMiddle' class='site-header-container'>
     <city-logo :size='52' class='site-logo'></city-logo>
-    <h3 class='site-header'>city roads</h3>
-    <p class='description'>This website renders every single road within a city</p>
+    <h1 class='site-header'>city roads</h1>
+    <p class='description'>Draw and export all roads in any city at once with WebGL</p>
   </div>
   <form v-on:submit.prevent="onSubmit" class='search-box'>
       <input class='query-input' v-model='enteredInput' type='text' placeholder='Enter a city name to start' ref='input'>
       <a type='submit' class='search-submit' href='#' @click.prevent='onSubmit' v-if='enteredInput && !hideInput'>{{mainActionText}}</a>
   </form>
+  <div v-if='boxInTheMiddle && !loading && !suggestions.length' class='quick-cities'>
+    <span class='quick-label'>Explore:</span>
+    <a 
+      v-for='city in quickCities' 
+      :key='city.slug' 
+      :href="'city/' + city.slug + '/'" 
+      class='quick-city-chip'
+      @click.prevent='onQuickCityClick(city)'
+      :title="'Draw all roads in ' + city.name"
+    >{{ city.name }}</a>
+  </div>
+  <div v-if='boxInTheMiddle && !loading && !suggestions.length' class='tool-features'>
+    <span class='feature-item'>100% Vector & WebGL</span>
+    <span class='feature-separator'>•</span>
+    <span class='feature-item'>Export SVG & High-Res PNG</span>
+    <span class='feature-separator'>•</span>
+    <span class='feature-item'>OpenStreetMap Data</span>
+  </div>
   <div v-if='showWarning' class='prompt message note shadow'>
     Note: Large cities may require 200MB+ of data transfer and may need a powerful device to render.
   </div>
@@ -109,7 +127,16 @@ export default {
       clicked: false,
       showWarning: hasValidArea, 
       mainActionText: hasValidArea ? 'Download Area' : FIND_TEXT,
-      suggestions: []
+      suggestions: [],
+      quickCities: [
+        { name: 'Paris', slug: 'paris' },
+        { name: 'Tokyo', slug: 'tokyo' },
+        { name: 'New York', slug: 'new-york' },
+        { name: 'London', slug: 'london' },
+        { name: 'Beijing', slug: 'beijing' },
+        { name: 'Rome', slug: 'rome' },
+        { name: 'San Francisco', slug: 'san-francisco' }
+      ]
     }
   },
   watch: {
@@ -132,6 +159,10 @@ export default {
     clearInterval(this.notifyStillLoading);
   },
   methods: {
+    onQuickCityClick(city) {
+      this.enteredInput = city.name;
+      this.onSubmit();
+    },
     onSubmit() {
       queryState.set('q', this.enteredInput);
       this.cancelRequest()
@@ -378,7 +409,7 @@ function parseBBox(bboxStr) {
   filter: drop-shadow(0 2px 8px rgba(61, 68, 81, 0.08));
 }
 
-h3.site-header {
+h1.site-header, h3.site-header {
   margin: 0;
   font-family: serif-font;
   font-weight: 600;
@@ -442,6 +473,71 @@ input {
     align-items: center;
     flex-shrink: 0;
   }
+}
+
+.quick-cities {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-family: sans-font;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.quick-label {
+  color: secondary-ink;
+  font-weight: 500;
+  margin-right: 2px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.quick-city-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  background: subtle-fill;
+  border: 1px solid subtle-border;
+  border-radius: 12px;
+  color: primary-ink;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 400;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background: glass-surface;
+    border-color: sole-accent;
+    color: sole-accent;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(61, 68, 81, 0.08);
+  }
+}
+
+.tool-features {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  font-family: sans-font;
+  font-size: 11px;
+  color: secondary-ink;
+  opacity: 0.75;
+  letter-spacing: 0.02em;
+}
+
+.feature-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.feature-separator {
+  color: subtle-border;
+  user-select: none;
 }
 
 .prompt {
@@ -698,7 +794,7 @@ input {
     margin-bottom: 8px;
   }
 
-  h3.site-header {
+  h1.site-header, h3.site-header {
     font-size: 26px;
     letter-spacing: 0.1em;
   }

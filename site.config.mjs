@@ -104,9 +104,9 @@ const siteConfig = {
 
   // 站点基础信息
   siteName: 'City Roads',
-  title: 'City Roads — Minimalist Cartography & Urban Road Visualizer',
-  description: 'Render and visualize every single road in any city at once with WebGL. Explore urban road networks, customize minimalist cartography styles, and export high-resolution SVG and PNG vector graphics.',
-  keywords: 'city roads visualization, minimalist cartography, urban road networks, openstreetmap, street maps, vector svg export, city map poster, road graph',
+  title: 'City Roads — Draw & Export All Roads in Any City (Online Tool)',
+  description: 'Free web tool to instantly draw, render, and download all roads in any city as vector SVG or high-res PNG. Powered by OpenStreetMap and WebGL.',
+  keywords: 'draw all roads in a city, draw all roads in a city at once, city road map generator, city roads visualization, export street map svg, openstreetmap road vector, minimalist city poster, city road network, vector map generator',
 
   // 维护者与仓库信息
   author: 'Owen Cedaric',
