@@ -1,6 +1,6 @@
 <template>
-<div class='find-place' :class='{centered: boxInTheMiddle }'>
-  <div v-if='boxInTheMiddle' class='site-header-container'>
+<div class='find-place'>
+  <div class='site-header-container'>
     <city-logo :size='52' class='site-logo'></city-logo>
     <h1 class='site-header'>city roads</h1>
     <p class='description'>Draw and export all roads in any city at once with WebGL</p>
@@ -9,7 +9,7 @@
       <input class='query-input' v-model='enteredInput' type='text' placeholder='Enter a city name to start' ref='input'>
       <a type='submit' class='search-submit' href='#' @click.prevent='onSubmit' v-if='enteredInput && !hideInput'>{{mainActionText}}</a>
   </form>
-  <div v-if='boxInTheMiddle && !loading && !suggestions.length' class='quick-cities'>
+  <div v-if='!loading && !suggestions.length && !error' class='quick-cities'>
     <span class='quick-label'>Explore:</span>
     <a 
       v-for='city in quickCities' 
@@ -20,7 +20,7 @@
       :title="'Draw all roads in ' + city.name"
     >{{ city.name }}</a>
   </div>
-  <div v-if='boxInTheMiddle && !loading && !suggestions.length' class='tool-features'>
+  <div v-if='!loading && !suggestions.length && !error' class='tool-features'>
     <span class='feature-item'>100% Vector & WebGL</span>
     <span class='feature-separator'>•</span>
     <span class='feature-item'>Export SVG & High-Res PNG</span>
@@ -132,10 +132,8 @@ export default {
         { name: 'Paris', slug: 'paris' },
         { name: 'Tokyo', slug: 'tokyo' },
         { name: 'New York', slug: 'new-york' },
-        { name: 'London', slug: 'london' },
-        { name: 'Beijing', slug: 'beijing' },
-        { name: 'Rome', slug: 'rome' },
-        { name: 'San Francisco', slug: 'san-francisco' }
+        { name: 'Berlin', slug: 'berlin' },
+        { name: 'Rome', slug: 'rome' }
       ]
     }
   },
@@ -182,18 +180,12 @@ export default {
         .then(suggestions => {
           this.loading = null;
           this.hideInput = suggestions && suggestions.length;
-          if (this.boxInTheMiddle) {
-            // let animation that moves input box proceed a bit
-            this.boxInTheMiddle = false; // This triggers transition
-            // wait for it and then set the suggestions:
-            setTimeout(() => {
-              this.suggestionsLoaded = true;
-              this.suggestions = suggestions;
-            }, 50)
-          } else {
-              this.suggestionsLoaded = true;
-              this.suggestions = suggestions; 
-          }
+          this.suggestionsLoaded = true;
+          this.suggestions = suggestions || [];
+        })
+        .catch(err => {
+          this.loading = null;
+          this.error = err;
         });
     },
 
@@ -623,7 +615,7 @@ input {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    max-height: calc(100vh - 180px);
+    max-height: 240px;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -676,18 +668,12 @@ input {
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%) translateY(0);
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-property: top left transform;
-  transition-duration: 0.3s;
-}
-
-.find-place.centered {
   top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(-143px);
+  transform: translate(-50%, -50%);
+  width: desktop-controls-width;
+  max-height: 90vh;
+  z-index: 20;
 }
 
 .load-padding {
@@ -777,15 +763,8 @@ input {
     width: calc(100% - 32px);
     max-width: 440px;
     left: 50%;
-    transform: translateX(-50%);
-    top: 16px;
-  }
-
-  .find-place.centered {
-    top: 16vh;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 32px);
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .site-logo {

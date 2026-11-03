@@ -1,14 +1,71 @@
 <template>
   <find-place v-if='!placeFound' @loaded='onGridLoaded'></find-place>
-  <div id="app">
+  <div id="app" ref="controlsContainer">
     <div v-if='placeFound'>
       <div class='controls'>
-        <div class='brand-emblem' title='City Roads'>
+        <a href="#" class='brand-emblem' @click.prevent='startOver' title='City Roads — Return to home'>
           <city-logo :size='24'></city-logo>
+        </a>
+        <a href="#" class='print-button' @click.prevent='toggleSettings' :class='{ active: showSettings }'>Customize...</a>
+        <div class='controls-search'>
+          <form @submit.prevent='onHeaderSearch' class='header-search-form'>
+            <input 
+              class='header-search-input'
+              type='text' 
+              v-model='headerQuery' 
+              placeholder='Search city...' 
+              ref='headerInput'
+              @focus='onHeaderInputFocus'
+            />
+            <button 
+              v-if='headerQuery && !headerLoading' 
+              type='button' 
+              class='header-search-clear' 
+              @click.prevent='clearHeaderQuery' 
+              title='Clear'
+            >
+              <svg viewBox='0 0 24 24' width='12' height='12' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'>
+                <line x1='18' y1='6' x2='6' y2='18'></line>
+                <line x1='6' y1='6' x2='18' y2='18'></line>
+              </svg>
+            </button>
+            <button type='submit' class='header-search-submit' title='Search city' :disabled='headerLoading'>
+              <loading-icon v-if='headerLoading' :size='14'></loading-icon>
+              <svg v-else viewBox='0 0 24 24' width='14' height='14' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                <circle cx='11' cy='11' r='8'></circle>
+                <line x1='21' y1='21' x2='16.65' y2='16.65'></line>
+              </svg>
+            </button>
+          </form>
         </div>
-        <a href="#" class='print-button' @click.prevent='toggleSettings'>Customize...</a>
-        <a href="#" class='try-another' @click.prevent='startOver'>Try another city</a>
       </div>
+
+      <div v-if='headerSuggestions.length || headerLoadingText || headerError' class='header-search-results shadow'>
+        <div v-if='headerLoadingText' class='header-status'>
+          <loading-icon :size='16'></loading-icon>
+          <span class='status-text'>{{ headerLoadingText }}</span>
+          <a href="#" @click.prevent='cancelHeaderSearch' class='cancel-link'>cancel</a>
+        </div>
+        <div v-else-if='headerError' class='header-error'>
+          <div class='error-msg'>{{ headerError }}</div>
+          <div class='error-actions'>
+            <a href="#" @click.prevent='onHeaderSearch' class='retry-link'>Retry</a>
+            <a href="#" @click.prevent='closeHeaderResults' class='dismiss-link'>Dismiss</a>
+          </div>
+        </div>
+        <div v-else-if='headerSuggestions.length' class='header-suggestions-list'>
+          <div class='header-sug-title'>Select boundary:</div>
+          <ul>
+            <li v-for='(sug, idx) in headerSuggestions' :key='idx'>
+              <a @click.prevent='pickHeaderSuggestion(sug)' class='header-sug-item' href='#'>
+                <span class='sug-name'>{{ sug.name }}</span>
+                <small class='sug-type'>({{ sug.type }})</small>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <div v-if='showSettings' class='print-window'>
         <h3>Display</h3>
         <div class='row'>
@@ -102,6 +159,8 @@ import './lib/canvas2BlobPolyfill.js';
 import bus from './lib/bus.js';
 import createOverlayManager from './createOverlayManager.js';
 import tinycolor from 'tinycolor2';
+import findBoundaryByName from './lib/findBoundaryByName.js';
+import { fetchCityGrid } from './lib/fetchCityGrid.js';
 
 class ColorLayer {
   constructor(name, color, callback) {
@@ -131,12 +190,25 @@ export default {
       copyFeedback: null,
       labelColor: config.getLabelColor().toRgb(),
       backgroundColor: config.getBackgroundColor().toRgb(),
-      layers: []
+      layers: [],
+      headerQuery: '',
+      headerLoading: false,
+      headerLoadingText: null,
+      headerSuggestions: [],
+      headerError: null,
+      headerCancelToken: null
     }
   },
   computed: {
     labelColorRGBA() {
       return toRGBA(this.labelColor);
+    }
+  },
+  watch: {
+    name(newName) {
+      if (!this.headerLoading && newName) {
+        this.headerQuery = newName;
+      }
     }
   },
   created() {
@@ -146,15 +218,120 @@ export default {
     bus.on('line-color', this.syncLineColor);
     this.overlayManager = createOverlayManager();
   },
+  mounted() {
+    document.addEventListener('click', this.handleOutsideClick);
+    document.addEventListener('keydown', this.handleKeyDown);
+  },
   beforeUnmount() {
-    debugger;
     this.overlayManager.dispose();
     this.dispose();
     bus.off('scene-transform', this.handleSceneTransform);
     bus.off('background-color', this.syncBackground);
     bus.off('line-color', this.syncLineColor);
+    document.removeEventListener('click', this.handleOutsideClick);
+    document.removeEventListener('keydown', this.handleKeyDown);
+    if (this.headerCancelToken) this.headerCancelToken();
   },
   methods: {
+    handleOutsideClick(e) {
+      if (this.$refs.controlsContainer && !this.$refs.controlsContainer.contains(e.target)) {
+        this.closeHeaderResults();
+      }
+    },
+    handleKeyDown(e) {
+      if (e.key === 'Escape') {
+        this.closeHeaderResults();
+        this.showSettings = false;
+      }
+    },
+    onHeaderInputFocus(e) {
+      if (e && e.target && typeof e.target.select === 'function') {
+        e.target.select();
+      }
+    },
+    clearHeaderQuery() {
+      this.headerQuery = '';
+      this.closeHeaderResults();
+      if (this.$refs.headerInput) {
+        this.$refs.headerInput.focus();
+      }
+    },
+    closeHeaderResults() {
+      this.headerSuggestions = [];
+      this.headerError = null;
+    },
+    cancelHeaderSearch() {
+      if (this.headerCancelToken) {
+        this.headerCancelToken();
+        this.headerCancelToken = null;
+      }
+      this.headerLoading = false;
+      this.headerLoadingText = null;
+    },
+    async onHeaderSearch() {
+      const q = (this.headerQuery || '').trim();
+      if (!q) return;
+
+      this.closeHeaderResults();
+      this.showSettings = false;
+      this.headerLoading = true;
+      this.headerLoadingText = `Searching "${q}"...`;
+      this.headerError = null;
+
+      try {
+        const suggestions = await findBoundaryByName(q);
+        this.headerLoading = false;
+        this.headerLoadingText = null;
+
+        if (!suggestions || !suggestions.length) {
+          this.headerError = `No cities found matching "${q}".`;
+          return;
+        }
+
+        if (suggestions.length === 1) {
+          this.pickHeaderSuggestion(suggestions[0]);
+        } else {
+          this.headerSuggestions = suggestions;
+        }
+      } catch (err) {
+        this.headerLoading = false;
+        this.headerLoadingText = null;
+        this.headerError = 'Failed to search cities. Please check network and try again.';
+      }
+    },
+    async pickHeaderSuggestion(suggestion) {
+      this.headerSuggestions = [];
+      this.headerLoading = true;
+      const cityName = suggestion.name.split(',')[0];
+      this.headerLoadingText = `Loading ${cityName}...`;
+      this.headerError = null;
+
+      try {
+        const grid = await fetchCityGrid(
+          suggestion,
+          (status) => {
+            if (status.percent !== undefined) {
+              this.headerLoadingText = `Loading ${cityName} (${Math.round(status.percent * 100)}%)...`;
+            } else if (status.label) {
+              this.headerLoadingText = status.label;
+            }
+          },
+          (cancelFn) => {
+            this.headerCancelToken = cancelFn;
+          }
+        );
+
+        this.headerLoading = false;
+        this.headerLoadingText = null;
+        this.headerQuery = '';
+        this.onGridLoaded(grid);
+      } catch (err) {
+        this.headerLoading = false;
+        this.headerLoadingText = null;
+        if (err && err.cancelled) return;
+        this.headerError = err.message || 'Failed to download roads. OpenStreetMap servers may be busy.';
+      }
+    },
     dispose() {
       if (this.scene) {
         this.scene.dispose();
@@ -162,12 +339,16 @@ export default {
       }
     },
     toggleSettings() {
+      this.closeHeaderResults();
       this.showSettings = !this.showSettings;
     },
     handleSceneTransform() {
       this.zazzleLink = null;
     },
     onGridLoaded(grid) {
+      this.dispose();
+      this.closeHeaderResults();
+
       if (grid.isArea) {
         appState.set('areaId', grid.id);
         appState.unset('osm_id');
@@ -178,7 +359,8 @@ export default {
         appState.set('bbox', grid.bboxString);
       }
       this.placeFound = true;
-      this.name = grid.name.split(',')[0];
+      this.name = grid.name.split(',')[0].trim();
+      this.headerQuery = this.name;
       let canvas = getCanvas();
       canvas.style.visibility = 'visible';
 
@@ -191,7 +373,7 @@ export default {
       let gridLayer = new GridLayer();
       gridLayer.id = 'lines';
       gridLayer.setGrid(grid);
-      this.scene.add(gridLayer)
+      this.scene.add(gridLayer);
     },
 
     startOver() {
@@ -200,6 +382,9 @@ export default {
       appState.unset('q');
       appState.enableCache();
 
+      this.closeHeaderResults();
+      this.headerQuery = '';
+      this.name = '';
       this.dispose();
       this.placeFound = false;
       this.zazzleLink = null;
@@ -390,10 +575,13 @@ function recordOpenClick(link) {
     padding: 0 12px;
     border-right: 1px solid subtle-border;
     opacity: 0.85;
-    transition: opacity 0.15s ease-in-out;
+    cursor: pointer;
+    transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out, background 0.15s ease-in-out;
 
     &:hover {
       opacity: 1;
+      background: subtle-fill;
+      transform: scale(1.06);
     }
   }
 
@@ -417,17 +605,203 @@ function recordOpenClick(link) {
     }
   }
 
-  a.try-another {
-    flex: 1;
-  }
-
   a.print-button {
-    flex: 1;
+    padding: 0 16px;
     border-right: 1px solid subtle-border;
+    white-space: nowrap;
 
     &:focus {
       outline: none;
+    }
+
+    &.active {
+      color: sole-accent;
       background: subtle-fill;
+    }
+  }
+
+  .controls-search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+
+    .header-search-form {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 0 8px 0 12px;
+    }
+
+    .header-search-input {
+      flex: 1;
+      height: 100%;
+      border: none;
+      background: transparent;
+      font-family: sans-font;
+      font-size: 13px;
+      color: primary-ink;
+      min-width: 0;
+      padding: 0;
+      outline: none;
+
+      &::placeholder {
+        color: secondary-ink;
+        opacity: 0.65;
+        font-weight: 300;
+      }
+    }
+
+    .header-search-clear {
+      border: none;
+      background: transparent;
+      padding: 4px;
+      margin-left: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: secondary-ink;
+      border-radius: 50%;
+      opacity: 0.55;
+      transition: opacity 0.15s ease-in-out, color 0.15s ease-in-out;
+
+      &:hover {
+        opacity: 1;
+        color: primary-ink;
+      }
+    }
+
+    .header-search-submit {
+      border: none;
+      background: transparent;
+      padding: 4px;
+      margin-left: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: secondary-ink;
+      border-radius: 3px;
+      transition: color 0.15s ease-in-out, background 0.15s ease-in-out;
+
+      &:hover:not(:disabled) {
+        color: sole-accent;
+        background: subtle-fill;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
+    }
+  }
+}
+
+.header-search-results {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: desktop-controls-width;
+  background: glass-surface;
+  backdrop-filter: blur(glass-blur);
+  -webkit-backdrop-filter: blur(glass-blur);
+  border: 1px solid subtle-border;
+  border-radius: 3px;
+  box-shadow: 0 8px 24px rgba(61, 68, 81, 0.12);
+  z-index: 30;
+  max-height: 280px;
+  overflow-y: auto;
+
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    font-family: sans-font;
+    font-size: 13px;
+    color: secondary-ink;
+
+    .cancel-link {
+      margin-left: auto;
+      font-size: 12px;
+      color: secondary-ink;
+      text-decoration: underline;
+      cursor: pointer;
+      &:hover { color: sole-accent; }
+    }
+  }
+
+  .header-error {
+    padding: 12px 14px;
+    font-family: sans-font;
+    font-size: 13px;
+    color: #c0392b;
+
+    .error-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 12px;
+
+      a {
+        text-decoration: underline;
+        cursor: pointer;
+        color: primary-ink;
+        &:hover { color: sole-accent; }
+      }
+    }
+  }
+
+  .header-suggestions-list {
+    .header-sug-title {
+      padding: 8px 12px 4px 12px;
+      font-size: 11px;
+      font-family: sans-font;
+      color: secondary-ink;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      border-top: 1px solid subtle-fill;
+    }
+
+    .header-sug-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      text-decoration: none;
+      font-family: sans-font;
+      font-size: 13px;
+      color: primary-ink;
+      transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+
+      &:hover {
+        background: subtle-fill;
+        color: sole-accent;
+      }
+
+      .sug-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 8px;
+      }
+
+      .sug-type {
+        color: secondary-ink;
+        font-size: 11px;
+        flex-shrink: 0;
+      }
     }
   }
 }
@@ -641,7 +1015,7 @@ a:focus {
     right: 0;
 
     .preview-actions, .error,
-    .controls, .print-window {
+    .controls, .print-window, .header-search-results {
       width: 100%;
     }
 
