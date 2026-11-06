@@ -1,4 +1,15 @@
 <template>
+  <a 
+    href="#" 
+    class='top-right-ai-button' 
+    :class='{ active: showAiModal, "on-map": placeFound }'
+    @click.prevent='openAiModal' 
+    title='City Roads AI Skill 调用指南与 Prompt'
+  >
+    <remix-icon name="robot-2-line" :size="15" class="ai-icon"></remix-icon>
+    <span class='ai-text'>AI Skill</span>
+  </a>
+
   <find-place v-if='!placeFound' @loaded='onGridLoaded'></find-place>
   <div id="app" ref="controlsContainer">
     <div v-if='placeFound'>
@@ -115,6 +126,14 @@
             Copy raw SVG paths to clipboard (ideal for Traces in GrowingGalaxy).
           </span>
         </div>
+        <div class='row'>
+          <a href='#'  @click.prevent='openAiModal' class='col'>
+            <remix-icon name="robot-2-line" :size="14" style="margin-right: 6px;"></remix-icon>AI Agent Skill
+          </a> 
+          <span class='col c-2'>
+            使用自然语言 Prompt 或 CLI 自动化导出城市道路矢量图。
+          </span>
+        </div>
         <div v-if='copyFeedback' class='preview-actions message'>
           {{ copyFeedback }}
         </div>
@@ -140,6 +159,7 @@
 
   <editable-label v-if='placeFound' v-model='name' class='city-name' :printable='true' :style='{color: labelColorRGBA}' :overlay-manager='overlayManager'></editable-label>
   <div v-if='placeFound' class='license printable can-drag' :style='{color: labelColorRGBA}'>data <a href='https://www.openstreetmap.org/about/' target="_blank" :style='{color: labelColorRGBA}'>© OpenStreetMap</a></div>
+  <ai-skill-modal v-model="showAiModal" :city-name="name"></ai-skill-modal>
 </template>
 
 <script>
@@ -148,6 +168,8 @@ import LoadingIcon from './components/LoadingIcon.vue';
 import EditableLabel from './components/EditableLabel.vue';
 import ColorPicker from './components/ColorPicker.vue';
 import CityLogo from './components/CityLogo.vue';
+import AiSkillModal from './components/AiSkillModal.vue';
+import RemixIcon from './components/RemixIcon.vue';
 import createScene from './lib/createScene.js';
 import GridLayer from './lib/GridLayer.js';
 import generateZazzleLink from './lib/getZazzleLink.js';
@@ -177,7 +199,9 @@ export default {
     LoadingIcon,
     EditableLabel,
     ColorPicker,
-    CityLogo
+    CityLogo,
+    AiSkillModal,
+    RemixIcon
   },
   data() {
     return {
@@ -186,6 +210,7 @@ export default {
       zazzleLink: null,
       generatingPreview: false,
       showSettings: false,
+      showAiModal: false,
       settingsOpen: false,
       copyFeedback: null,
       labelColor: config.getLabelColor().toRgb(),
@@ -216,6 +241,7 @@ export default {
     bus.on('scene-transform', this.handleSceneTransform);
     bus.on('background-color', this.syncBackground);
     bus.on('line-color', this.syncLineColor);
+    bus.on('open-ai-skill-modal', this.handleOpenAiModal);
     this.overlayManager = createOverlayManager();
   },
   mounted() {
@@ -228,6 +254,7 @@ export default {
     bus.off('scene-transform', this.handleSceneTransform);
     bus.off('background-color', this.syncBackground);
     bus.off('line-color', this.syncLineColor);
+    bus.off('open-ai-skill-modal', this.handleOpenAiModal);
     document.removeEventListener('click', this.handleOutsideClick);
     document.removeEventListener('keydown', this.handleKeyDown);
     if (this.headerCancelToken) this.headerCancelToken();
@@ -242,7 +269,15 @@ export default {
       if (e.key === 'Escape') {
         this.closeHeaderResults();
         this.showSettings = false;
+        this.showAiModal = false;
       }
+    },
+    handleOpenAiModal() {
+      this.showAiModal = true;
+    },
+    openAiModal() {
+      this.showAiModal = true;
+      this.showSettings = false;
     },
     onHeaderInputFocus(e) {
       if (e && e.target && typeof e.target.select === 'function') {
@@ -522,6 +557,63 @@ function recordOpenClick(link) {
 
 <style lang='stylus'>
 @import('./vars.styl');
+
+.top-right-ai-button {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  background: glass-surface;
+  backdrop-filter: blur(glass-blur);
+  -webkit-backdrop-filter: blur(glass-blur);
+  border: 1px solid subtle-border;
+  border-radius: 20px;
+  color: primary-ink;
+  text-decoration: none;
+  font-family: sans-font;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 16px rgba(61, 68, 81, 0.06);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+
+  .ai-icon {
+    color: sole-accent;
+    transition: transform 0.2s ease;
+  }
+
+  .ai-text {
+    line-height: 1;
+  }
+
+  &:hover {
+    color: sole-accent;
+    border-color: sole-accent;
+    background: rgba(251, 249, 246, 0.98);
+    box-shadow: 0 4px 20px rgba(130, 161, 185, 0.22);
+    transform: translateY(-1px);
+
+    .ai-icon {
+      transform: scale(1.12);
+    }
+  }
+
+  &.active {
+    color: sole-accent;
+    border-color: sole-accent;
+    background: subtle-fill;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
 
 #app {
   margin: 16px;
@@ -1008,6 +1100,17 @@ a:focus {
 }
 
 @media (max-width: small-screen) {
+  .top-right-ai-button {
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 12px;
+
+    &.on-map {
+      display: none;
+    }
+  }
+
   #app {
     width: calc(100% - 24px);
     margin: 12px;
@@ -1017,6 +1120,13 @@ a:focus {
     .preview-actions, .error,
     .controls, .print-window, .header-search-results {
       width: 100%;
+    }
+
+    .controls {
+      a.print-button {
+        padding: 0 10px;
+        font-size: 12px;
+      }
     }
 
     .loading-container {

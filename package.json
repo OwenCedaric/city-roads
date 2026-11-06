@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "vite",
     "generate:seo": "node scripts/generate-city-pages.mjs",
+    "export:city": "node --no-warnings scripts/export-city.mjs",
     "build": "vite build && node scripts/generate-city-pages.mjs",
     "start": "vite",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"

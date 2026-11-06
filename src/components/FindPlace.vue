@@ -99,6 +99,7 @@ import queryState from '../lib/appState.js';
 import config from '../config.js';
 import Progress from '../lib/Progress.js'
 import LoadOptions from '../lib/LoadOptions.js';
+import bus from '../lib/bus.js';
 import Pbf from 'pbf';
 import {place} from '../proto/place.js';
 
@@ -187,6 +188,10 @@ export default {
           this.loading = null;
           this.error = err;
         });
+    },
+
+    openAiModal() {
+      bus.fire('open-ai-skill-modal', { cityName: this.enteredInput || '' });
     },
 
     isServerError(error) {
