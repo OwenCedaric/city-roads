@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const DIST_DIR = path.resolve(ROOT_DIR, 'dist');
 const DATA_FILE = path.resolve(ROOT_DIR, 'src/data/top-cities.json');
+const ZH_DATA_FILE = path.resolve(ROOT_DIR, 'src/data/cities-zh-details.json');
 
 const BASE_URL = siteConfig.siteUrl;
 
@@ -45,8 +46,24 @@ export const CITY_ZH_MAP = {
   'suzhou': '苏州', 'tianjin': '天津', 'changsha': '长沙', 'qingdao': '青岛',
   'sapporo': '札幌', 'yokohama': '横滨', 'fukuoka': '福冈', 'kuala-lumpur': '吉隆坡',
   'jakarta': '雅加达', 'manila': '马尼拉', 'hanoi': '河内', 'ho-chi-minh-city': '胡志明市',
-  'cape-town': '开普敦', 'johannesburg': '约翰内斯堡', 'santiago': '圣地亚哥', 'bogota': '波哥大'
+  'cape-town': '开普敦', 'johannesburg': '约翰内斯堡', 'santiago': '圣地亚哥', 'bogota': '波哥大',
+  'austin': '奥斯汀', 'florence': '佛罗伦萨', 'edinburgh': '爱丁堡', 'rio-de-janeiro': '里约热内卢',
+  'philadelphia': '费城', 'denver': '丹佛', 'dallas': '达拉斯', 'houston': '休斯敦',
+  'portland': '波特兰', 'san-diego': '圣迭戈', 'las-vegas': '拉斯维加斯', 'new-orleans': '新奥尔良',
+  'nashville': '纳什维尔', 'seville': '塞维利亚', 'valencia': '瓦伦西亚', 'venice': '威尼斯',
+  'krakow': '克拉科夫', 'porto': '波尔图', 'manchester': '曼彻斯特', 'birmingham': '伯明翰',
+  'lyon': '里昂', 'marseille': '马赛', 'rotterdam': '鹿特丹', 'busan': '釜山',
+  'bengaluru': '班加罗尔', 'tel-aviv': '特拉维夫'
 };
+
+let CITIES_ZH_DETAILS = {};
+try {
+  if (fs.existsSync(ZH_DATA_FILE)) {
+    CITIES_ZH_DETAILS = JSON.parse(fs.readFileSync(ZH_DATA_FILE, 'utf8'));
+  }
+} catch (e) {
+  // Graceful fallback
+}
 
 export function loadCities() {
   const content = fs.readFileSync(DATA_FILE, 'utf8');
@@ -55,8 +72,14 @@ export function loadCities() {
 
 export function generateCityHTML(city, allCities = [], lang = 'en') {
   const isZh = lang === 'zh';
-  const countryZh = COUNTRY_ZH_MAP[city.countryCode] || city.country;
-  const cityDisplayName = CITY_ZH_MAP[city.slug] || city.localName || city.name;
+  const zhDetails = CITIES_ZH_DETAILS[city.slug] || {};
+  const countryZh = zhDetails.country || COUNTRY_ZH_MAP[city.countryCode] || city.country;
+  const cityDisplayName = zhDetails.name || CITY_ZH_MAP[city.slug] || city.localName || city.name;
+  const layoutType = isZh ? (zhDetails.layoutType || city.layoutType) : city.layoutType;
+  const description = isZh ? (zhDetails.description || city.description) : city.description;
+  const gridPattern = isZh ? (zhDetails.gridPattern || city.networkMetrics.gridPattern) : city.networkMetrics.gridPattern;
+  const dominantType = isZh ? (zhDetails.dominantType || city.networkMetrics.dominantType) : city.networkMetrics.dominantType;
+  const primaryStreets = isZh ? (zhDetails.primaryStreets || city.primaryStreets) : city.primaryStreets;
   
   const enUrl = buildUrl(BASE_URL, `city/${city.slug}/`);
   const zhUrl = buildUrl(BASE_URL, `zh/city/${city.slug}/`);
@@ -83,15 +106,15 @@ export function generateCityHTML(city, allCities = [], lang = 'en') {
 
   // Localized Strings & Typography
   const pageTitle = isZh
-    ? `${cityDisplayName} 城市道路网地图与极简矢量海报 | City Roads`
+    ? `${cityDisplayName} 城市道路网地图与极简矢量海报导出 | City Roads`
     : `${city.name} Road Network Map & Minimalist Vector Poster | City Roads`;
 
   const metaDescription = isZh
-    ? `探索并导出${cityDisplayName} (${countryZh}) 的全部城市道路矢量图（SVG/高分辨率 PNG）。了解${cityDisplayName}的${city.layoutType}路网形态与街区肌理。`
+    ? `免费探索并一键导出${cityDisplayName} (${countryZh}) 的全部城市道路矢量图 (SVG / 高清海报 PNG)。深入了解${cityDisplayName}${layoutType}与街区肌理。`
     : `Explore and export every single road in ${city.name} (${city.country}) as clean vector SVG or high-resolution PNG. Discover the ${city.layoutType} cartography of ${city.name}.`;
 
   const metaKeywords = isZh
-    ? `${city.name} 道路地图, ${cityDisplayName} 路网, ${city.name} 矢量 SVG, 城市路网海报, 极简地图设计, OpenStreetMap 数据, ${cityDisplayName} 城市规划, ${city.localName} 路网`
+    ? `${cityDisplayName} 道路地图, ${cityDisplayName} 路网, ${city.name} 矢量 SVG, 城市路网海报, 极简地图设计, OpenStreetMap 数据, ${cityDisplayName} 城市规划, ${city.localName} 路网, ${cityDisplayName} 地图壁纸, 城市街道肌理`
     : `${city.name} road map, ${city.name} street network, ${city.name} vector SVG, ${city.name} poster, minimalist cartography, ${city.localName} 路网, OpenStreetMap`;
 
   const jsonLd = {
@@ -104,7 +127,20 @@ export function generateCityHTML(city, allCities = [], lang = 'en') {
         "url": isZh ? zhHomeUrl : enHomeUrl,
         "inLanguage": isZh ? "zh-CN" : "en",
         "applicationCategory": "DesignApplication",
-        "operatingSystem": "All"
+        "operatingSystem": "All",
+        "featureList": isZh ? [
+          "基于 WebGL 高性能 GPU 实时渲染全球任意城市全部道路网络",
+          "导出纯净矢量 SVG 文件，支持 Figma、Illustrator 与笔式绘图仪",
+          "下载高清晰度 PNG 海报位图，用于定制极简城市地图艺术挂画",
+          "自定义极简配色方案与字体排版风格",
+          "提供开发者 JavaScript API 与 iframe 自动化集成协议"
+        ] : [
+          "Draw all roads in any city at once with high-performance WebGL",
+          "Export clean vector SVG for Figma, Illustrator, and pen plotters",
+          "Download high-resolution PNG for custom city map posters",
+          "Customize minimalist color themes and typography",
+          "Programmatic API and iframe integration"
+        ]
       },
       {
         "@type": "Place",
@@ -128,7 +164,7 @@ export function generateCityHTML(city, allCities = [], lang = 'en') {
         "@id": BASE_URL ? `${canonicalUrl}#dataset` : `#dataset-${city.slug}`,
         "name": isZh ? `${cityDisplayName} 矢量道路网络数据集` : `${city.name} Vector Road Network`,
         "description": isZh 
-          ? `从 OpenStreetMap 提取的${cityDisplayName}全部矢量道路线段，包括高速公路、主干道、次干道及生活性居住街道。`
+          ? `从 OpenStreetMap 提取的${cityDisplayName} (${countryZh}) 全部矢量道路线段，包括高速公路、快速干道、生活街道与历史小巷。`
           : `Vectorized road segments of ${city.name} extracted from OpenStreetMap, including motorways, primary, secondary, and residential streets.`,
         "license": "https://opendatacommons.org/licenses/odbl/",
         "creator": {
@@ -169,7 +205,7 @@ export function generateCityHTML(city, allCities = [], lang = 'en') {
             "name": `如何将${cityDisplayName}的道路导出为矢量 SVG？`,
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": `在浏览器中打开 City Roads 并加载${cityDisplayName}，点击导出菜单中的“复制 SVG”或“导出为矢量图 (.svg)”。开发者亦可通过 window.cityRoads.getSVG() 提取纯净路径。`
+              "text": `在浏览器中打开 City Roads 并加载${cityDisplayName}，点击导出菜单中的“复制 SVG”或“导出为矢量图 (.svg)”。开发者与设计师亦可通过 window.cityRoads.getSVG() 提取纯净路径，无缝兼容 Figma、Illustrator 与笔式绘图机。`
             }
           },
           {
@@ -177,7 +213,7 @@ export function generateCityHTML(city, allCities = [], lang = 'en') {
             "name": `${cityDisplayName}的城市路网布局是怎样的？`,
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": `${cityDisplayName}主要呈现${city.layoutType}格局。${city.description}`
+              "text": `${cityDisplayName}主要呈现${layoutType}。${description}`
             }
           },
           {
@@ -185,7 +221,7 @@ export function generateCityHTML(city, allCities = [], lang = 'en') {
             "name": `导出的${cityDisplayName}路网数据支持商业使用吗？`,
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": `支持。道路几何数据依据开放数据库许可（ODbL）由 OpenStreetMap 贡献者提供。只要保留适当的 OpenStreetMap 版权署名，即可用于个人艺术挂画打印或商业设计。`
+              "text": `支持。道路几何数据依据开放数据库许可（ODbL）由 OpenStreetMap 贡献者提供。只要保留适当的 OpenStreetMap 版权署名（如 © OpenStreetMap contributors），即可用于个人艺术挂画打印、商业包装、文创产品或设计分析。`
             }
           }
         ] : [
@@ -223,6 +259,10 @@ export function generateCityHTML(city, allCities = [], lang = 'en') {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="format-detection" content="telephone=no">
   <title>${pageTitle}</title>
   <meta name="description" content="${metaDescription}">
   <meta name="keywords" content="${metaKeywords}">
@@ -534,7 +574,7 @@ ${JSON.stringify(jsonLd, null, 2)}
     <section class="hero">
       <span class="badge">${isZh ? countryZh : city.country} • ${city.countryCode}</span>
       <h1>${isZh ? `${cityDisplayName} 城市道路网地图` : `${city.name} Road Network Map`}</h1>
-      <p class="lead">${city.description}</p>
+      <p class="lead">${description}</p>
 
       <div class="action-group">
         <a href="${interactiveUrl}" class="btn btn-primary">
@@ -555,14 +595,22 @@ ${JSON.stringify(jsonLd, null, 2)}
 
     <div class="grid-2">
       <section class="card">
-        <h2>${isZh ? '城市路网格局与特征概览' : 'Road Typology & Facts'}</h2>
+        <h2>${isZh ? '城市路网格局与形态概览' : 'Road Typology & Facts'}</h2>
         <div class="stat-row">
-          <span class="stat-label">${isZh ? '本地 / 母语名称' : 'Local / Native Name'}</span>
+          <span class="stat-label">${isZh ? '城市标准译名' : 'City Standard Name'}</span>
+          <span class="stat-value">${isZh ? `${cityDisplayName} (${city.name})` : city.name}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">${isZh ? '本地 / 原文名称' : 'Local / Native Name'}</span>
           <span class="stat-value">${city.localName}</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">${isZh ? '城市街网形态' : 'Urban Grid Pattern'}</span>
-          <span class="stat-value">${city.networkMetrics.gridPattern}</span>
+          <span class="stat-value">${gridPattern}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">${isZh ? '主导道路特征' : 'Dominant Road Types'}</span>
+          <span class="stat-value">${dominantType}</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">${isZh ? '预估道路线段段数' : 'Estimated Road Ways'}</span>
@@ -570,14 +618,14 @@ ${JSON.stringify(jsonLd, null, 2)}
         </div>
         <div class="stat-row">
           <span class="stat-label">${isZh ? '地理坐标包围盒' : 'Geographic Bounding Box'}</span>
-          <span class="stat-value">${city.bbox[0].toFixed(2)}, ${city.bbox[1].toFixed(2)} to ${city.bbox[2].toFixed(2)}, ${city.bbox[3].toFixed(2)}</span>
+          <span class="stat-value">${city.bbox[0].toFixed(2)}, ${city.bbox[1].toFixed(2)} 至 ${city.bbox[2].toFixed(2)}, ${city.bbox[3].toFixed(2)}</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">${isZh ? '核心干道走廊' : 'Primary Arterial Corridors'}</span>
-          <span class="stat-value">${city.primaryStreets}</span>
+          <span class="stat-value">${primaryStreets}</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">${isZh ? '数据来源与授权' : 'Data Source'}</span>
+          <span class="stat-label">${isZh ? '数据来源与开放许可' : 'Data Source'}</span>
           <span class="stat-value">OpenStreetMap (ODbL)</span>
         </div>
       </section>
@@ -585,17 +633,17 @@ ${JSON.stringify(jsonLd, null, 2)}
       <section class="card" id="api">
         <h2>${isZh ? '开发者与矢量导出 API' : 'Developer & Export API'}</h2>
         <p style="font-size: 0.9rem; color: #6b7280; margin-bottom: 8px;">
-          ${isZh ? `直接在您的 Web 应用、Figma 插件或笔式绘图仪中提取${cityDisplayName}道路矢量：` : `Extract vector SVG geometries directly into your web applications or pen plotters:`}
+          ${isZh ? `直接在您的 Web 应用、Figma 插件、设计脚本或笔式绘图仪中提取${cityDisplayName}道路矢量：` : `Extract vector SVG geometries directly into your web applications or pen plotters:`}
         </p>
-        <pre><code>// Programmatically extract ${city.name} roads:
+        <pre><code>// ${isZh ? `通过 JavaScript 代码秒级加载与提取 ${cityDisplayName} 路网矢量：` : `Programmatically extract ${city.name} roads:`}
 const res = await window.cityRoads.loadCity('${city.name}', {
-  minLength: 2,        // Filter micro segments
-  includeLabels: true  // Minimalist typography
+  minLength: 2,        // ${isZh ? '过滤微小碎线段 (px)' : 'Filter micro segments'}
+  includeLabels: true  // ${isZh ? '包含极简衬线城市标题' : 'Minimalist typography'}
 });
 
-console.log(res.svg); // Clean XML &lt;path&gt; markup</code></pre>
+console.log(res.svg); // ${isZh ? '获取纯净标准 XML <path> 矢量代码' : 'Clean XML <path> markup'}</code></pre>
         <p style="font-size: 0.85rem; color: #8b92a0; margin-top: 10px;">
-          ${isZh ? '支持 iframe <code>postMessage</code> 桥接协议，适用于自动化数据流。' : 'Supports iframe <code>postMessage</code> bridge for automated pipelines.'}
+          ${isZh ? '支持 iframe <code>postMessage</code> 跨域通信与纯 Node.js CLI 无头批量导出协议。' : 'Supports iframe <code>postMessage</code> bridge for automated pipelines.'}
         </p>
       </section>
     </div>
@@ -604,16 +652,20 @@ console.log(res.svg); // Clean XML &lt;path&gt; markup</code></pre>
       <h2>${isZh ? '常见问题解答 (FAQ)' : 'Frequently Asked Questions'}</h2>
       ${isZh ? `
       <div class="faq-item">
-        <div class="faq-question">City Roads 如何渲染${cityDisplayName}的城市道路？</div>
-        <div>City Roads 从 OpenStreetMap 获取原始路网几何数据（通过 Overpass API 或预先索引的 Protobuf 图数据），并在高性能 WebGL 画布上实时渲染数以万计的道路线段。</div>
+        <div class="faq-question">City Roads 如何绘制并渲染${cityDisplayName}的全部城市道路？</div>
+        <div>City Roads 从 OpenStreetMap 获取原始矢量路网几何数据（通过 Overpass API 或预先建立索引的 Protobuf 拓扑图数据），并在浏览器中使用高性能 WebGL 图形渲染管线秒级绘制数以万计的道路线段与街区肌理。</div>
       </div>
       <div class="faq-item">
-        <div class="faq-question">我可以导出${cityDisplayName}的高清海报或矢量图吗？</div>
-        <div>可以！交互式查看器允许自定义画布底色、道路墨色，并一键导出无限缩放的矢量 SVG 文件或打印级高清晰度 PNG 海报位图。</div>
+        <div class="faq-question">${cityDisplayName}的城市路网呈现怎样的规划特征？</div>
+        <div>${cityDisplayName}主要呈现${layoutType}。${description}</div>
       </div>
       <div class="faq-item">
-        <div class="faq-question">导出的${cityDisplayName}地图可以用于商业用途吗？</div>
-        <div>可以。路网几何数据由 OpenStreetMap 贡献者在开放数据库许可（ODbL）下提供。只要在作品中保留 OpenStreetMap 版权署名，即可自由用于个人印刷、装饰画或商业设计。</div>
+        <div class="faq-question">我可以将${cityDisplayName}的地图导出为高清海报或矢量 SVG 吗？</div>
+        <div>可以！在线交互式工具支持自由调节背景纸张底色与道路墨水颜色，并支持一键导出无损无限缩放的矢量 SVG 文件，或用于印刷定制的打印级高清 PNG 海报位图。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">导出的${cityDisplayName}路网可以用于商业用途吗？</div>
+        <div>可以。路网几何数据由 OpenStreetMap 贡献者在开放数据库许可（ODbL）下开放提供。只要在最终作品或产品中保留适当的版权署名（如 © OpenStreetMap contributors），即可自由用于个人艺术挂画打印、商业包装、文创产品或建筑规划底图。</div>
       </div>` : `
       <div class="faq-item">
         <div class="faq-question">How does City Roads render ${city.name} roads?</div>
@@ -635,8 +687,10 @@ console.log(res.svg); // Clean XML &lt;path&gt; markup</code></pre>
       </h3>
       <div class="city-chips">
         ${relatedCities.map(c => {
-          const relName = isZh ? (CITY_ZH_MAP[c.slug] || c.localName || c.name) : c.name;
-          const relSub = isZh ? (c.localName && c.localName !== relName ? ` (${c.localName})` : '') : ` (${c.localName})`;
+          const relZh = CITIES_ZH_DETAILS[c.slug];
+          const relName = isZh ? (relZh?.name || CITY_ZH_MAP[c.slug] || c.localName || c.name) : c.name;
+          const relCountry = isZh ? (relZh?.country || COUNTRY_ZH_MAP[c.countryCode] || c.country) : c.country;
+          const relSub = isZh ? (c.localName && c.localName !== relName ? ` (${c.localName})` : ` (${relCountry})`) : ` (${c.country})`;
           return `<a href="../${c.slug}/" class="city-chip">${relName}${relSub}</a>`;
         }).join('\n        ')}
       </div>
@@ -655,7 +709,7 @@ console.log(res.svg); // Clean XML &lt;path&gt; markup</code></pre>
 </html>`;
 }
 
-export function generateChineseHomepage(baseHtml) {
+export function generateChineseHomepage(baseHtml, cities = []) {
   const zhTitle = siteConfig.zh.title;
   const zhDesc = siteConfig.zh.description;
   const zhKeywords = siteConfig.zh.keywords;
@@ -682,7 +736,21 @@ export function generateChineseHomepage(baseHtml) {
     .replace(/(href|src)="assets\//g, '$1="../assets/')
     .replace(/(href|src)="favicon\.svg"/g, '$1="../favicon.svg"')
     .replace(/"name": "City Roads"/g, `"name": "${zhSiteName}"`)
-    .replace(/"description": "Free web tool to instantly draw[^"]*"/g, `"description": "${zhDesc}"`);
+    .replace(/"description": "Free web tool to instantly draw[^"]*"/g, `"description": "${zhDesc}"`)
+    .replace(/"inLanguage": \["en", "zh-CN"\]/, '"inLanguage": "zh-CN"')
+    .replace(/"name": "Global City Road Networks Dataset"/, '"name": "全球城市道路网络矢量数据集"')
+    .replace(/"description": "OpenStreetMap road network data indexed and serialized for thousands of world metropolitan areas\."/, '"description": "基于 OpenStreetMap 开放数据索引与序列化的全球数千座都会区矢量路网数据集，支持 SVG 矢量与高清 PNG 导出。"');
+
+  // Inject Chinese Search Engine & Dual-Kernel tags if missing
+  if (!zhHtml.includes('name="applicable-device"')) {
+    const chinaEngineTags = `
+    <!-- Chinese Search Engines & Multi-Device Standards -->
+    <meta name="applicable-device" content="pc,mobile">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no">`;
+    zhHtml = zhHtml.replace('<head>', `<head>${chinaEngineTags}`);
+  }
 
   // Ensure reciprocal hreflang links exist
   if (!zhHtml.includes('hreflang="zh-CN"')) {
@@ -694,20 +762,47 @@ export function generateChineseHomepage(baseHtml) {
     zhHtml = zhHtml.replace('</head>', `${hreflangSnippet}\n  </head>`);
   }
 
-  // Localized noscript content
+  // Generate Crawlable Semantic Directory for Chinese and Global Top Cities
+  const availableSlugs = new Set(cities.map(c => c.slug));
+  const topCnSlugs = ['beijing', 'shanghai', 'guangzhou', 'shenzhen', 'hangzhou', 'chengdu', 'hong-kong', 'taipei', 'chongqing', 'wuhan', 'nanjing', 'xian', 'suzhou', 'tianjin', 'changsha', 'qingdao'].filter(s => availableSlugs.size === 0 || availableSlugs.has(s));
+  const topWorldSlugs = ['tokyo', 'paris', 'new-york', 'london', 'singapore', 'kyoto', 'barcelona', 'amsterdam', 'berlin', 'rome', 'san-francisco', 'sydney', 'chicago', 'los-angeles', 'vienna', 'dubai'].filter(s => availableSlugs.size === 0 || availableSlugs.has(s));
+
+  const cnLinks = topCnSlugs.map(slug => {
+    const zhName = CITIES_ZH_DETAILS[slug]?.name || CITY_ZH_MAP[slug] || slug;
+    return `<a href="./city/${slug}/" style="color: #3d4451; margin-right: 12px; text-decoration: none; border-bottom: 1px dotted #82a1b9;">${zhName}城市道路网</a>`;
+  }).join(' ');
+
+  const worldLinks = topWorldSlugs.map(slug => {
+    const zhName = CITIES_ZH_DETAILS[slug]?.name || CITY_ZH_MAP[slug] || slug;
+    return `<a href="./city/${slug}/" style="color: #3d4451; margin-right: 12px; text-decoration: none; border-bottom: 1px dotted #82a1b9;">${zhName}道路地图</a>`;
+  }).join(' ');
+
+  // Localized noscript content with rich semantic directory
   const zhNoscript = `
     <noscript>
-      <div style="max-width: 720px; margin: 40px auto; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #3d4451; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-        <h1 style="font-family: 'Playfair Display', 'Noto Serif SC', serif; font-size: 28px; margin-bottom: 12px;">City Roads — 一键绘制与导出全球任意城市全部道路网</h1>
-        <p><strong>City Roads 城市路网</strong> 是一款免费的在线极简地图工具，基于 OpenStreetMap 开源路网数据与 WebGL GPU 图形加速，一键秒级绘制全球任意城市的完整街网。</p>
-        <h2>核心功能与应用场景</h2>
-        <ul>
+      <div style="max-width: 760px; margin: 40px auto; padding: 28px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.65; color: #3d4451; background: #fff; border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+        <h1 style="font-family: 'Playfair Display', 'Noto Serif SC', serif; font-size: 26px; margin-bottom: 12px; color: #2c323d;">City Roads — 一键绘制与导出全球任意城市全部道路网</h1>
+        <p><strong>City Roads 城市路网</strong> 是一款免费在线极简制图工具，基于 OpenStreetMap 开源路网数据与 WebGL GPU 图形加速，一键秒级绘制全球任意城市的完整街网。</p>
+        
+        <h2 style="font-size: 18px; margin-top: 20px; margin-bottom: 10px; color: #2c323d;">核心功能与应用场景</h2>
+        <ul style="padding-left: 20px;">
           <li><strong>一键绘制城市全部道路：</strong> 秒级渲染数千座世界都会区的全部街道网络与城市肌理。</li>
           <li><strong>矢量 SVG 导出：</strong> 清晰无损的矢量路径，支持按道路长度过滤，适配 Figma、Illustrator、激光雕刻与笔式绘图机。</li>
           <li><strong>高清 PNG 城市海报：</strong> 打印级高分辨率位图导出，轻松定制极简城市道路艺术挂画与文创产品。</li>
           <li><strong>开发者 API 与自动化脚本：</strong> 支持通过 <code>window.cityRoads</code>、iframe <code>postMessage</code> 或纯 Node.js CLI 无头引擎批量抓取导出。</li>
         </ul>
-        <p><em>请在现代浏览器中启用 JavaScript 与 WebGL 支持，以畅享交互式 3D 地图浏览与实时配色调节。</em></p>
+
+        <h2 style="font-size: 18px; margin-top: 24px; margin-bottom: 10px; color: #2c323d;">重点城市路网索引与矢量导出通道</h2>
+        <div style="margin-bottom: 16px;">
+          <h3 style="font-size: 14px; margin: 12px 0 6px 0; color: #6b7280; text-transform: uppercase;">中国与亚洲重点都会</h3>
+          <p style="line-height: 2.1;">${cnLinks}</p>
+          <h3 style="font-size: 14px; margin: 14px 0 6px 0; color: #6b7280; text-transform: uppercase;">全球知名代表性都会区</h3>
+          <p style="line-height: 2.1;">${worldLinks}</p>
+        </div>
+
+        <p style="font-size: 13px; color: #8892a0; border-top: 1px solid #eae6df; padding-top: 12px; margin-top: 20px;">
+          <em>提示：请在现代浏览器中启用 JavaScript 与 WebGL 支持，以畅享交互式 3D 地图浏览、实时调色与无损矢量导出。</em>
+        </p>
       </div>
     </noscript>`;
 
@@ -827,6 +922,12 @@ User-agent: 360Spider
 Allow: /
 
 User-agent: Sogou web spider
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: YisouSpider
 Allow: /
 
 User-agent: YandexBot
@@ -976,7 +1077,7 @@ export function buildPages() {
   const distIndexFile = path.resolve(DIST_DIR, 'index.html');
   if (fs.existsSync(distIndexFile)) {
     const baseIndexHtml = fs.readFileSync(distIndexFile, 'utf8');
-    const zhIndexHtml = generateChineseHomepage(baseIndexHtml);
+    const zhIndexHtml = generateChineseHomepage(baseIndexHtml, cities);
     fs.writeFileSync(path.resolve(distZhDir, 'index.html'), zhIndexHtml, 'utf8');
   }
 

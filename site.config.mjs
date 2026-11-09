@@ -111,9 +111,9 @@ const siteConfig = {
   // 站点基础信息 (Chinese / 中文)
   zh: {
     siteName: 'City Roads 城市路网',
-    title: 'City Roads — 一键绘制与导出全球任意城市全部道路网 (在线极简矢量地图)',
+    title: 'City Roads — 一键绘制与导出全球任意城市全部道路网 (在线极简矢量地图与海报生成器)',
     description: '免费在线工具，基于 OpenStreetMap 真实路网与 WebGL 高性能渲染，一键秒级绘制全球任意城市全部道路，并支持导出高精矢量 SVG 与高清海报 PNG。',
-    keywords: '绘制城市全部道路, 城市路网生成器, 城市道路矢量图, 导出地图SVG, 极简城市路网海报, OpenStreetMap 道路渲染, 城市地图矢量生成',
+    keywords: '绘制城市全部道路, 城市路网生成器, 城市道路矢量图, 导出地图SVG, 极简城市路网海报, OpenStreetMap 道路渲染, 城市地图矢量生成, 城市路网数据下载, 城市街道肌理图, 建筑规划道路底图, 城市地图壁纸',
   },
 
   // 维护者与仓库信息
