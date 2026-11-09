@@ -102,11 +102,19 @@ const siteConfig = {
   siteUrl: normalizeUrl(rawSiteUrl),
   rawSiteUrl,
 
-  // 站点基础信息
+  // 站点基础信息 (English Default)
   siteName: 'City Roads',
   title: 'City Roads — Draw & Export All Roads in Any City (Online Tool)',
   description: 'Free web tool to instantly draw, render, and download all roads in any city as vector SVG or high-res PNG. Powered by OpenStreetMap and WebGL.',
   keywords: 'draw all roads in a city, draw all roads in a city at once, city road map generator, city roads visualization, export street map svg, openstreetmap road vector, minimalist city poster, city road network, vector map generator',
+
+  // 站点基础信息 (Chinese / 中文)
+  zh: {
+    siteName: 'City Roads 城市路网',
+    title: 'City Roads — 一键绘制与导出全球任意城市全部道路网 (在线极简矢量地图)',
+    description: '免费在线工具，基于 OpenStreetMap 真实路网与 WebGL 高性能渲染，一键秒级绘制全球任意城市全部道路，并支持导出高精矢量 SVG 与高清海报 PNG。',
+    keywords: '绘制城市全部道路, 城市路网生成器, 城市道路矢量图, 导出地图SVG, 极简城市路网海报, OpenStreetMap 道路渲染, 城市地图矢量生成',
+  },
 
   // 维护者与仓库信息
   author: 'Owen Cedaric',

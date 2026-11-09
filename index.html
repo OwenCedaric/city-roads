@@ -15,6 +15,11 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="__SITE_URL__/">
 
+    <!-- Alternate Languages / Hreflang for Multilingual SEO -->
+    <link rel="alternate" hreflang="en" href="__SITE_URL__/">
+    <link rel="alternate" hreflang="zh-CN" href="__SITE_URL__/zh/">
+    <link rel="alternate" hreflang="x-default" href="__SITE_URL__/">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="__SITE_URL__/">
@@ -24,6 +29,7 @@
     <meta property="og:image" content="__OG_IMAGE__">
     <meta property="og:image:alt" content="City Roads visualization showing every street rendered in minimalist aesthetic">
     <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="zh_CN">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
@@ -57,6 +63,7 @@
           "description": "__SITE_DESCRIPTION__",
           "applicationCategory": "DesignApplication",
           "operatingSystem": "All",
+          "inLanguage": ["en", "zh-CN"],
           "browserRequirements": "Requires WebGL support",
           "featureList": [
             "Draw all roads in any city at once with high-performance WebGL",

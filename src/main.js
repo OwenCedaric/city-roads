@@ -7,6 +7,7 @@ import App from './App.vue';
 import NoWebGL from './NoWebGL.vue';
 import Query from './lib/Query.js';
 import { cityRoads, setupPostMessageBridge } from './lib/cityRoadsAPI.js';
+import i18nPlugin from './i18n/index.js';
 
 // const wgl = require('w-gl');
 
@@ -21,9 +22,13 @@ window.cityRoads = cityRoads;
 setupPostMessageBridge();
 
 if (isWebGLEnabled(document.querySelector('#canvas'))) {
-  createApp(App).mount('#host');
+  const app = createApp(App);
+  app.use(i18nPlugin);
+  app.mount('#host');
 } else {
-  createApp(NoWebGL).mount('#host');
+  const app = createApp(NoWebGL);
+  app.use(i18nPlugin);
+  app.mount('#host');
 }
 
 function logError(e) {

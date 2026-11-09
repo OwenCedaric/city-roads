@@ -2,39 +2,39 @@
 <div class='find-place'>
   <div class='site-header-container'>
     <city-logo :size='52' class='site-logo'></city-logo>
-    <h1 class='site-header'>city roads</h1>
-    <p class='description'>Draw and export all roads in any city at once with WebGL</p>
+    <h1 class='site-header'>{{ $t('findPlace.siteHeader') }}</h1>
+    <p class='description'>{{ $t('findPlace.siteDescription') }}</p>
   </div>
   <form v-on:submit.prevent="onSubmit" class='search-box'>
-      <input class='query-input' v-model='enteredInput' type='text' placeholder='Enter a city name to start' ref='input'>
+      <input class='query-input' v-model='enteredInput' type='text' :placeholder="$t('findPlace.placeholder')" ref='input'>
       <a type='submit' class='search-submit' href='#' @click.prevent='onSubmit' v-if='enteredInput && !hideInput'>{{mainActionText}}</a>
   </form>
   <div v-if='!loading && !suggestions.length && !error' class='quick-cities'>
-    <span class='quick-label'>Explore:</span>
+    <span class='quick-label'>{{ $t('findPlace.explore') }}</span>
     <a 
       v-for='city in quickCities' 
       :key='city.slug' 
       :href="'city/' + city.slug + '/'" 
       class='quick-city-chip'
       @click.prevent='onQuickCityClick(city)'
-      :title="'Draw all roads in ' + city.name"
+      :title="$t('findPlace.exploreTitle', { name: city.name })"
     >{{ city.name }}</a>
   </div>
   <div v-if='!loading && !suggestions.length && !error' class='tool-features'>
-    <span class='feature-item'>100% Vector & WebGL</span>
+    <span class='feature-item'>{{ $t('findPlace.featureVector') }}</span>
     <span class='feature-separator'>•</span>
-    <span class='feature-item'>Export SVG & High-Res PNG</span>
+    <span class='feature-item'>{{ $t('findPlace.featureExport') }}</span>
     <span class='feature-separator'>•</span>
-    <span class='feature-item'>OpenStreetMap Data</span>
+    <span class='feature-item'>{{ $t('findPlace.featureData') }}</span>
   </div>
   <div v-if='showWarning' class='prompt message note shadow'>
-    Note: Large cities may require 200MB+ of data transfer and may need a powerful device to render.
+    {{ $t('findPlace.largeCityWarning') }}
   </div>
   <div class='results' v-if='!loading'>
     <div v-if='suggestionsLoaded && suggestions.length' class='suggestions shadow'>
       <div class='prompt message'>
-        <div>Select boundaries below to download all roads within</div>
-        <div class='note'>large cities may require 200MB+ of data transfer and a powerful device</div>
+        <div>{{ $t('findPlace.selectBoundaryPrompt') }}</div>
+        <div class='note'>{{ $t('findPlace.selectBoundarySubnote') }}</div>
       </div>
       <ul>
         <li v-for='(suggestion, index) in suggestions' :key="index">
@@ -48,40 +48,40 @@
       </ul>
     </div>
     <div v-if='suggestionsLoaded && !suggestions.length && !loading && !error' class='no-results message shadow'>
-      Didn't find matching cities. Try a different query?
+      {{ $t('findPlace.noMatchingCities') }}
     </div>
     <div v-if='noRoads' class='no-results message shadow'>
-      Didn't find any roads. Try a different query?
+      {{ $t('findPlace.noRoads') }}
     </div>
   </div>
   <div v-if='error' class='error message shadow'>
     <div v-if='isServerError(error)'>
-      <div>OpenStreetMap servers are busy or temporarily unavailable.</div>
-      <div class='error-note'>We tried {{error.serversAttempted || 'multiple'}} servers but none responded in time. This usually resolves within a few minutes.</div>
+      <div>{{ $t('findPlace.osmBusy') }}</div>
+      <div class='error-note'>{{ $t('findPlace.osmBusyNote', { servers: error.serversAttempted || 'multiple' }) }}</div>
       <div class='error-actions'>
-        <a href='#' @click.prevent="retry" class='retry-btn'>Retry</a>
+        <a href='#' @click.prevent="retry" class='retry-btn'>{{ $t('common.retry') }}</a>
       </div>
     </div>
     <div v-else>
-      <div>Sorry, something went wrong while loading data.</div>
+      <div>{{ $t('findPlace.somethingWrong') }}</div>
       <div class='error-note'>{{error.message || error.toString()}}</div>
       <div class='error-actions'>
-        <a href='#' @click.prevent="retry" class='retry-btn'>Retry</a>
+        <a href='#' @click.prevent="retry" class='retry-btn'>{{ $t('common.retry') }}</a>
       </div>
       <div class='error-links'>
-        <a :href='getBugReportURL(error)' :title='"report error: " + error' target='_blank'>report this issue</a>
+        <a :href='getBugReportURL(error)' :title='"report error: " + error' target='_blank'>{{ $t('findPlace.reportIssue') }}</a>
       </div>
     </div>
   </div>
   <div v-if='loading' class='loading message shadow'>
     <loading-icon></loading-icon>
     <span>{{loading}}</span>
-    <a href="#" @click.prevent='cancelRequest' class='cancel-request'>cancel</a>
+    <a href="#" @click.prevent='cancelRequest' class='cancel-request'>{{ $t('common.cancel') }}</a>
     <div class='load-padding' v-if='stillLoading > 0'>
-      Still loading...
+      {{ $t('findPlace.stillLoading1') }}
     </div>
     <div class='load-padding' v-if='stillLoading > 1'>
-      Sorry it takes so long!
+      {{ $t('findPlace.stillLoading2') }}
     </div>
   </div>
 </div>
@@ -102,8 +102,6 @@ import LoadOptions from '../lib/LoadOptions.js';
 import bus from '../lib/bus.js';
 import Pbf from 'pbf';
 import {place} from '../proto/place.js';
-
-const FIND_TEXT = 'Find City Bounds';
 
 export default {
   name: 'FindPlace',
@@ -127,21 +125,38 @@ export default {
       noRoads: false,
       clicked: false,
       showWarning: hasValidArea, 
-      mainActionText: hasValidArea ? 'Download Area' : FIND_TEXT,
-      suggestions: [],
-      quickCities: [
-        { name: 'Paris', slug: 'paris' },
-        { name: 'Tokyo', slug: 'tokyo' },
-        { name: 'New York', slug: 'new-york' },
-        { name: 'Berlin', slug: 'berlin' },
-        { name: 'Rome', slug: 'rome' }
-      ]
+      hasValidArea,
+      suggestions: []
+    }
+  },
+  computed: {
+    mainActionText() {
+      return this.hasValidArea ? this.$t('findPlace.downloadAction') : this.$t('findPlace.findAction');
+    },
+    quickCities() {
+      if (this.$i18n && this.$i18n.locale === 'zh') {
+        return [
+          { name: '巴黎', searchName: 'Paris', slug: 'paris' },
+          { name: '东京', searchName: 'Tokyo', slug: 'tokyo' },
+          { name: '北京', searchName: 'Beijing', slug: 'beijing' },
+          { name: '纽约', searchName: 'New York', slug: 'new-york' },
+          { name: '杭州', searchName: 'Hangzhou', slug: 'hangzhou' },
+          { name: '罗马', searchName: 'Rome', slug: 'rome' }
+        ];
+      }
+      return [
+        { name: 'Paris', searchName: 'Paris', slug: 'paris' },
+        { name: 'Tokyo', searchName: 'Tokyo', slug: 'tokyo' },
+        { name: 'New York', searchName: 'New York', slug: 'new-york' },
+        { name: 'Berlin', searchName: 'Berlin', slug: 'berlin' },
+        { name: 'Rome', searchName: 'Rome', slug: 'rome' }
+      ];
     }
   },
   watch: {
     enteredInput() {
       // As soon as they change it, we need not to download:
-      this.mainActionText = FIND_TEXT;
+      this.hasValidArea = false;
       this.showWarning = false;
       this.hideInput = false;
       appState.unsetPlace();
@@ -159,7 +174,7 @@ export default {
   },
   methods: {
     onQuickCityClick(city) {
-      this.enteredInput = city.name;
+      this.enteredInput = city.searchName || city.name;
       this.onSubmit();
     },
     onSubmit() {
@@ -176,7 +191,7 @@ export default {
         return;
       }
 
-      this.loading = 'Searching cities that match your query...'
+      this.loading = this.$t('findPlace.searchingCities');
       findBoundaryByName(this.enteredInput)
         .then(suggestions => {
           this.loading = null;
@@ -261,7 +276,7 @@ export default {
     },
 
     checkCache(suggestion) {
-      this.loading = 'Checking cache...'
+      this.loading = this.$t('findPlace.fetchingBoundary');
       let areaId = suggestion.areaId;
 
       return request(config.areaServer + '/' + areaId + '.pbf', {
@@ -279,7 +294,7 @@ export default {
     },
 
     useOSM(suggestion) {
-      this.loading = 'Connecting to OpenStreetMap...'
+      this.loading = this.$t('findPlace.downloadingRoads');
       
       // it may take a while to load data. 
       this.restartLoadingMonitor();

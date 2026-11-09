@@ -1,11 +1,8 @@
 import { fileURLToPath, URL } from 'url'
-import fs from 'fs'
-import path from 'path'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { visualizer } from "rollup-plugin-visualizer";
-import siteConfig, { buildUrl, normalizeUrl } from './site.config.mjs'
+import siteConfig, { buildUrl } from './site.config.mjs'
 
 // Injects site configuration placeholders into index.html
 function htmlSiteConfigPlugin() {
@@ -14,12 +11,14 @@ function htmlSiteConfigPlugin() {
     enforce: 'pre',
     transformIndexHtml(html) {
       const canonicalRoot = buildUrl(siteConfig.siteUrl, '');
+      const canonicalZhRoot = buildUrl(siteConfig.siteUrl, 'zh/');
       const webappId = siteConfig.siteUrl ? `${canonicalRoot}#webapp` : '#webapp';
       const datasetId = siteConfig.siteUrl ? `${canonicalRoot}#dataset` : '#dataset';
 
       let transformed = html
         .replace(/__SITE_URL__\/#webapp/g, webappId)
         .replace(/__SITE_URL__\/#dataset/g, datasetId)
+        .replace(/__SITE_URL__\/zh\//g, canonicalZhRoot)
         .replace(/__SITE_URL__\//g, canonicalRoot)
         .replace(/__SITE_URL__/g, canonicalRoot.replace(/\/$/, ''))
         .replace(/__SITE_NAME__/g, siteConfig.siteName)
@@ -55,7 +54,24 @@ function cityPagesDevPlugin() {
       server.middlewares.use(async (req, res, next) => {
         const url = req.url || '';
 
-        // Dynamic dev routing for city landing pages
+        // Dynamic dev routing for Chinese city landing pages: /zh/city/:slug
+        const zhCityMatch = url.match(/^\/zh\/city\/([a-z0-9-]+)\/?$/i);
+        if (zhCityMatch) {
+          try {
+            const { generateCityHTML, loadCities } = await import('./scripts/generate-city-pages.mjs');
+            const cities = loadCities();
+            const slug = zhCityMatch[1].toLowerCase();
+            const city = cities.find(c => c.slug === slug);
+            if (city) {
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.end(generateCityHTML(city, cities, 'zh'));
+            }
+          } catch (err) {
+            console.error('Error serving Chinese city dev page:', err);
+          }
+        }
+
+        // Dynamic dev routing for English city landing pages: /city/:slug
         const cityMatch = url.match(/^\/city\/([a-z0-9-]+)\/?$/i);
         if (cityMatch) {
           try {
@@ -65,7 +81,7 @@ function cityPagesDevPlugin() {
             const city = cities.find(c => c.slug === slug);
             if (city) {
               res.setHeader('Content-Type', 'text/html; charset=utf-8');
-              return res.end(generateCityHTML(city, cities));
+              return res.end(generateCityHTML(city, cities, 'en'));
             }
           } catch (err) {
             console.error('Error serving city dev page:', err);

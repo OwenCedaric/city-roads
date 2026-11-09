@@ -1,13 +1,12 @@
 <template>
   <div class='absolute no-webgl'>
-    <h3>WebGL is not enabled :(</h3>
-    <p>This website renders millions of roads at once.</p>
+    <h3>{{ $t('noWebgl.title') }}</h3>
+    <p>{{ $t('noWebgl.p1') }}</p>
     <p>
-      To render this amount of data fast, the website uses <a href='https://get.webgl.org/'>WebGL</a>,
-      which seem to be not supported by the device that you are using.
+      {{ $t('noWebgl.p2') }}
     </p>
-    <p>Please try a different device to play with this website</p>
-    <img src="https://i.imgur.com/Fbbe5a6.png" alt="demo">
+    <p>{{ $t('noWebgl.p3') }}</p>
+    <img src="https://i.imgur.com/Fbbe5a6.png" :alt="$t('noWebgl.demoAlt')">
   </div>
 </template>
 <style lang="stylus" scoped>

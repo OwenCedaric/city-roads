@@ -5,7 +5,7 @@
       <div class="ai-modal-header">
         <div class="ai-header-title-group">
           <div class="ai-badge">AGENT SKILL</div>
-          <h2 class="ai-modal-title">City Roads AI Skill 调用指南</h2>
+          <h2 class="ai-modal-title">{{ $t('aiModal.title') }}</h2>
         </div>
         <button type="button" class="ai-close-btn" @click="close" title="Close (Esc)">
           <remix-icon name="close-line" :size="18"></remix-icon>
@@ -16,17 +16,17 @@
       <div v-if="cityName" class="ai-city-callout">
         <remix-icon name="map-pin-2-line" :size="15" class="callout-icon"></remix-icon>
         <div class="callout-body">
-          <span class="callout-label">当前城市专属 Prompt：</span>
-          <code class="callout-code">帮我用 midnight 主题导出当前 {{ cityName }} 的城市道路矢量图</code>
+          <span class="callout-label">{{ $t('aiModal.cityPromptLabel') }}</span>
+          <code class="callout-code">{{ cityExclusivePrompt }}</code>
         </div>
-        <button class="ai-copy-btn mini" @click="copyText(`帮我用 midnight 主题导出当前 ${cityName} 的城市道路矢量图`, 'cityPrompt')">
+        <button class="ai-copy-btn mini" @click="copyText(cityExclusivePrompt, 'cityPrompt')">
           <template v-if="copiedKey === 'cityPrompt'">
             <remix-icon name="check-line" :size="12"></remix-icon>
-            <span>已复制</span>
+            <span>{{ $t('common.copied') }}</span>
           </template>
           <template v-else>
             <remix-icon name="file-copy-line" :size="12"></remix-icon>
-            <span>复制</span>
+            <span>{{ $t('common.copy') }}</span>
           </template>
         </button>
       </div>
@@ -40,7 +40,7 @@
           @click="activeTab = 'prompt'"
         >
           <remix-icon name="chat-smile-2-line" :size="14"></remix-icon>
-          <span>对话 Prompt</span>
+          <span>{{ $t('aiModal.tabPrompt') }}</span>
         </button>
         <button 
           type="button" 
@@ -49,7 +49,7 @@
           @click="activeTab = 'cli'"
         >
           <remix-icon name="terminal-box-line" :size="14"></remix-icon>
-          <span>命令行 CLI</span>
+          <span>{{ $t('aiModal.tabCli') }}</span>
         </button>
         <button 
           type="button" 
@@ -58,7 +58,7 @@
           @click="activeTab = 'themes'"
         >
           <remix-icon name="palette-line" :size="14"></remix-icon>
-          <span>主题与参数</span>
+          <span>{{ $t('aiModal.tabThemes') }}</span>
         </button>
       </div>
 
@@ -67,7 +67,7 @@
         <!-- 1. Prompt Tab -->
         <div v-if="activeTab === 'prompt'" class="tab-pane">
           <p class="tab-desc">
-            本项目已在 <code>.agents/skills/city-roads-export/</code> 封装了标准 AI Skill。在 Antigravity 或智能体对话框中，直接输入自然语言即可触发：
+            {{ $t('aiModal.promptIntro') }}
           </p>
 
           <div class="prompt-cards-grid">
@@ -77,11 +77,11 @@
                 <button class="ai-copy-btn" @click="copyText(item.prompt, 'prompt_' + idx)">
                   <template v-if="copiedKey === 'prompt_' + idx">
                     <remix-icon name="check-line" :size="12"></remix-icon>
-                    <span>已复制</span>
+                    <span>{{ $t('common.copied') }}</span>
                   </template>
                   <template v-else>
                     <remix-icon name="file-copy-line" :size="12"></remix-icon>
-                    <span>复制 Prompt</span>
+                    <span>{{ $t('aiModal.copyPrompt') }}</span>
                   </template>
                 </button>
               </div>
@@ -93,7 +93,7 @@
           <div class="tip-box">
             <remix-icon name="lightbulb-line" :size="16" class="tip-icon"></remix-icon>
             <div class="tip-text">
-              <strong>Prompt 技巧：</strong>支持中文城市名、拼音或英文。你可以自由要求不同的配色（如“暗黑模式”、“黑金风”、“蓝图风”）、不同比例（如“手机壁纸”、“方图”）或只过滤“主要干道”。
+              <strong>{{ $t('aiModal.promptTipsTitle') }}</strong> {{ $t('aiModal.promptTipsContent') }}
             </div>
           </div>
         </div>
@@ -101,55 +101,55 @@
         <!-- 2. CLI Tab -->
         <div v-if="activeTab === 'cli'" class="tab-pane">
           <p class="tab-desc">
-            底层采用纯 Node.js 无头渲染引擎，无需启动浏览器。直接在终端运行以下脚本即可秒级抓取与导出：
+            {{ $t('aiModal.cliIntro') }}
           </p>
 
           <div class="cli-command-block">
-            <div class="cli-label">最简生成（默认暗黑主题，1200x1600 海报尺寸）：</div>
+            <div class="cli-label">{{ $t('aiModal.cliLabelBasic') }}</div>
             <div class="code-row">
               <code>npm run export:city -- --city "{{ cityName || 'Paris' }}"</code>
               <button class="ai-copy-btn" @click="copyText(`npm run export:city -- --city &quot;${cityName || 'Paris'}&quot;`, 'cli_simple')">
                 <template v-if="copiedKey === 'cli_simple'">
                   <remix-icon name="check-line" :size="12"></remix-icon>
-                  <span>已复制</span>
+                  <span>{{ $t('common.copied') }}</span>
                 </template>
                 <template v-else>
                   <remix-icon name="file-copy-line" :size="12"></remix-icon>
-                  <span>复制</span>
+                  <span>{{ $t('common.copy') }}</span>
                 </template>
               </button>
             </div>
           </div>
 
           <div class="cli-command-block">
-            <div class="cli-label">指定黑金风格（midnight）并保存到自定义目录：</div>
+            <div class="cli-label">{{ $t('aiModal.cliLabelMidnight') }}</div>
             <div class="code-row">
               <code>npm run export:city -- --city "Kyoto" --theme midnight --out ./output/kyoto-gold.svg</code>
               <button class="ai-copy-btn" @click="copyText('npm run export:city -- --city &quot;Kyoto&quot; --theme midnight --out ./output/kyoto-gold.svg', 'cli_gold')">
                 <template v-if="copiedKey === 'cli_gold'">
                   <remix-icon name="check-line" :size="12"></remix-icon>
-                  <span>已复制</span>
+                  <span>{{ $t('common.copied') }}</span>
                 </template>
                 <template v-else>
                   <remix-icon name="file-copy-line" :size="12"></remix-icon>
-                  <span>复制</span>
+                  <span>{{ $t('common.copy') }}</span>
                 </template>
               </button>
             </div>
           </div>
 
           <div class="cli-command-block">
-            <div class="cli-label">手机壁纸比例（9:16，无文字纯路网）：</div>
+            <div class="cli-label">{{ $t('aiModal.cliLabelWallpaper') }}</div>
             <div class="code-row">
               <code>npm run export:city -- --city "Tokyo" --theme blueprint --width 1080 --height 1920 --no-label</code>
               <button class="ai-copy-btn" @click="copyText('npm run export:city -- --city &quot;Tokyo&quot; --theme blueprint --width 1080 --height 1920 --no-label', 'cli_wallpaper')">
                 <template v-if="copiedKey === 'cli_wallpaper'">
                   <remix-icon name="check-line" :size="12"></remix-icon>
-                  <span>已复制</span>
+                  <span>{{ $t('common.copied') }}</span>
                 </template>
                 <template v-else>
                   <remix-icon name="file-copy-line" :size="12"></remix-icon>
-                  <span>复制</span>
+                  <span>{{ $t('common.copy') }}</span>
                 </template>
               </button>
             </div>
@@ -158,7 +158,7 @@
 
         <!-- 3. Themes Tab -->
         <div v-if="activeTab === 'themes'" class="tab-pane">
-          <p class="tab-desc">预设了 6 款经过专业色彩校准的极简艺术排版主题：</p>
+          <p class="tab-desc">{{ $t('aiModal.themesIntro') }}</p>
 
           <div class="theme-palette-grid">
             <div v-for="t in themes" :key="t.key" class="theme-card" :style="{ backgroundColor: t.bg }">
@@ -171,53 +171,53 @@
             </div>
           </div>
 
-          <h4 class="sub-heading">常用 CLI 参数速查</h4>
+          <h4 class="sub-heading">{{ $t('aiModal.subHeadingParams') }}</h4>
           <div class="params-table-wrapper">
             <table class="params-table">
               <thead>
                 <tr>
-                  <th>参数</th>
-                  <th>类型</th>
-                  <th>默认值</th>
-                  <th>说明</th>
+                  <th>{{ $t('aiModal.thParam') }}</th>
+                  <th>{{ $t('aiModal.thType') }}</th>
+                  <th>{{ $t('aiModal.thDefault') }}</th>
+                  <th>{{ $t('aiModal.thDesc') }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><code>-c, --city</code></td>
                   <td>String</td>
-                  <td><em>必填</em></td>
-                  <td>目标城市/区域名称（如 "Seattle", "Kyoto", "Hangzhou"）</td>
+                  <td><em>{{ $t('aiModal.required') }}</em></td>
+                  <td>{{ $t('aiModal.paramCityDesc') }}</td>
                 </tr>
                 <tr>
                   <td><code>-t, --theme</code></td>
                   <td>String</td>
                   <td><code>dark</code></td>
-                  <td>色彩风格：dark, light, blueprint, midnight, emerald, warm-sand</td>
+                  <td>{{ $t('aiModal.paramThemeDesc') }}</td>
                 </tr>
                 <tr>
                   <td><code>-w, --width</code></td>
                   <td>Number</td>
                   <td><code>1200</code></td>
-                  <td>SVG 画布宽度（像素）</td>
+                  <td>{{ $t('aiModal.paramWidthDesc') }}</td>
                 </tr>
                 <tr>
                   <td><code>-h, --height</code></td>
                   <td>Number</td>
                   <td><code>1600</code></td>
-                  <td>SVG 画布高度（像素）</td>
+                  <td>{{ $t('aiModal.paramHeightDesc') }}</td>
                 </tr>
                 <tr>
                   <td><code>--filter</code></td>
                   <td>String</td>
                   <td><code>all</code></td>
-                  <td>道路类型：all (全部路网), major (仅主干道与高速)</td>
+                  <td>{{ $t('aiModal.paramRoadsDesc') }}</td>
                 </tr>
                 <tr>
                   <td><code>--no-label</code></td>
                   <td>Boolean</td>
                   <td><code>false</code></td>
-                  <td>去除海报底部的城市名与经纬度标签</td>
+                  <td>{{ $t('aiModal.paramNoTextDesc') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -228,9 +228,9 @@
       <!-- Modal Footer -->
       <div class="ai-modal-footer">
         <div class="footer-tip">
-          产出文件默认存放在 <code>./output/</code> 目录下，可直接导入 Figma 或笔式绘图机。
+          {{ $t('aiModal.outputNote') }}
         </div>
-        <button type="button" class="ai-primary-btn" @click="close">了解，开始使用</button>
+        <button type="button" class="ai-primary-btn" @click="close">{{ $t('aiModal.closeBtn') }}</button>
       </div>
     </div>
   </div>
@@ -259,38 +259,31 @@ export default {
     return {
       activeTab: 'prompt',
       copiedKey: null,
-      copyTimeout: null,
-      promptExamples: [
-        {
-          tag: '艺术海报',
-          prompt: '帮我生成一张杭州的暗黑风格城市道路海报',
-          desc: '自动抓取全部道路，应用高对比暗黑背景与经纬度排版'
-        },
-        {
-          tag: '蓝图工程风',
-          prompt: '导出巴黎的极简建筑蓝图风格矢量图，尺寸 1200x1200',
-          desc: '深海军蓝基底配合荧光天蓝线条，1:1 方形画幅'
-        },
-        {
-          tag: '手机壁纸',
-          prompt: '制作东京的黑金（midnight）手机壁纸，去除底边文字',
-          desc: '纯黑背景上镀金路网，9:16 满屏纯路网'
-        },
-        {
-          tag: '主干道过滤',
-          prompt: '帮我导出纽约曼哈顿的主要干道路网，过滤掉细小巷道',
-          desc: '自动追加 major 过滤器，保留核心动脉，文件极致精简'
-        }
-      ],
-      themes: [
-        { key: 'dark', label: 'Dark 极简暗黑', bg: '#0d1117', line: 'rgba(240, 246, 252, 0.85)', text: '#f0f6fc', accent: '#58a6ff' },
-        { key: 'light', label: 'Light 雅致浅灰', bg: '#fbf9f6', line: 'rgba(44, 52, 55, 0.82)', text: '#1a202c', accent: '#3182ce' },
-        { key: 'blueprint', label: 'Blueprint 建筑蓝图', bg: '#0b2545', line: 'rgba(138, 201, 255, 0.85)', text: '#ffffff', accent: '#64b5f6' },
-        { key: 'midnight', label: 'Midnight 黑金艺术', bg: '#06080e', line: 'rgba(255, 215, 0, 0.85)', text: '#ffd700', accent: '#ffa000' },
-        { key: 'emerald', label: 'Emerald 矩阵墨绿', bg: '#0a1914', line: 'rgba(74, 222, 128, 0.85)', text: '#86efac', accent: '#4ade80' },
-        { key: 'warm-sand', label: 'Warm Sand 暖沙复古', bg: '#f4ece1', line: 'rgba(74, 59, 50, 0.85)', text: '#382c24', accent: '#8c6d58' }
-      ]
+      copyTimeout: null
     };
+  },
+  computed: {
+    cityExclusivePrompt() {
+      return this.$t('aiModal.cityPromptTemplate', { cityName: this.cityName || 'Paris' });
+    },
+    promptExamples() {
+      return this.$t('aiModal.prompts') || [];
+    },
+    themes() {
+      const labels = this.$t('aiModal.themeLabels') || {};
+      const base = [
+        { key: 'dark', bg: '#0d1117', line: 'rgba(240, 246, 252, 0.85)', text: '#f0f6fc', accent: '#58a6ff' },
+        { key: 'light', bg: '#fbf9f6', line: 'rgba(44, 52, 55, 0.82)', text: '#1a202c', accent: '#3182ce' },
+        { key: 'blueprint', bg: '#0b2545', line: 'rgba(138, 201, 255, 0.85)', text: '#ffffff', accent: '#64b5f6' },
+        { key: 'midnight', bg: '#06080e', line: 'rgba(255, 215, 0, 0.85)', text: '#ffd700', accent: '#ffa000' },
+        { key: 'emerald', bg: '#0a1914', line: 'rgba(74, 222, 128, 0.85)', text: '#86efac', accent: '#4ade80' },
+        { key: 'warm-sand', bg: '#f4ece1', line: 'rgba(74, 59, 50, 0.85)', text: '#382c24', accent: '#8c6d58' }
+      ];
+      return base.map(b => ({
+        ...b,
+        label: labels[b.key] || b.key
+      }));
+    }
   },
   methods: {
     close() {

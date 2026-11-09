@@ -1,30 +1,33 @@
 <template>
-  <a 
-    href="#" 
-    class='top-right-ai-button' 
-    :class='{ active: showAiModal, "on-map": placeFound }'
-    @click.prevent='openAiModal' 
-    title='City Roads AI Skill 调用指南与 Prompt'
-  >
-    <remix-icon name="robot-2-line" :size="15" class="ai-icon"></remix-icon>
-    <span class='ai-text'>AI Skill</span>
-  </a>
+  <div class="top-right-bar" :class='{ "on-map": placeFound }'>
+    <language-switch variant="pill"></language-switch>
+    <a 
+      href="#" 
+      class='top-right-ai-button' 
+      :class='{ active: showAiModal }'
+      @click.prevent='openAiModal' 
+      :title='$t("aiModal.title")'
+    >
+      <remix-icon name="robot-2-line" :size="15" class="ai-icon"></remix-icon>
+      <span class='ai-text'>AI Skill</span>
+    </a>
+  </div>
 
   <find-place v-if='!placeFound' @loaded='onGridLoaded'></find-place>
   <div id="app" ref="controlsContainer">
     <div v-if='placeFound'>
       <div class='controls'>
-        <a href="#" class='brand-emblem' @click.prevent='startOver' title='City Roads — Return to home'>
+        <a href="#" class='brand-emblem' @click.prevent='startOver' :title='$t("header.returnHome")'>
           <city-logo :size='24'></city-logo>
         </a>
-        <a href="#" class='print-button' @click.prevent='toggleSettings' :class='{ active: showSettings }'>Customize...</a>
+        <a href="#" class='print-button' @click.prevent='toggleSettings' :class='{ active: showSettings }'>{{ $t('settings.customize') }}</a>
         <div class='controls-search'>
           <form @submit.prevent='onHeaderSearch' class='header-search-form'>
             <input 
               class='header-search-input'
               type='text' 
               v-model='headerQuery' 
-              placeholder='Search city...' 
+              :placeholder="$t('header.searchPlaceholder')" 
               ref='headerInput'
               @focus='onHeaderInputFocus'
             />
@@ -33,14 +36,14 @@
               type='button' 
               class='header-search-clear' 
               @click.prevent='clearHeaderQuery' 
-              title='Clear'
+              :title="$t('header.clear')"
             >
               <svg viewBox='0 0 24 24' width='12' height='12' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'>
                 <line x1='18' y1='6' x2='6' y2='18'></line>
                 <line x1='6' y1='6' x2='18' y2='18'></line>
               </svg>
             </button>
-            <button type='submit' class='header-search-submit' title='Search city' :disabled='headerLoading'>
+            <button type='submit' class='header-search-submit' :title="$t('header.searchCity')" :disabled='headerLoading'>
               <loading-icon v-if='headerLoading' :size='14'></loading-icon>
               <svg v-else viewBox='0 0 24 24' width='14' height='14' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
                 <circle cx='11' cy='11' r='8'></circle>
@@ -55,17 +58,17 @@
         <div v-if='headerLoadingText' class='header-status'>
           <loading-icon :size='16'></loading-icon>
           <span class='status-text'>{{ headerLoadingText }}</span>
-          <a href="#" @click.prevent='cancelHeaderSearch' class='cancel-link'>cancel</a>
+          <a href="#" @click.prevent='cancelHeaderSearch' class='cancel-link'>{{ $t('common.cancel') }}</a>
         </div>
         <div v-else-if='headerError' class='header-error'>
           <div class='error-msg'>{{ headerError }}</div>
           <div class='error-actions'>
-            <a href="#" @click.prevent='onHeaderSearch' class='retry-link'>Retry</a>
-            <a href="#" @click.prevent='closeHeaderResults' class='dismiss-link'>Dismiss</a>
+            <a href="#" @click.prevent='onHeaderSearch' class='retry-link'>{{ $t('common.retry') }}</a>
+            <a href="#" @click.prevent='closeHeaderResults' class='dismiss-link'>{{ $t('common.dismiss') }}</a>
           </div>
         </div>
         <div v-else-if='headerSuggestions.length' class='header-suggestions-list'>
-          <div class='header-sug-title'>Select boundary:</div>
+          <div class='header-sug-title'>{{ $t('header.selectBoundary') }}</div>
           <ul>
             <li v-for='(sug, idx) in headerSuggestions' :key='idx'>
               <a @click.prevent='pickHeaderSuggestion(sug)' class='header-sug-item' href='#'>
@@ -78,9 +81,9 @@
       </div>
 
       <div v-if='showSettings' class='print-window'>
-        <h3>Display</h3>
+        <h3>{{ $t('settings.display') }}</h3>
         <div class='row'>
-          <div class='col'>Colors</div>
+          <div class='col'>{{ $t('settings.colors') }}</div>
           <div class='col colors c-2'>
             <div v-for='layer in layers' :key='layer.name' class='color-container'>
               <color-picker v-model='layer.color' @change='layer.changeColor'></color-picker>
@@ -89,68 +92,48 @@
           </div>
         </div>
 
-        <h3>Export</h3>
-        <div class='row'>
-          <a href='#' @click.prevent='zazzleMugPrint()' class='col'>Onto a mug</a> 
-          <span class='col c-2'>
-            Print what you see onto a mug. <br/>Get a unique gift of your favorite city.
-          </span>
-        </div>
-        <div class='preview-actions message' v-if='zazzleLink || generatingPreview'>
-            <div v-if='zazzleLink' class='padded popup-help'>
-              If your browser has blocked the new window, <br/>please <a :href='zazzleLink' target='_blank'>click here</a>
-              to open it.
-            </div>
-            <div v-if='generatingPreview' class='loading-container'>
-              <loading-icon></loading-icon>
-              Generating preview url...
-            </div>
-        </div>
-        <div class='row'>
-          <a href='#'  @click.prevent='toPNGFile' class='col'>As an image (.png)</a> 
-          <span class='col c-2'>
-            Save the current screen as a raster image.
-          </span>
-        </div>
-        
-        <div class='row'>
-          <a href='#'  @click.prevent='toSVGFile' class='col'>As a vector (.svg)</a> 
-          <span class='col c-2'>
-            Save the current screen as a vector image.
-          </span>
-        </div>
+        <h3>{{ $t('settings.export') }}</h3>
+        <div class='export-options'>
+          <div class='export-item'>
+            <a href='#' @click.prevent='toPNGFile' class='export-link'>
+              {{ $t('settings.asPng') }}
+            </a>
+            <div class='export-desc'>{{ $t('settings.asPngDesc') }}</div>
+          </div>
 
-        <div class='row'>
-          <a href='#'  @click.prevent='copySVGCode' class='col'>Copy SVG Code</a> 
-          <span class='col c-2'>
-            Copy raw SVG paths to clipboard (ideal for Traces in GrowingGalaxy).
-          </span>
-        </div>
-        <div class='row'>
-          <a href='#'  @click.prevent='openAiModal' class='col'>
-            <remix-icon name="robot-2-line" :size="14" style="margin-right: 6px;"></remix-icon>AI Agent Skill
-          </a> 
-          <span class='col c-2'>
-            使用自然语言 Prompt 或 CLI 自动化导出城市道路矢量图。
-          </span>
+          <div class='export-item'>
+            <a href='#' @click.prevent='toSVGFile' class='export-link'>
+              {{ $t('settings.asSvg') }}
+            </a>
+            <div class='export-desc'>{{ $t('settings.asSvgDesc') }}</div>
+          </div>
+
+          <div class='export-item'>
+            <a href='#' @click.prevent='copySVGCode' class='export-link'>
+              {{ $t('settings.copySvg') }}
+            </a>
+            <div class='export-desc'>{{ $t('settings.copySvgDesc') }}</div>
+          </div>
+
+          <div class='export-item'>
+            <a href='#' @click.prevent='openAiModal' class='export-link'>
+              <remix-icon name="robot-2-line" :size="14" class="export-link-icon"></remix-icon>
+              <span>{{ $t('settings.aiSkill') }}</span>
+            </a>
+            <div class='export-desc'>{{ $t('settings.aiSkillDesc') }}</div>
+          </div>
         </div>
         <div v-if='copyFeedback' class='preview-actions message'>
           {{ copyFeedback }}
         </div>
-        <div v-if='false' class='row'>
-          <a href='#' @click.prevent='toProtobuf' class='col'>To a .PBF file</a> 
-          <span class='col c-2'>
-            Save the current data as a protobuf message. For developer use only.
-          </span>
-        </div>
 
-        <h3>About</h3>
+        <h3>{{ $t('settings.about') }}</h3>
         <div>
           <p>
-            Renders every road within a city using OpenStreetMap data and WebGL.
+            {{ $t('settings.aboutP1') }}
           </p>
           <p>
-            Redesigned and maintained by <a href='https://github.com/OwenCedaric/city-roads' target='_blank'>Owen Cedaric</a>, originally created by <a href='https://github.com/anvaka/city-roads' target='_blank'>@anvaka</a>.
+            {{ $t('settings.aboutP2', { author: 'Owen Cedaric', originalAuthor: '@anvaka' }) }}
           </p>
         </div>
       </div>
@@ -158,7 +141,7 @@
   </div>
 
   <editable-label v-if='placeFound' v-model='name' class='city-name' :printable='true' :style='{color: labelColorRGBA}' :overlay-manager='overlayManager'></editable-label>
-  <div v-if='placeFound' class='license printable can-drag' :style='{color: labelColorRGBA}'>data <a href='https://www.openstreetmap.org/about/' target="_blank" :style='{color: labelColorRGBA}'>© OpenStreetMap</a></div>
+  <div v-if='placeFound' class='license printable can-drag' :style='{color: labelColorRGBA}'>{{ $t('settings.license') }} <a href='https://www.openstreetmap.org/about/' target="_blank" :style='{color: labelColorRGBA}'>{{ $t('settings.licenseSuffix') }}</a></div>
   <ai-skill-modal v-model="showAiModal" :city-name="name"></ai-skill-modal>
 </template>
 
@@ -170,11 +153,11 @@ import ColorPicker from './components/ColorPicker.vue';
 import CityLogo from './components/CityLogo.vue';
 import AiSkillModal from './components/AiSkillModal.vue';
 import RemixIcon from './components/RemixIcon.vue';
+import LanguageSwitch from './components/LanguageSwitch.vue';
 import createScene from './lib/createScene.js';
 import GridLayer from './lib/GridLayer.js';
-import generateZazzleLink from './lib/getZazzleLink.js';
 import appState from './lib/appState.js';
-import {getPrintableCanvas, getCanvas, getSVGString} from './lib/saveFile.js';
+import {getCanvas, getSVGString} from './lib/saveFile.js';
 import {registerAppInstance} from './lib/cityRoadsAPI.js';
 import config from './config.js';
 import './lib/canvas2BlobPolyfill.js';
@@ -201,14 +184,13 @@ export default {
     ColorPicker,
     CityLogo,
     AiSkillModal,
-    RemixIcon
+    RemixIcon,
+    LanguageSwitch
   },
   data() {
     return {
       placeFound: false,
       name: '',
-      zazzleLink: null,
-      generatingPreview: false,
       showSettings: false,
       showAiModal: false,
       settingsOpen: false,
@@ -238,7 +220,6 @@ export default {
   },
   created() {
     registerAppInstance(this);
-    bus.on('scene-transform', this.handleSceneTransform);
     bus.on('background-color', this.syncBackground);
     bus.on('line-color', this.syncLineColor);
     bus.on('open-ai-skill-modal', this.handleOpenAiModal);
@@ -251,7 +232,6 @@ export default {
   beforeUnmount() {
     this.overlayManager.dispose();
     this.dispose();
-    bus.off('scene-transform', this.handleSceneTransform);
     bus.off('background-color', this.syncBackground);
     bus.off('line-color', this.syncLineColor);
     bus.off('open-ai-skill-modal', this.handleOpenAiModal);
@@ -377,9 +357,6 @@ export default {
       this.closeHeaderResults();
       this.showSettings = !this.showSettings;
     },
-    handleSceneTransform() {
-      this.zazzleLink = null;
-    },
     onGridLoaded(grid) {
       this.dispose();
       this.closeHeaderResults();
@@ -422,7 +399,6 @@ export default {
       this.name = '';
       this.dispose();
       this.placeFound = false;
-      this.zazzleLink = null;
       this.showSettings = false;
       this.backgroundColor = config.getBackgroundColor().toRgb();
       this.labelColor = config.getLabelColor().toRgb();
@@ -455,7 +431,7 @@ export default {
           document.execCommand('copy');
           document.body.removeChild(textarea);
         }
-        this.copyFeedback = 'SVG code copied to clipboard!';
+        this.copyFeedback = this.$t('settings.copyFeedback');
         setTimeout(() => {
           this.copyFeedback = null;
         }, 3000);
@@ -496,7 +472,6 @@ export default {
       function toRatioColor(c) {
         return {r: c.r/0xff, g: c.g/0xff, b: c.b/0xff, a: c.a}
       }
-      this.zazzleLink = null;
     },
 
     syncLineColor() {
@@ -510,33 +485,10 @@ export default {
     // TODO: I need two background methods?
     updateBackground() {
       this.setBackgroundColor(this.backgroundColor)
-      this.zazzleLink = null;
     },
     setBackgroundColor(c) {
       this.scene.background = c;
       document.body.style.backgroundColor = toRGBA(c);
-      this.zazzleLink = null;
-    },
-
-    zazzleMugPrint() {
-      if (this.zazzleLink) {
-        window.open(this.zazzleLink, '_blank');
-        recordOpenClick(this.zazzleLink);
-        return;
-      }
-
-      this.generatingPreview = true;
-      getPrintableCanvas(this.scene).then(printableCanvas => {
-        generateZazzleLink(printableCanvas).then(link => {
-          this.zazzleLink = link;
-          window.open(link, '_blank');
-          recordOpenClick(link);
-          this.generatingPreview = false;
-        }).catch(e => {
-          this.error = e;
-          this.generatingPreview = false;
-        });
-      });
     }
   }
 }
@@ -558,11 +510,17 @@ function recordOpenClick(link) {
 <style lang='stylus'>
 @import('./vars.styl');
 
-.top-right-ai-button {
+.top-right-bar {
   position: fixed;
   top: 20px;
   right: 24px;
   z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-right-ai-button {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -982,6 +940,50 @@ a:focus {
     margin-right: 8px;
   }
 
+  .export-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+  }
+
+  .export-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .export-link {
+    display: inline-flex;
+    align-items: center;
+    color: primary-ink;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+    padding: 2px 0;
+
+    &:hover {
+      color: sole-accent;
+    }
+
+    .export-link-icon {
+      margin-right: 6px;
+      color: inherit;
+    }
+  }
+
+  .export-desc {
+    font-family: sans-font;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: secondary-ink;
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
   h3 {
     margin: 18px 0 10px 0;
     font-family: serif-font;
@@ -1100,15 +1102,19 @@ a:focus {
 }
 
 @media (max-width: small-screen) {
-  .top-right-ai-button {
+  .top-right-bar {
     top: 12px;
     right: 12px;
-    padding: 6px 12px;
-    font-size: 12px;
+    gap: 8px;
 
     &.on-map {
-      display: none;
+      top: 66px;
     }
+  }
+
+  .top-right-ai-button {
+    padding: 6px 12px;
+    font-size: 12px;
   }
 
   #app {
@@ -1170,6 +1176,51 @@ a:focus {
           padding-left: 2px;
           font-size: 12px;
           line-height: 1.45;
+        }
+      }
+
+      .export-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .export-item {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 8px;
+        border-bottom: 1px solid subtle-border;
+
+        &:last-of-type {
+          border-bottom: none;
+        }
+
+        .export-link {
+          display: flex;
+          align-items: center;
+          padding: 8px 12px;
+          background: subtle-fill;
+          border: 1px solid subtle-border;
+          border-radius: 3px;
+          font-size: 13px;
+          color: primary-ink;
+          margin-bottom: 4px;
+
+          &:active {
+            opacity: 0.8;
+          }
+
+          .export-link-icon {
+            margin-right: 6px;
+          }
+        }
+
+        .export-desc {
+          padding-left: 2px;
+          font-size: 11.5px;
+          line-height: 1.45;
+          color: secondary-ink;
         }
       }
 
